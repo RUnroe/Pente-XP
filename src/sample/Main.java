@@ -16,6 +16,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public int dummyMethodForTesting(int num) {
+        return (int) Math.round(Math.random() * num);
+    }
 
     public static void main(String[] args) {
         launch(args);
