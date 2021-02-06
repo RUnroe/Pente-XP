@@ -187,25 +187,251 @@ class EngineTest {
 
 
 
-    @Test
-    void validateMoveIsCorrect() {
 
-    }
 
     @Test
     void makeMoveIsCorrect() {
+        Engine engine = new Engine(false);
+
+        //Validate moves
+        engine.board = getInitBoard();
+        engine.isPlayerOneTurn = true;
+        assertEquals(true, engine.makeMove(0,0));
+        assertEquals(true, engine.makeMove(0,1));
+        assertEquals(true, engine.makeMove(2,2));
+
+        //Check that player cannot place piece on another piece
+        assertEquals(false, engine.makeMove(0,0));
+
+        //Verify the board was updated
+        assertEquals(Piece.PLAYER_ONE, engine.board[0][1]);
+
+        //Verify other board positions are unchanged
+        assertEquals(Piece.EMPTY, engine.board[1][0]);
+
+        //Verify piece cannot be placed out of bounds
+        assertEquals(false, engine.makeMove(-1,-1));
+        assertEquals(false, engine.makeMove(19,19));
+        assertEquals(false, engine.makeMove(19,0));
+        assertEquals(false, engine.makeMove(0,-1));
+
 
     }
 
     @Test
     void passTurnIsCorrect() {
+        Engine engine = new Engine(false);
+        engine.isPlayerOneTurn = true;
+        engine.passTurn();
+        assertEquals(false, engine.isPlayerOneTurn);
+        engine.passTurn();
+        assertEquals(true, engine.isPlayerOneTurn);
+    }
+
+
+
+    @Test
+    void checkForCaptureHorizontalIsCorrect() {
+        Engine engine = new Engine(false);
+        //Set board state
+        //check for capture in x,y
+
+        //Valid capture
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[0][1] = Piece.PLAYER_TWO;
+        engine.board[0][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[0][3] = Piece.PLAYER_ONE;
+
+        assertEquals(true, engine.checkForCapture(0,3));
+        //Check from other side as well
+        assertEquals(true, engine.checkForCapture(0,0));
+
+
+
+        //Missing enemy piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[0][1] = Piece.EMPTY;
+        engine.board[0][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[0][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(0,3));
+        //Check from other side
+        assertEquals(false, engine.checkForCapture(0,0));
+
+
+        //Missing other player_one piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.EMPTY;
+        engine.board[0][1] = Piece.PLAYER_TWO;
+        engine.board[0][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[0][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(0,3));
+
 
     }
 
     @Test
-    void checkForCaptureIsCorrect() {
+    void checkForCaptureVerticalIsCorrect() {
+        Engine engine = new Engine(false);
+        //Set board state
+        //check for capture in x,y
+
+        //Valid capture
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[1][0] = Piece.PLAYER_TWO;
+        engine.board[2][0] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][0] = Piece.PLAYER_ONE;
+
+        assertEquals(true, engine.checkForCapture(3,0));
+        //Check from other side as well
+        assertEquals(true, engine.checkForCapture(0,0));
+
+
+
+        //Missing enemy piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[1][0] = Piece.EMPTY;
+        engine.board[2][0] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][0] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(3,0));
+        //Check from other side
+        assertEquals(false, engine.checkForCapture(0,0));
+
+
+        //Missing other player_one piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.EMPTY;
+        engine.board[1][0] = Piece.PLAYER_TWO;
+        engine.board[2][0] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][0] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(3,0));
+
 
     }
+
+    //Top left to bottom right diagonal check
+    @Test
+    void checkForCaptureDiagonalTLtoBRIsCorrect() {
+        Engine engine = new Engine(false);
+        //Set board state
+        //check for capture in x,y
+
+        //Valid capture
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[1][1] = Piece.PLAYER_TWO;
+        engine.board[2][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][3] = Piece.PLAYER_ONE;
+
+        assertEquals(true, engine.checkForCapture(3,3));
+        //Check from other side as well
+        assertEquals(true, engine.checkForCapture(0,0));
+
+
+
+        //Missing enemy piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.PLAYER_ONE;
+        engine.board[1][1] = Piece.EMPTY;
+        engine.board[2][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(3,3));
+        //Check from other side
+        assertEquals(false, engine.checkForCapture(0,0));
+
+
+        //Missing other player_one piece
+        engine.board = getInitBoard();
+        engine.board[0][0] = Piece.EMPTY;
+        engine.board[1][1] = Piece.PLAYER_TWO;
+        engine.board[2][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[3][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(3,3));
+
+
+    }
+
+    //Bottom left to top right diagonal check
+    @Test
+    void checkForCaptureDiagonalBltoTRIsCorrect() {
+        Engine engine = new Engine(false);
+        //Set board state
+        //check for capture in x,y
+
+        //Valid capture
+        engine.board = getInitBoard();
+        engine.board[18][0] = Piece.PLAYER_ONE;
+        engine.board[17][1] = Piece.PLAYER_TWO;
+        engine.board[16][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[15][3] = Piece.PLAYER_ONE;
+
+        assertEquals(true, engine.checkForCapture(15,3));
+        //Check from other side as well
+        assertEquals(true, engine.checkForCapture(18,0));
+
+
+
+        //Missing enemy piece
+        engine.board = getInitBoard();
+        engine.board[18][0] = Piece.PLAYER_ONE;
+        engine.board[17][1] = Piece.EMPTY;
+        engine.board[16][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[15][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(15,3));
+        //Check from other side
+        assertEquals(false, engine.checkForCapture(18,0));
+
+
+        //Missing other player_one piece
+        engine.board = getInitBoard();
+        engine.board[18][0] = Piece.EMPTY;
+        engine.board[17][1] = Piece.PLAYER_TWO;
+        engine.board[16][2] = Piece.PLAYER_TWO;
+
+        //Place piece
+        engine.board[15][3] = Piece.PLAYER_ONE;
+
+        assertEquals(false, engine.checkForCapture(15,3));
+
+
+    }
+
+
+
+
+
 
     @Test
     void checkForTriaHorizontalIsCorrect() {
