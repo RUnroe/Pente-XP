@@ -8,7 +8,7 @@ package main.controllers;
 
 public class Engine {
 
-    //Board board
+    //Piece[][] board
     //Boolean isPlayerOneTurn
     //Boolean secondPlayerIsAI
     //AI ai

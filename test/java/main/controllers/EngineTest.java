@@ -380,7 +380,7 @@ class EngineTest {
 
     //Bottom left to top right diagonal check
     @Test
-    void checkForCaptureDiagonalBltoTRIsCorrect() {
+    void checkForCaptureDiagonalBLtoTRIsCorrect() {
         Engine engine = new Engine(false);
         //Set board state
         //check for capture in x,y
