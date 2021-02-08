@@ -61,7 +61,7 @@ class AITest {
             for (int i = 0; i < 15; i++) {
                 int x = ((int) (Math.random() * 19));
                 int y = ((int) (Math.random() * 19));
-                board[y][x] = Piece.PLAYER_ONE;
+                board[y][x] = Piece.WHITE;
             }
 
             int[] aiMove = ai.determineMove(board);
