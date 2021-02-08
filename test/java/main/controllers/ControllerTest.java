@@ -11,7 +11,7 @@ class ControllerTest {
         Controller controller = new Controller();
         controller.setup();
 
-        assertTrue(controller.engine != null);
+        assertNotNull(controller.engine);
     }
 
 }
