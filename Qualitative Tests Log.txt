@@ -1,0 +1,39 @@
+Pente-XP Qualitative Testing Checklist
+
+Views
+	PenteView
+		Does the GUI appear on screen at all?
+		Does it display the title screen?
+			Do the textboxes for names appear, and appear properly and aethetically correct?
+				Can you type in these textboxes?
+			Does the radial options for AI or Player opponent appear and look correct?
+				Can you select the unchecked option?
+			Does the Play button appear legibly?
+				Can you click on it and have another screen load?
+			Does the Help button appear legibly?
+				Can you click on it and have another screen load?
+		Does the Help menu display after being openned by the corresponding button?
+			Does the help menu have legible and well organized text?
+				Does the text make sense and explain the fundamentals of the game?
+			Does the Back button appear legibly?
+				Can you click on the button and be returned to the screen you were on prior to opening the Help menu?
+		Does the Game meny display after being openned by the corresponding button?
+			Are the names chosen on the title screen appear on the appropriate player's turn?
+			Does the game page display the board?
+				Does the board contain the proper information?
+			Does the board respond to player clicks by changing color?
+			Does the Make Move button change the page when clicked?
+				If no space or an invalid space (such as one occupied by another piece) is chosen, is an error displayed?
+				If the space chosen was valid, is the board and displayed player name updated appropriately?
+					If a tria or tesera occurs, is it displayed to the user?
+			Does the Quit button appear legibly?
+				When pressed, is the game page replaced by the title screen?
+					Upon returning to the title screen, are the textboxes already filled with the previously entered names?
+					If the Play button is pressed again, is the Game menu displayed with a new instance of the board?
+					Does moving to other pages repeatedly cause visual errors or crash the application?
+			Does the Help button appear legibly?
+				Does the help menu have legible and well organized text?
+					Does the text make sense and explain the fundamentals of the game?
+				Does the Back button appear legibly?
+					Can you click on the button and be returned to the screen you were on prior to opening the Help menu?
+			When the game has reached it's conclusion, is the end result displayed?		
