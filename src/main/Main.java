@@ -7,15 +7,21 @@ import main.views.PenteView;
 
 import static javafx.application.Application.launch;
 
+//Must extend application for JavaFX
 public class Main extends Application {
 
     public static void main(String[] args) {
+
+        //Runs start method using command line arguments if any exist
         launch(args);
     }
 
+    //Application method to use JavaFX
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Controller controller = new Controller(primaryStage);
+
+        //Instantiates new Controller with the main JavaFx stage and calls the controller's core method
+        new Controller(primaryStage).run();
     }
 
 }

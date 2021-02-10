@@ -8,19 +8,24 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//Class linked to fxml objects and methods
 public class FxHandler {
     public Button PlayGameBtn;
     public Button btnBack;
     public Button InstructionBtn;
 
+    //Can't use this with JavaFX
+//    private FxHandler() {}
+
     public void GoToGame(ActionEvent actionEvent) {
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../resources/game.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/game.fxml")));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
