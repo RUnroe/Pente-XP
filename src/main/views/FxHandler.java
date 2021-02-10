@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FxHandler {
     public Button PlayGameBtn;
@@ -40,5 +42,11 @@ public class FxHandler {
         }
         stage.setTitle("Pente-XP");
         stage.show();
+    }
+
+    public void UserClick(ActionEvent actionEvent) {
+        Pattern pattern = Pattern.compile("\\d+_\\d+");
+        Matcher matcher = pattern.matcher(actionEvent.getSource().toString());
+        if (matcher.find()) System.out.println(matcher.group(0));
     }
 }

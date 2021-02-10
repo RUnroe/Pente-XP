@@ -11,6 +11,7 @@ public class Controller {
     public Controller(Stage primaryStage) throws IOException {
         penteView = new PenteView(primaryStage);
     }
+
     //string playerOneName
     //string playerTwoName
     //Engine engine(secondPlayerIsAI)
