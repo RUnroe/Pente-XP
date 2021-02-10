@@ -17,31 +17,34 @@ public class FxHandler {
     public Button PlayGameBtn;
     public Button btnBack;
     public Button InstructionBtn;
+    public Button SettingsBtn;
 
     //Can't use this with JavaFX
 //    private FxHandler() {}
 
-    public void GoToGame(ActionEvent actionEvent) {
-        Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
-
+    void changeScene(Stage stage, String fxmlPath) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/game.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        stage.setTitle("Game!");
-        stage.show();
+    }
+
+    public void GoToGame(ActionEvent actionEvent) {
+        Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
+        changeScene(stage, "../resources/game.fxml");
     }
 
     public void GoToInstruction(ActionEvent actionEvent) {
+        changeScene((Stage) InstructionBtn.getScene().getWindow(), "../resources/instructions.fxml");
     }
 
     public void onBackClicked(ActionEvent actionEvent) {
         Stage stage = (Stage) btnBack.getScene().getWindow();
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../resources/penteTemplateTest.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/penteTemplateTest.fxml")));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,5 +57,9 @@ public class FxHandler {
         Pattern pattern = Pattern.compile("\\d+_\\d+");
         Matcher matcher = pattern.matcher(actionEvent.getSource().toString());
         if (matcher.find()) System.out.println(matcher.group(0));
+    }
+
+    public void GoToSettings(ActionEvent actionEvent) {
+        changeScene((Stage) SettingsBtn.getScene().getWindow(), "../resources/penteTemplateTest.fxml");
     }
 }
