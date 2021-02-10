@@ -14,12 +14,13 @@ import java.util.regex.Pattern;
 public class FxHandler {
     public Button PlayGameBtn;
     public Button btnBack;
+    public Button InstructionBtn;
 
     public void GoToGame(ActionEvent actionEvent) {
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../resources/game.fxml"));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class FxHandler {
         Stage stage = (Stage) btnBack.getScene().getWindow();
 
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("penteTemplateTest.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../resources/penteTemplateTest.fxml"));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
