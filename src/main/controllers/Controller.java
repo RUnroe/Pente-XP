@@ -1,6 +1,16 @@
 package main.controllers;
 
+import javafx.stage.Stage;
+import main.views.PenteView;
+
+import java.io.IOException;
+
 public class Controller {
+    PenteView penteView;
+
+    public Controller(Stage primaryStage) throws IOException {
+        penteView = new PenteView(primaryStage);
+    }
     //string playerOneName
     //string playerTwoName
     //Engine engine(secondPlayerIsAI)
