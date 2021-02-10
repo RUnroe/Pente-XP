@@ -1,8 +1,7 @@
 package main.controllers;
 
 public class Controller {
-    //string playerOneName
-    //string playerTwoName
+    public static String p1Name, p2Name;
     //Engine engine(secondPlayerIsAI)
     //PenteView view
 
@@ -11,4 +10,7 @@ public class Controller {
 
 
     //setup()
+
+
+
 }
