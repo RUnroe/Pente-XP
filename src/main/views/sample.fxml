@@ -1,0 +1,10 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<GridPane fx:controller="main.views.FxHandler"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <Label prefWidth="300" prefHeight="300">You did it!</Label>
+    <Button fx:id="btnBack" text="Back" onAction="#onBackClicked"/>
+</GridPane>

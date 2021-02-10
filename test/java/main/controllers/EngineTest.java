@@ -1,3 +1,4 @@
+/*
 package main.controllers;
 
 import main.models.Piece;
@@ -751,3 +752,4 @@ class EngineTest {
         assertEquals(false, engine.checkForTesera(16,2));
     }
 }
+*/
