@@ -16,7 +16,8 @@ public class Engine {
     //AI ai
     //int turnCount = 0
 
-    public Engine(){
+    public Engine(Boolean secondPlayerIsAI) {
+        p2IsAI = secondPlayerIsAI;
         isPlayerOneTurn = true;
         createBoard();
     }
@@ -118,7 +119,7 @@ public class Engine {
         return board;
     }
 
-    public Boolean getPlayerOneTurn() {
+    public Boolean isPlayerOneTurn() {
         return isPlayerOneTurn;
     }
 

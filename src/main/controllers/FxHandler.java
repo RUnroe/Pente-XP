@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 //Class linked to fxml objects and methods
 public class FxHandler {
     public GridPane gridGame;
-    private final GameController gameController = new GameController();
+    private static final GameController gameController = new GameController();
 
     public Button PlayGameBtn;
     public Button btnBack;
@@ -56,7 +56,7 @@ public class FxHandler {
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
         changeScene(stage, "../resources/game.fxml");
-
+        gameController.createGame(false);
 //        Button[] buttons = (Button[]) gridGame.getChildren().toArray();
 //
 //        for (Button button : buttons) {
@@ -96,6 +96,14 @@ public class FxHandler {
 
         int y = Integer.parseInt(pos[0]);
         int x = Integer.parseInt(pos[1]);
+
+        //set color based on which player's turn it is
+        if (gameController.getEngine().isPlayerOneTurn()) {
+            button.setStyle("-fx-background-color: #ffffff; ");
+        } else {
+            button.setStyle("-fx-background-color: #000000; ");
+        }
+        button.setDisable(true);
 
         button.setBackground(Background.EMPTY);
         System.out.println("Coords: " + x + "x, " + y + "y");

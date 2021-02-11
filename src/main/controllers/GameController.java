@@ -17,6 +17,8 @@ public class GameController {
 //        //Initializing the view with a JavaFX stage
 //        penteView = new PenteView(primaryStage);
 //    }
+    Engine engine;
+
 
     public GameController() {}
 
@@ -39,12 +41,15 @@ public class GameController {
 
     }
 
-//    public Engine getEngine() {
-//    }
+    public Engine getEngine() {
+        return engine;
+    }
+    public void createGame(Boolean secondPlayerIsAI) {
+        engine = new Engine(secondPlayerIsAI);
+    }
 
     //string playerOneName
     //string playerTwoName
-    //Engine engine(secondPlayerIsAI)
     //PenteView view
 
     //userClick(x, y) (call all engine methods) (what happened in turn. Display on gui)
