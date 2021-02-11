@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import main.models.Piece;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -98,22 +99,38 @@ public class FxHandler {
         int x = Integer.parseInt(pos[1]);
 
         //set color based on which player's turn it is
-        if (gameController.getEngine().isPlayerOneTurn()) {
-            button.setStyle("-fx-background-color: #ffffff; ");
-        } else {
-            button.setStyle("-fx-background-color: #000000; ");
-        }
-        button.setDisable(true);
+//        if (gameController.getEngine().isPlayerOneTurn()) {
+//            button.setStyle("-fx-background-color: #ffffff; ");
+//        } else {
+//            button.setStyle("-fx-background-color: #000000; ");
+//        }
+        //button.setDisable(true);
 
         button.setBackground(Background.EMPTY);
         System.out.println("Coords: " + x + "x, " + y + "y");
 
-//        boolean isPlayerOneTurn =  gameController.getEngine().isPlayerOneTurn();
-//        Pattern pattern = Pattern.compile("\\d+_\\d+");
-//        Matcher matcher = pattern.matcher(actionEvent.getSource().toString());
-//        if (matcher.find()) System.out.println(matcher.group(0));
-
         gameController.userClick(y, x);
+        updateBoard();
+    }
+
+    public void updateBoard() {
+        Piece[][] board = gameController.getEngine().getBoard();
+        for (Object object : gridGame.getChildren().toArray()) {
+            Button button = (Button) object;
+            String btnId = button.getId().toString();
+            //Separates string into [<grid>,<y>,<x>] and stores [<y>,<x>]
+            String[] pos = btnId.split("grid")[1].split("_");
+            int y = Integer.parseInt(pos[0]);
+            int x = Integer.parseInt(pos[1]);
+            switch (board[y][x]) {
+                case EMPTY: button.setStyle("-fx-background-color: transparent; ");
+                break;
+                case WHITE: button.setStyle("-fx-background-color: #ffffff; ");
+                break;
+                case BLACK: button.setStyle("-fx-background-color: #000000; ");
+                break;
+            }
+        }
     }
 
     public void GoToSettings(ActionEvent actionEvent) {

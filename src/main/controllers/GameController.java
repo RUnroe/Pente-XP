@@ -38,6 +38,8 @@ public class GameController {
     //Test for clicking coords
     public void userClick(int y, int x) {
         System.out.println("User clicked " + x + "," + y +"!");
+        engine.makeMove(x,y);
+        engine.passTurn();
 
     }
 
