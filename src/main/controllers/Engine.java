@@ -31,7 +31,9 @@ public class Engine {
     }
 
     //aiTurn() (get move from AI class. Make move. PassTurn)
+    public void aiTurn() {
 
+    }
     public boolean validateMove(int x, int y){
         if(board[y][x] != Piece.EMPTY){
             return false;
@@ -52,20 +54,17 @@ public class Engine {
             return false;
         }
     }
-    //passTurn() (return string - "It is now player 2's turn") (if player 2s turn and player 2 is an AI, call AI method)
-//    public String passTurn(){
-//        if(isPlayerOneTurn){
-//            isPlayerOneTurn = false;
-//            if(p2IsAI){
-//                return "It is now the AI's Turn";
-//            } else {
-//                return "It is now " + p2Name + "'s Turn";
-//            }
-//        } else {
-//            isPlayerOneTurn = true;
-//            return "It is now " + p1Name + "'s Turn";
-//        }
-//    }
+    //passTurn()
+    public void passTurn(){
+        if(isPlayerOneTurn){
+            isPlayerOneTurn = false;
+            if(p2IsAI){
+               aiTurn();
+            }
+        } else {
+            isPlayerOneTurn = true;
+        }
+    }
     //checkForCapture(y, x) (return boolean)
     public boolean checkForCapture(int x, int y) {
         Piece color = board[y][x];
@@ -117,5 +116,13 @@ public class Engine {
 
     public Piece[][] getBoard(){
         return board;
+    }
+
+    public Boolean getPlayerOneTurn() {
+        return isPlayerOneTurn;
+    }
+
+    public Boolean getP2IsAI() {
+        return p2IsAI;
     }
 }
