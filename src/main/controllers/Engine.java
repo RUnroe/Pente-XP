@@ -14,7 +14,6 @@ public class Engine {
     private Boolean isPlayerOneTurn;
     private Boolean p2IsAI;
     private byte p1Caps = 0, p2Caps = 0;
-    //int turnCount = 0
 
     public Engine(){
         isPlayerOneTurn = true;
@@ -32,7 +31,7 @@ public class Engine {
 
     //aiTurn() (get move from AI class. Make move. PassTurn)
 
-    public boolean validateMove(int x, int y){
+    public boolean validateMove(int y, int x){
         if(board[y][x] != Piece.EMPTY){
             return false;
         } else {
@@ -40,7 +39,7 @@ public class Engine {
         }
     }
 
-    public boolean makeMove(int x, int y){
+    public boolean makeMove(int y, int x){
         if(validateMove(x,y)){
             if (isPlayerOneTurn) {
                 board[y][x] = Piece.WHITE;
@@ -65,7 +64,7 @@ public class Engine {
             return "It is now " + Controller.p1Name + "'s Turn";
         }
     }
-    public boolean checkForCapture(int x, int y) {
+    public boolean checkForCapture(int y, int x) {
         Piece color = board[y][x];
         boolean pTurn;
         Piece oppColor = null;
@@ -140,7 +139,7 @@ public class Engine {
         return false;
     }
 
-    public boolean checkFor(int x, int y, int num) {
+    public boolean checkFor(int y, int x, int num) {
      //check horizontal
         Piece color = board[y][x];
 
