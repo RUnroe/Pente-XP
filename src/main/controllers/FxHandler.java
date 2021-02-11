@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.models.Piece;
 
@@ -27,14 +28,13 @@ public class FxHandler {
     public Button InstructionBtn;
     public Button SettingsBtn;
     public TextField PlayerOneName;
-    public String pOneName;
     public TextField PlayerTwoName;
-    public String pTwoName;
     public RadioButton gameTypePVP;
     public ToggleGroup gameType;
     public RadioButton gameTypePVC;
     public Label lblP1Name;
     public Label lblP2Name;
+    public Text outputTxt;
 
     //Can't use this with JavaFX
 //    private FxHandler() {}
@@ -52,20 +52,14 @@ public class FxHandler {
 
 //        System.out.println(PlayerOneName.getText());
 
-//        pOneName = PlayerOneName.getText().toString();
-//        pTwoName = PlayerTwoName.getText().toString();
+        gameController.setPlayerOneName(PlayerOneName.getText().toString());
+        gameController.setPlayerTwoName(PlayerTwoName.getText().toString());
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
         changeScene(stage, "../resources/game.fxml");
         gameController.createGame(false);
-//        Button[] buttons = (Button[]) gridGame.getChildren().toArray();
-//
-//        for (Button button : buttons) {
-//            button.setPadding(new Insets(5));
-//        }
 
-//        lblP1Name.setText(pOneName);
-//        lblP2Name.setText(pTwoName);
+
 
     }
 
@@ -111,9 +105,22 @@ public class FxHandler {
 
         gameController.userClick(y, x);
         updateBoard();
+        updateOutput();
     }
 
-    public void updateBoard() {
+    private void updateOutput() {
+        lblP1Name.setText(gameController.getPlayerOneName());
+        lblP2Name.setText(gameController.getPlayerTwoName());
+
+        String pOneName = gameController.getPlayerOneName();
+        String pTwoName = gameController.getPlayerTwoName();
+        if(gameController.getEngine().isPlayerOneTurn()) {
+            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
+        } else {
+            outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
+        }
+    }
+    private void updateBoard() {
         Piece[][] board = gameController.getEngine().getBoard();
         for (Object object : gridGame.getChildren().toArray()) {
             Button button = (Button) object;

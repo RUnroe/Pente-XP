@@ -17,8 +17,26 @@ public class GameController {
 //        //Initializing the view with a JavaFX stage
 //        penteView = new PenteView(primaryStage);
 //    }
-    Engine engine;
+    private Engine engine;
+    private String playerOneName;
 
+    public String getPlayerOneName() {
+        return playerOneName;
+    }
+
+    public void setPlayerOneName(String playerOneName) {
+        this.playerOneName = playerOneName;
+    }
+
+    public String getPlayerTwoName() {
+        return playerTwoName;
+    }
+
+    public void setPlayerTwoName(String playerTwoName) {
+        this.playerTwoName = playerTwoName;
+    }
+
+    private String playerTwoName;
 
     public GameController() {}
 
@@ -50,8 +68,7 @@ public class GameController {
         engine = new Engine(secondPlayerIsAI);
     }
 
-    //string playerOneName
-    //string playerTwoName
+
     //PenteView view
 
     //userClick(x, y) (call all engine methods) (what happened in turn. Display on gui)
