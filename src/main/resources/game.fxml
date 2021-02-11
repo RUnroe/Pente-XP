@@ -50,7 +50,7 @@
     </AnchorPane>
     <AnchorPane prefHeight="676.0" prefWidth="750.0">
       <children>
-            <ImageView fitHeight="435.0" fitWidth="422.0" layoutX="169.0" layoutY="57.0" pickOnBounds="true">
+            <ImageView fitHeight="427.0" fitWidth="418.0" layoutX="172.0" layoutY="64.0" pickOnBounds="true">
                <image>
                   <Image url="@board.png" />
                </image>
