@@ -6,10 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.AccessibleRole;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -34,6 +32,8 @@ public class FxHandler {
     public RadioButton gameTypePVP;
     public ToggleGroup gameType;
     public RadioButton gameTypePVC;
+    public Label lblP1Name;
+    public Label lblP2Name;
 
     //Can't use this with JavaFX
 //    private FxHandler() {}
@@ -49,6 +49,10 @@ public class FxHandler {
 
     public void GoToGame(ActionEvent actionEvent) {
 
+//        System.out.println(PlayerOneName.getText());
+
+//        pOneName = PlayerOneName.getText().toString();
+//        pTwoName = PlayerTwoName.getText().toString();
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
         changeScene(stage, "../resources/game.fxml");
@@ -59,8 +63,8 @@ public class FxHandler {
 //            button.setPadding(new Insets(5));
 //        }
 
-        pOneName = PlayerOneName.getText();
-        pTwoName = PlayerTwoName.getText();
+//        lblP1Name.setText(pOneName);
+//        lblP2Name.setText(pTwoName);
 
     }
 
@@ -93,6 +97,7 @@ public class FxHandler {
         int y = Integer.parseInt(pos[0]);
         int x = Integer.parseInt(pos[1]);
 
+        button.setBackground(Background.EMPTY);
         System.out.println("Coords: " + x + "x, " + y + "y");
 
 //        boolean isPlayerOneTurn =  gameController.getEngine().isPlayerOneTurn();

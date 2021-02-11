@@ -93,7 +93,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-            <Button fx:id="grid0_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#UserClick" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Button fx:id="grid0_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#UserClick" style="-fx-background-color: transparent;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <Button fx:id="grid1_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#UserClick" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <Button fx:id="grid2_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#UserClick" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <Button fx:id="grid3_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#UserClick" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -457,12 +457,12 @@
 
           </children>
         </GridPane>
-            <Label layoutX="14.0" layoutY="14.0" text="Player 1">
+            <Label fx:id="lblP1Name" layoutX="14.0" layoutY="14.0" text="Player 1">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="689.0" layoutY="14.0" text="Player 2">
+            <Label fx:id="lblP2Name" layoutX="689.0" layoutY="14.0" text="Player 2">
                <font>
                   <Font size="14.0" />
                </font>
