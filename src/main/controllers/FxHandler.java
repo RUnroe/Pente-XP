@@ -100,7 +100,7 @@ public class FxHandler {
 //        }
         //button.setDisable(true);
 
-        button.setBackground(Background.EMPTY);
+        button.setStyle("-fx-background-color: black;");
         System.out.println("Coords: " + x + "x, " + y + "y");
 
         gameController.userClick(y, x);
@@ -130,12 +130,9 @@ public class FxHandler {
             int y = Integer.parseInt(pos[0]);
             int x = Integer.parseInt(pos[1]);
             switch (board[y][x]) {
-                case EMPTY: button.setStyle("-fx-background-color: transparent; ");
-                break;
-                case WHITE: button.setStyle("-fx-background-color: #ffffff; ");
-                break;
-                case BLACK: button.setStyle("-fx-background-color: #000000; ");
-                break;
+                case EMPTY -> button.setStyle("-fx-background-color: transparent; -fx-background-radius: 50%;");
+                case WHITE -> button.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 100%;");
+                case BLACK -> button.setStyle("-fx-background-color: #000000; -fx-background-radius: 50%;");
             }
         }
     }
