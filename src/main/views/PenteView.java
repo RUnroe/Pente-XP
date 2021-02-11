@@ -3,8 +3,8 @@ package main.views;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import main.controllers.FxHandler;
 
 import java.io.IOException;
 import java.util.Objects;

@@ -2,22 +2,22 @@ Pente-XP Qualitative Testing Checklist
 
 Views
 	PenteView
-		Does the GUI appear on screen at all?
-		Does it display the title screen?
-			Do the textboxes for names appear, and appear properly and aethetically correct?
-				Can you type in these textboxes?
-			Does the radial options for AI or Player opponent appear and look correct?
-				Can you select the unchecked option?
-			Does the Play button appear legibly?
-				Can you click on it and have another screen load?
-			Does the Help button appear legibly?
-				Can you click on it and have another screen load?
-		Does the Help menu display after being openned by the corresponding button?
-			Does the help menu have legible and well organized text?
+		Does the GUI appear on screen at all? Check!
+		Does it display the title screen? Check!
+			Do the text boxes for names appear, and appear properly and aesthetically correct? Check!
+				Can you type in these text boxes? Check!
+			Does the radial options for AI or Player opponent appear and look correct? Check!
+				Can you select the unchecked option? Check!
+			Does the Play button appear legibly? Check!
+				Can you click on it and have another screen load? Check!
+			Does the Help button appear legibly? Check!
+				Can you click on it and have another screen load? Check!
+		Does the Help menu display after being opened by the corresponding button? Check!
+			Does the help menu have legible and well organized text? Check!
 				Does the text make sense and explain the fundamentals of the game?
-			Does the Back button appear legibly?
-				Can you click on the button and be returned to the screen you were on prior to opening the Help menu?
-		Does the Game meny display after being openned by the corresponding button?
+			Does the Back button appear legibly? Check!
+				Can you click on the button and be returned to the screen you were on prior to opening the Help menu? Check!
+		Does the Game menu display after being opened by the corresponding button? Check!
 			Are the names chosen on the title screen appear on the appropriate player's turn?
 			Does the game page display the board?
 				Does the board contain the proper information?

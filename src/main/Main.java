@@ -2,7 +2,7 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import main.controllers.Controller;
+import main.controllers.GameController;
 import main.views.PenteView;
 
 import static javafx.application.Application.launch;
@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //Instantiates new Controller with the main JavaFx stage and calls the controller's core method
-        new Controller(primaryStage).run();
+        new PenteView(primaryStage);
     }
 
 }
