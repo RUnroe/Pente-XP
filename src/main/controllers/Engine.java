@@ -31,7 +31,7 @@ public class Engine {
     }
 
     //aiTurn() (get move from AI class. Make move. PassTurn)
-    public void aiTurn() {
+    public void aiTurn() {}
 
     public boolean validateMove(int y, int x){
         if(board[y][x] != Piece.EMPTY){
@@ -42,7 +42,7 @@ public class Engine {
     }
 
     public boolean makeMove(int y, int x){
-        if(validateMove(x,y)){
+        if(validateMove(y, x)){
             if (isPlayerOneTurn) {
                 board[y][x] = Piece.WHITE;
             } else {
@@ -53,17 +53,17 @@ public class Engine {
             return false;
         }
     }
-    public String passTurn(){
+    public void passTurn(){
         if(isPlayerOneTurn){
             isPlayerOneTurn = false;
-            if(p2IsAI){
-                return "It is now the AI's Turn";
-            } else {
-                return "It is now " + Controller.p2Name + "'s Turn";
-            }
+//            if(p2IsAI){
+//                return "It is now the AI's Turn";
+//            } else {
+//                return "It is now " + Controller.p2Name + "'s Turn";
+//            }
         } else {
             isPlayerOneTurn = true;
-            return "It is now " + Controller.p1Name + "'s Turn";
+//            return "It is now " + Controller.p1Name + "'s Turn";
         }
     }
     public boolean checkForCapture(int y, int x) {
@@ -220,13 +220,13 @@ public class Engine {
     }
 
     //If this class goes static, this method will be responsible for wiping everything
-    public String endGame(){
-        if(isPlayerOneTurn){
-            return Controller.p1Name + " wins!";
-        } else {
-            return Controller.p2Name + " wins!";
-        }
-    }
+//    public String endGame(){
+//        if(isPlayerOneTurn){
+//            return Controller.p1Name + " wins!";
+//        } else {
+//            return Controller.p2Name + " wins!";
+//        }
+//    }
 
 
     public Piece[][] getBoard(){
