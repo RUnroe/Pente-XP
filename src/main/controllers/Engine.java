@@ -16,6 +16,8 @@ public class Engine {
     private Boolean isPlayerOneTurn;
     private final Boolean isP2Ai;
     private byte p1Caps = 0, p2Caps = 0;
+    private int p1Captures;
+    private int p2Captures;
 
     public Engine(Boolean secondPlayerIsAI) {
         isP2Ai = secondPlayerIsAI;
@@ -23,9 +25,9 @@ public class Engine {
         createBoard();
     }
 
-    private void createBoard(){
+    private void createBoard() {
         board = new Piece[19][19];
-        for(int y = 0; y < board.length; y++) {
+        for (int y = 0; y < board.length; y++) {
             for(int x = 0; x < board[0].length; x++) {
                 board[y][x] = Piece.EMPTY;
             }
@@ -251,6 +253,22 @@ public class Engine {
 
     public Boolean isP2Ai() {
         return isP2Ai;
+    }
+
+    public int getP1Captures() {
+        return p1Captures;
+    }
+
+    public void setP1Captures(int p1Captures) {
+        this.p1Captures = p1Captures;
+    }
+
+    public int getP2Captures() {
+        return p2Captures;
+    }
+
+    public void setP2Captures(int p2Captures) {
+        this.p2Captures = p2Captures;
     }
 
     public boolean checkForWin(int y, int x) {

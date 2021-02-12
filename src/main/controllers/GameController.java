@@ -16,6 +16,7 @@ public class GameController {
     private String playerOneName;
     private String playerTwoName;
 
+
 //    public boolean isWin;
 //    public boolean isTesera;
 //    public boolean isTria;
@@ -102,14 +103,34 @@ public String conditionStr = "";
 //
 //                }
 //            }
-            System.out.println("Capture: " + engine.checkForCapture(y, x));
-            conditionStr = (engine.checkFor(y, x, 5)) ? //Checks for win
+            boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
+            System.out.println("Capture: " + isCaptureFound);
+            if (isCaptureFound) {
+                if (engine.isPlayerOneTurn()) {
+                    engine.setP1Captures(getEngine().getP1Captures() + 1);
+                } else {
+                    engine.setP2Captures(getEngine().getP2Captures() + 1);
+                }
+            }
+
+            /*
+            left, down, and the tl<->br diagonal return true for captures
+              \
+              -\
+              | \- -- -- --
+              |  \
+              |   \
+              |
+            */
+
+            conditionStr = (engine.checkFor(y, x, 5) || //Checks for win by 5 consecutive stones
+                    ((engine.isPlayerOneTurn() ? engine.getP1Captures() : engine.getP2Captures()) >= 5)) ? //Checks for win by 5 captures
                     ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
                     (engine.checkFor(y, x, 4)) ? //Checks for tesera
                             ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
                             (engine.checkFor(y, x, 3)) ? //Checks for tria
                                     ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tria")) : "";
-            if(conditionStr.toLowerCase().contains("win")) engine.passTurn();
+            if (conditionStr.toLowerCase().contains("win")) engine.passTurn();
             engine.passTurn();
         }
         return isTurnHandled;

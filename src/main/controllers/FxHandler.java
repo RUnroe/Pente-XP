@@ -152,17 +152,23 @@ public class FxHandler {
     private void updateOutput() {
         updatePlayerNames();
 
-        //updatePlayerCaptureCount();
+        updatePlayerCaptureCount();
         updateSecondaryOutputBox();
 
 
         String pOneName = gameController.getPlayerOneName();
         String pTwoName = gameController.getPlayerTwoName();
-        if(gameController.getEngine().isPlayerOneTurn()) {
+
+        if (gameController.getEngine().isPlayerOneTurn()) {
             outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
         } else {
             outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
         }
+    }
+
+    private void updatePlayerCaptureCount() {
+        playerOneCaptureCount.setText(String.valueOf(gameController.getEngine().getP1Captures()));
+        playerTwoCaptureCount.setText(String.valueOf(gameController.getEngine().getP2Captures()));
     }
 
     private void updatePlayerNames() {
