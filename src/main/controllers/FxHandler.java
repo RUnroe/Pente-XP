@@ -38,6 +38,8 @@ public class FxHandler {
     static Scene settingsScene;
     static Scene instructionsScene;
     static Scene gameScene;
+    public Button btnGameToHelp;
+    public Button btnHelpToGame;
 
     public static Scene getSettingsScene() {
         return settingsScene;
@@ -90,6 +92,11 @@ public class FxHandler {
 //        changeScene(stage, "../resources/game.fxml");
 //        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
 //        pauseTransition.setOnFinished(evt -> updatePlayerNames());
+        try {
+            gameScene = createScene("../resources/game.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         changeScene(stage, gameScene);
 //        Worker worker = g
 //        stage.getScene().rootProperty().addListener(new ChangeListener<>() {
@@ -167,8 +174,10 @@ public class FxHandler {
     }
 
     private void updatePlayerCaptureCount() {
-        playerOneCaptureCount.setText(String.valueOf(gameController.getEngine().getP1Captures()));
-        playerTwoCaptureCount.setText(String.valueOf(gameController.getEngine().getP2Captures()));
+//        playerOneCaptureCount.setText(String.valueOf(gameController.getEngine().getP1Captures()));
+//        playerTwoCaptureCount.setText(String.valueOf(gameController.getEngine().getP2Captures()));
+        playerOneCaptureCount.setText("Captures: " + gameController.getEngine().getP1Captures());
+        playerTwoCaptureCount.setText("Captures: " + gameController.getEngine().getP2Captures());
     }
 
     private void updatePlayerNames() {
@@ -234,5 +243,13 @@ public class FxHandler {
 //        if (gameController.getPlayerTwoName() != null) {
 //            PlayerTwoName.setText(gameController.getPlayerTwoName());
 //        }
+    }
+
+    public void onGameToHelpClick(ActionEvent actionEvent) {
+        changeScene((Stage) btnGameToHelp.getScene().getWindow(), instructionsScene);
+    }
+
+    public void onHelpToGameClick(ActionEvent actionEvent) {
+        changeScene((Stage) btnHelpToGame.getScene().getWindow(), gameScene);
     }
 }

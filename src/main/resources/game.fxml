@@ -33,10 +33,10 @@
 -->
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.FxHandler">
   <children>
     <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -462,21 +462,32 @@
             <Button fx:id="grid18_18" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#UserClick" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: transparent; -fx-background-radius: 50%;" GridPane.columnIndex="18" GridPane.rowIndex="18" />
           </children>
         </GridPane>
-            <Label fx:id="lblP1Name" layoutX="14.0" layoutY="14.0" text="Player 1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblP2Name" layoutX="689.0" layoutY="14.0" text="Player 2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER" />
-            <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tria/Tesera/Win" />
-            <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame" text="Quit Game" />
-            <Text fx:id="playerOneCaptureCount" layoutX="35.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-            <Text fx:id="playerTwoCaptureCount" layoutX="710.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+        <Label fx:id="lblP1Name" layoutX="35.0" layoutY="15.0" text="Player 1">
+          <font>
+            <Font size="14.0"/>
+          </font>
+        </Label>
+        <Label fx:id="lblP2Name" layoutX="667.0" layoutY="15.0" text="Player 2">
+          <font>
+            <Font size="14.0"/>
+          </font>
+        </Label>
+        <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER"/>
+        <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Tria/Tesera/Win"/>
+        <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame"
+                text="Quit Game"/>
+        <Text fx:id="playerOneCaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Captures: 0"/>
+        <Text fx:id="playerTwoCaptureCount" layoutX="661.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Captures: 0"/>
+        <Button fx:id="btnGameToHelp" layoutX="709.0" layoutY="498.0" mnemonicParsing="false"
+                onAction="#onGameToHelpClick" prefHeight="30.0" prefWidth="35.0" text="?">
+          <font>
+            <Font size="14.0"/>
+          </font>
+        </Button>
       </children>
     </AnchorPane>
   </children>

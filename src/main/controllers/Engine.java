@@ -38,7 +38,7 @@ public class Engine {
         int[] move;
         do {
             move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
-            isValidMove(move[0], move[1]);
+            isValid = isValidMove(move[0], move[1]);
         } while (!isValid);
         return move;
     }
@@ -67,117 +67,132 @@ public class Engine {
     }
 
     public boolean checkForCapture(int y, int x) {
+        boolean isCapture = false;
         Piece color = board[y][x];
-        boolean pTurn;
+        boolean p1Turn;
         Piece oppColor = null;
-        if (color == Piece.BLACK) {
-            oppColor = Piece.WHITE;
-            pTurn = true;
-        } else {
-            oppColor = Piece.BLACK;
-            pTurn = false;
-        }
+
+        p1Turn = (color == Piece.WHITE);
+        oppColor = (p1Turn ? Piece.BLACK : Piece.WHITE);
+
+        //Commented out because player 1 takes white piece.
+        //Ternary above solves issue
+//        if (color == Piece.BLACK) {
+//            oppColor = Piece.WHITE;
+//            p1Turn = true;
+//        } else {
+//            oppColor = Piece.BLACK;
+//            p1Turn = false;
+//        }
 
         //Checks horizontally
         if (x > 2) {
             if (board[y][x - 1] == oppColor && board[y][x - 2] == oppColor && board[y][x - 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y][x-1] = Piece.EMPTY;
-                board[y][x-2] = Piece.EMPTY;
-                return true;
+                board[y][x - 1] = Piece.EMPTY;
+                board[y][x - 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
-        if (x < 14) {
+        if (x < 16) {
             if (board[y][x + 1] == oppColor && board[y][x + 2] == oppColor && board[y][x + 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y][x+1] = Piece.EMPTY;
-                board[y][x+2] = Piece.EMPTY;
-                return true;
+                board[y][x + 1] = Piece.EMPTY;
+                board[y][x + 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
         //Checks Vertically
         if (y > 2) {
             if (board[y - 1][x] == oppColor && board[y - 2][x] == oppColor && board[y - 3][x] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y-1][x] = Piece.EMPTY;
-                board[y-2][x] = Piece.EMPTY;
-                return true;
+                board[y - 1][x] = Piece.EMPTY;
+                board[y - 2][x] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
         if (y < 16) {
             if (board[y + 1][x] == oppColor && board[y + 2][x] == oppColor && board[y + 3][x] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y+1][x] = Piece.EMPTY;
-                board[y+2][x] = Piece.EMPTY;
-                return true;
+                board[y + 1][x] = Piece.EMPTY;
+                board[y + 2][x] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
         //Checks Diagonally
-        if (x > 3 && y > 2) {
+        if (x > 2 && y > 2) {
             if (board[y - 1][x - 1] == oppColor && board[y - 2][x - 2] == oppColor && board[y - 3][x - 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y-1][x-1] = Piece.EMPTY;
-                board[y-2][x-2] = Piece.EMPTY;
-                return true;
+                board[y - 1][x - 1] = Piece.EMPTY;
+                board[y - 2][x - 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
-        if (x < 14 && y < 16) {
+        if (x < 16 && y < 16) {
             if (board[y + 1][x + 1] == oppColor && board[y + 2][x + 2] == oppColor && board[y + 3][x + 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y+1][x+1] = Piece.EMPTY;
-                board[y+2][x+2] = Piece.EMPTY;
-                return true;
+                board[y + 1][x + 1] = Piece.EMPTY;
+                board[y + 2][x + 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
         if (x > 2 && y < 16) {
             if (board[y + 1][x - 1] == oppColor && board[y + 2][x - 2] == oppColor && board[y + 3][x - 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y+1][x-1] = Piece.EMPTY;
-                board[y+2][x-2] = Piece.EMPTY;
-                return true;
+                board[y + 1][x - 1] = Piece.EMPTY;
+                board[y + 2][x - 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
         if (x < 16 && y > 2) {
             if (board[y - 1][x + 1] == oppColor && board[y + -2][x + 2] == oppColor && board[y - 3][x + 3] == color) {
-                if (pTurn) {
+                if (p1Turn) {
                     p1Caps++;
                 } else {
                     p2Caps++;
                 }
-                board[y-1][x+1] = Piece.EMPTY;
-                board[y-2][x+2] = Piece.EMPTY;
-                return true;
+                board[y - 1][x + 1] = Piece.EMPTY;
+                board[y - 2][x + 2] = Piece.EMPTY;
+//                return true;
+                isCapture = true;
             }
         }
-        return false;
+        return isCapture;
     }
     private boolean checkFor(int y, int x, int num) {
         //check horizontal
