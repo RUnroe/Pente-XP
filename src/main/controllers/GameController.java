@@ -106,11 +106,11 @@ public String conditionStr = "";
             boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
             if (isCaptureFound) {
-                if (engine.isPlayerOneTurn()) {
-                    engine.setP1Captures(getEngine().getP1Captures() + 1);
-                } else {
-                    engine.setP2Captures(getEngine().getP2Captures() + 1);
-                }
+//                if (engine.isPlayerOneTurn()) {
+//                    engine.setP1Captures(getEngine().getP1Captures() + 1);
+//                } else {
+//                    engine.setP2Captures(getEngine().getP2Captures() + 1);
+//                }
             }
 
             /*

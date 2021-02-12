@@ -57,8 +57,10 @@ public class Engine {
             } else {
                 board[y][x] = Piece.BLACK;
             }
-        return isValidMove;
+        }
+            return isValidMove;
     }
+
 
     public void passTurn() {
         isPlayerOneTurn = !isPlayerOneTurn();
@@ -88,7 +90,8 @@ public class Engine {
                 board[y][x-2] = Piece.EMPTY;
                 return true;
             }
-        } else if (x < 14) {
+        }
+        if (x < 14) {
             if (board[y][x + 1] == oppColor && board[y][x + 2] == oppColor && board[y][x + 3] == color) {
                 if (pTurn) {
                     p1Caps++;
@@ -112,7 +115,8 @@ public class Engine {
                 board[y-2][x] = Piece.EMPTY;
                 return true;
             }
-        } else if (y < 14) {
+        }
+        if (y < 16) {
             if (board[y + 1][x] == oppColor && board[y + 2][x] == oppColor && board[y + 3][x] == color) {
                 if (pTurn) {
                     p1Caps++;
@@ -125,7 +129,7 @@ public class Engine {
             }
         }
         //Checks Diagonally
-        if (x > 2 && y > 2) {
+        if (x > 3 && y > 2) {
             if (board[y - 1][x - 1] == oppColor && board[y - 2][x - 2] == oppColor && board[y - 3][x - 3] == color) {
                 if (pTurn) {
                     p1Caps++;
@@ -136,7 +140,8 @@ public class Engine {
                 board[y-2][x-2] = Piece.EMPTY;
                 return true;
             }
-        } else if (x < 14 && y < 14) {
+        }
+        if (x < 14 && y < 16) {
             if (board[y + 1][x + 1] == oppColor && board[y + 2][x + 2] == oppColor && board[y + 3][x + 3] == color) {
                 if (pTurn) {
                     p1Caps++;
@@ -145,6 +150,30 @@ public class Engine {
                 }
                 board[y+1][x+1] = Piece.EMPTY;
                 board[y+2][x+2] = Piece.EMPTY;
+                return true;
+            }
+        }
+        if (x > 2 && y < 16) {
+            if (board[y + 1][x - 1] == oppColor && board[y + 2][x - 2] == oppColor && board[y + 3][x - 3] == color) {
+                if (pTurn) {
+                    p1Caps++;
+                } else {
+                    p2Caps++;
+                }
+                board[y+1][x-1] = Piece.EMPTY;
+                board[y+2][x-2] = Piece.EMPTY;
+                return true;
+            }
+        }
+        if (x < 16 && y > 2) {
+            if (board[y - 1][x + 1] == oppColor && board[y + -2][x + 2] == oppColor && board[y - 3][x + 3] == color) {
+                if (pTurn) {
+                    p1Caps++;
+                } else {
+                    p2Caps++;
+                }
+                board[y-1][x+1] = Piece.EMPTY;
+                board[y-2][x+2] = Piece.EMPTY;
                 return true;
             }
         }
@@ -230,19 +259,6 @@ public class Engine {
         return pieces >= num;
     }
 
-
-
-    public Piece[][] getBoard() {
-        return board;
-    }
-
-    public void setPlayerOneTurn(Boolean playerOneTurn) {
-        isPlayerOneTurn = playerOneTurn;
-    }
-
-    public Boolean isPlayerOneTurn() {
-        return isPlayerOneTurn;
-    }
 
     public boolean checkForWin(int y, int x) {
         if (isPlayerOneTurn && p1Caps >= 5) {
