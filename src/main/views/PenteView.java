@@ -2,7 +2,6 @@ package main.views;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.controllers.FxHandler;
 
@@ -23,19 +22,23 @@ public class PenteView {
             FXMLLoader loader = new FXMLLoader();
 
             //Sets the resource path for the fxml loader
-            loader.setLocation(Objects.requireNonNull(getClass().getResource("../resources/penteTemplateTest.fxml")));
+            loader.setLocation(Objects.requireNonNull(getClass().getResource("../resources/settings.fxml")));
 
             //Instantiates a base template for scenes to use from the fxml
             Parent root = loader.load();
 
             primaryStage.setTitle("Pente XP");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
+//            primaryStage.setScene(new Scene(root));
+//            primaryStage.show();
 
             setPrimaryStage(primaryStage);
 
             //Use this every time new fxml is loaded to ensure correct handler
-            setFxHandler(loader.getController());
+//            setFxHandler(loader.getController());
+            setFxHandler(new FxHandler());
+            fxHandler.attemptToPreloadScenes();
+            fxHandler.changeScene(primaryStage, FxHandler.getSettingsScene());
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

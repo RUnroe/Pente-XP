@@ -8,44 +8,31 @@ package main.controllers;
 
 import main.models.Piece;
 
+import java.util.Random;
+
 public class Engine {
 
     private Piece[][] board;
     private Boolean isPlayerOneTurn;
-    private Boolean p2IsAI;
+    private final Boolean isP2Ai;
     private byte p1Caps = 0, p2Caps = 0;
 
+
     public Engine(Boolean secondPlayerIsAI) {
-        p2IsAI = secondPlayerIsAI;
+        isP2Ai = secondPlayerIsAI;
         isPlayerOneTurn = true;
         createBoard();
     }
 
-    private void createBoard(){
+    private void createBoard() {
         board = new Piece[19][19];
-<<<<<<< Updated upstream
-        for(int y = 0; y < board.length; y++) {
-            for(int x = 0; x < board[0].length; x++) {
-=======
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[0].length; x++) {
->>>>>>> Stashed changes
                 board[y][x] = Piece.EMPTY;
             }
         }
     }
 
-    //aiTurn() (get move from AI class. Make move. PassTurn)
-<<<<<<< Updated upstream
-    public void aiTurn() {
-
-    public boolean validateMove(int y, int x){
-        if(board[y][x] != Piece.EMPTY){
-            return false;
-        } else {
-            return true;
-        }
-=======
     public int[] aiTurn() {
         boolean isValid = false;
         int[] move;
@@ -60,42 +47,21 @@ public class Engine {
         return (y > -1 && y < 19 &&
                 x > -1 && x < 19 &&
                 board[y][x] == Piece.EMPTY);
->>>>>>> Stashed changes
     }
 
-    public boolean makeMove(int y, int x){
-        if(validateMove(x,y)){
+    public boolean makeMove(int y, int x) {
+        boolean isValidMove = isValidMove(y, x);
+        if (isValidMove) {
             if (isPlayerOneTurn) {
                 board[y][x] = Piece.WHITE;
             } else {
                 board[y][x] = Piece.BLACK;
             }
-<<<<<<< Updated upstream
-            return true;
-        } else {
-            return false;
-=======
->>>>>>> Stashed changes
-        }
+        return isValidMove;
     }
-<<<<<<< Updated upstream
-    public String passTurn(){
-        if(isPlayerOneTurn){
-            isPlayerOneTurn = false;
-            if(p2IsAI){
-                return "It is now the AI's Turn";
-            } else {
-                return "It is now " + Controller.p2Name + "'s Turn";
-            }
-        } else {
-            isPlayerOneTurn = true;
-            return "It is now " + Controller.p1Name + "'s Turn";
-        }
-=======
 
     public void passTurn() {
         isPlayerOneTurn = !isPlayerOneTurn();
->>>>>>> Stashed changes
     }
 
     public boolean checkForCapture(int y, int x) {
@@ -260,38 +226,22 @@ public class Engine {
                 }
                 j++;
             }
-<<<<<<< Updated upstream
         } catch (Exception e){}
-        if(pieces >= num){
-            return true;
-        }
-        return false;
-    }
-
-    //If this class goes static, this method will be responsible for wiping everything
-    public String endGame(){
-        if(isPlayerOneTurn){
-            return Controller.p1Name + " wins!";
-        } else {
-            return Controller.p2Name + " wins!";
-        }
+        return pieces >= num;
     }
 
 
-    public Piece[][] getBoard(){
+
+    public Piece[][] getBoard() {
         return board;
+    }
+
+    public void setPlayerOneTurn(Boolean playerOneTurn) {
+        isPlayerOneTurn = playerOneTurn;
     }
 
     public Boolean isPlayerOneTurn() {
         return isPlayerOneTurn;
-    }
-
-    public Boolean getP2IsAI() {
-        return p2IsAI;
-=======
-        } catch (Exception e) {
-        }
-        return pieces >= num;
     }
 
     public boolean checkForWin(int y, int x) {
@@ -334,6 +284,5 @@ public class Engine {
     }
     public void setPlayerOneTurn(Boolean playerOneTurn) {
         isPlayerOneTurn = playerOneTurn;
->>>>>>> Stashed changes
     }
 }

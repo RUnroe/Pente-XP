@@ -18,12 +18,12 @@ Views
 			Does the Back button appear legibly? Check!
 				Can you click on the button and be returned to the screen you were on prior to opening the Help menu? Check!
 		Does the Game menu display after being opened by the corresponding button? Check!
-			Are the names chosen on the title screen appear on the appropriate player's turn?
-			Does the game page display the board?
-				Does the board contain the proper information?
-			Does the board respond to player clicks by changing color?
-			Does the Make Move button change the page when clicked?
-				If no space or an invalid space (such as one occupied by another piece) is chosen, is an error displayed?
+			Are the names chosen on the title screen appear on the appropriate player's turn? Check!
+			Does the game page display the board? Check!
+				Does the board contain the proper information? Check!
+			Does the board respond to player clicks by changing color? Check!
+			Does the Make Move button change the page when clicked? Check!
+				If no space or an invalid space (such as one occupied by another piece) is chosen, is an error displayed? No..
 				If the space chosen was valid, is the board and displayed player name updated appropriately?
 					If a tria or tesera occurs, is it displayed to the user?
 			Does the Quit button appear legibly?

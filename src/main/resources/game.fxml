@@ -473,6 +473,10 @@
                </font>
             </Label>
             <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER" />
+            <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tria/Tesera/Win" />
+            <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame" text="Quit Game" />
+            <Text fx:id="playerOneCaptureCount" layoutX="35.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+            <Text fx:id="playerTwoCaptureCount" layoutX="710.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
       </children>
     </AnchorPane>
   </children>

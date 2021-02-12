@@ -1,10 +1,5 @@
 package main.controllers;
 
-import javafx.stage.Stage;
-import main.views.PenteView;
-
-import java.io.IOException;
-
 public class GameController {
 
 
@@ -19,6 +14,13 @@ public class GameController {
 //    }
     private Engine engine;
     private String playerOneName;
+    private String playerTwoName;
+
+
+//    public boolean isWin;
+//    public boolean isTesera;
+//    public boolean isTria;
+public String conditionStr = "";
 
     public String getPlayerOneName() {
         return playerOneName;
@@ -36,7 +38,6 @@ public class GameController {
         this.playerTwoName = playerTwoName;
     }
 
-    private String playerTwoName;
 
     public GameController() {}
 
@@ -55,12 +56,22 @@ public class GameController {
 
     //Test for clicking coords
     public void userClick(int y, int x) {
-        System.out.println("User clicked " + x + "," + y +"!");
-        engine.makeMove(x,y);
-        engine.passTurn();
+        handleTurn(y, x);
+//        System.out.println("User clicked " + x + "," + y +"!");
+//        engine.makeMove(y, x);
+//        engine.passTurn();
 
-<<<<<<< Updated upstream
-=======
+        //Checks if it is player 2's turn (not player one's turn) AND if player 2 is an AI
+
+        if (!engine.isPlayerOneTurn() && engine.isP2Ai()) {
+            handleAiTurn();
+        }
+    }
+
+    private void handleAiTurn() {
+        //Gets an array of [<y>, <x>] coordinates using the AI algorithms
+        int[] yx;
+
         boolean isTurnHandled;
 
         //Attempts to handle turn until handle turn returns true
@@ -123,8 +134,9 @@ public class GameController {
             engine.passTurn();
         }
         return isTurnHandled;
->>>>>>> Stashed changes
     }
+
+
 
     public Engine getEngine() {
         return engine;
