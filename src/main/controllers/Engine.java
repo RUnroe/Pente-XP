@@ -8,15 +8,17 @@ package main.controllers;
 
 import main.models.Piece;
 
+import java.util.Random;
+
 public class Engine {
 
     private Piece[][] board;
     private Boolean isPlayerOneTurn;
-    private Boolean p2IsAI;
+    private Boolean isP2Ai;
     private byte p1Caps = 0, p2Caps = 0;
 
     public Engine(Boolean secondPlayerIsAI) {
-        p2IsAI = secondPlayerIsAI;
+        isP2Ai = secondPlayerIsAI;
         isPlayerOneTurn = true;
         createBoard();
     }
@@ -31,7 +33,9 @@ public class Engine {
     }
 
     //aiTurn() (get move from AI class. Make move. PassTurn)
-    public void aiTurn() {}
+    public int[] aiTurn() {
+        return new int[] { new Random().nextInt(19), new Random().nextInt(19)};
+    }
 
     public boolean validateMove(int y, int x){
         if(board[y][x] != Piece.EMPTY){
@@ -237,7 +241,7 @@ public class Engine {
         return isPlayerOneTurn;
     }
 
-    public Boolean getP2IsAI() {
-        return p2IsAI;
+    public Boolean isP2Ai() {
+        return isP2Ai;
     }
 }
