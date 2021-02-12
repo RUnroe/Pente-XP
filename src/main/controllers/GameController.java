@@ -19,7 +19,7 @@ public class GameController {
     public boolean isWin;
     public boolean isTesera;
     public boolean isTria;
-    public String conditionStr;
+    public String conditionStr = "";
 
     public String getPlayerOneName() {
         return playerOneName;
