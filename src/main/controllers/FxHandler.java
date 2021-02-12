@@ -116,7 +116,7 @@ public class FxHandler {
         updatePlayerNames();
 
         //updatePlayerCaptureCount();
-        //updateSecondaryOutputBox();
+        updateSecondaryOutputBox();
 
 
         String pOneName = gameController.getPlayerOneName();
@@ -138,9 +138,9 @@ public class FxHandler {
 //        playerOneCaptureCount.setText(gameController.getEngine().getPlayerOneCaptureCount().toString());
 //        playerTwoCaptureCount.setText(gameController.getEngine().getPlayerTwoCaptureCount().toString());
 //    }
-//    private void updateSecondaryOutputBox() {
-//        secondaryOutputTxt.setText(gameController.conditionStr);
-//    }
+    private void updateSecondaryOutputBox() {
+        secondaryOutputTxt.setText(gameController.conditionStr);
+    }
 
 
     private void updateBoard() {

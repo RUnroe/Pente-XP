@@ -106,6 +106,7 @@ public class GameController {
                                ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
                            (engine.checkFor(y, x, 3)) ? //Checks for tria
                                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) +  (" has a tria")) : "";
+            if(conditionStr.toLowerCase().contains("win")) engine.passTurn();
         }
         return isTurnHandled;
     }
