@@ -16,10 +16,10 @@ public class GameController {
     private String playerOneName;
     private String playerTwoName;
 
-    public boolean isWin;
-    public boolean isTesera;
-    public boolean isTria;
-    public String conditionStr = "";
+//    public boolean isWin;
+//    public boolean isTesera;
+//    public boolean isTria;
+public String conditionStr = "";
 
     public String getPlayerOneName() {
         return playerOneName;
@@ -56,7 +56,7 @@ public class GameController {
     //Test for clicking coords
     public void userClick(int y, int x) {
         handleTurn(y, x);
-        System.out.println("User clicked " + x + "," + y +"!");
+//        System.out.println("User clicked " + x + "," + y +"!");
 //        engine.makeMove(y, x);
 //        engine.passTurn();
 
@@ -79,10 +79,12 @@ public class GameController {
             yx = engine.aiTurn();
             isTurnHandled = handleTurn(yx[0], yx[1]);
         } while (!isTurnHandled);
+
     }
 
     private boolean handleTurn(int y, int x) {
         boolean isTurnHandled = engine.makeMove(y, x);
+        System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
 //            //Check for win
 //            if (engine.checkFor(y, x, 5)) {
@@ -100,13 +102,15 @@ public class GameController {
 //
 //                }
 //            }
+            System.out.println("Capture: " + engine.checkForCapture(y, x));
             conditionStr = (engine.checkFor(y, x, 5)) ? //Checks for win
-                                ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
-                           (engine.checkFor(y, x, 4)) ? //Checks for tesera
-                               ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
-                           (engine.checkFor(y, x, 3)) ? //Checks for tria
-                                   ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) +  (" has a tria")) : "";
+                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
+                    (engine.checkFor(y, x, 4)) ? //Checks for tesera
+                            ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
+                            (engine.checkFor(y, x, 3)) ? //Checks for tria
+                                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tria")) : "";
             if(conditionStr.toLowerCase().contains("win")) engine.passTurn();
+            engine.passTurn();
         }
         return isTurnHandled;
     }

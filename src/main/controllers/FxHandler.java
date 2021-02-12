@@ -2,12 +2,9 @@ package main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -15,8 +12,6 @@ import main.models.Piece;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 //Class linked to fxml objects and methods
 public class FxHandler {
@@ -40,6 +35,14 @@ public class FxHandler {
     public Text playerOneCaptureCount;
     public Text playerTwoCaptureCount;
 
+    static Scene settingsScene;
+    static Scene instructionsScene;
+    static Scene gameScene;
+
+    public static Scene getSettingsScene() {
+        return settingsScene;
+    }
+
     //Can't use this with JavaFX
 //    private FxHandler() {}
 
@@ -52,30 +55,57 @@ public class FxHandler {
         }
     }
 
-    public void GoToGame(ActionEvent actionEvent) {
+    private Scene createScene(String fxmlPath) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+        return new Scene(root);
+    }
 
-//        System.out.println(PlayerOneName.getText());
+    public void changeScene(Stage stage, Scene scene) {
+        stage.setScene(scene);
+    }
 
-        gameController.setPlayerOneName(PlayerOneName.getText().toString());
-        gameController.setPlayerTwoName(PlayerTwoName.getText().toString());
-
-        Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
-        changeScene(stage, "../resources/game.fxml");
-        gameController.createGame(false);
-
-
-
+    public void attemptToPreloadScenes() {
+        try {
+            settingsScene = createScene("../resources/settings.fxml");
+            gameScene = createScene("../resources/game.fxml");
+            instructionsScene = createScene("../resources/instructions.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void GoToInstruction(ActionEvent actionEvent) {
         changeScene((Stage) InstructionBtn.getScene().getWindow(), "../resources/instructions.fxml");
     }
 
+    public void GoToGame(ActionEvent actionEvent) {
+
+//        System.out.println(PlayerOneName.getText());
+
+        gameController.setPlayerOneName(PlayerOneName.getText());
+        gameController.setPlayerTwoName(PlayerTwoName.getText());
+        boolean isSecondPlayerAi = gameType.selectedToggleProperty().get().equals(gameTypePVC);
+
+        Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
+//        changeScene(stage, "../resources/game.fxml");
+//        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
+//        pauseTransition.setOnFinished(evt -> updatePlayerNames());
+        changeScene(stage, gameScene);
+//        Worker worker = g
+//        stage.getScene().rootProperty().addListener(new ChangeListener<>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Parent> observableValue, Parent parent, Parent t1) {
+//                updatePlayerNames();
+//            }
+//        });
+        gameController.createGame(isSecondPlayerAi);
+    }
+
     public void onBackClicked(ActionEvent actionEvent) {
         Stage stage = (Stage) btnBack.getScene().getWindow();
 
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/penteTemplateTest.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/settings.fxml")));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +118,7 @@ public class FxHandler {
 
         //Gets the button that was clicked
         Button button = (Button) actionEvent.getSource();
-        String btnId = button.getId().toString();
+        String btnId = button.getId();
 
         //Separates string into [<grid>,<y>,<x>] and stores [<y>,<x>]
         String[] pos = btnId.split("grid")[1].split("_");
@@ -110,6 +140,13 @@ public class FxHandler {
         gameController.userClick(y, x);
         updateBoard();
         updateOutput();
+        checkForWin();
+    }
+
+    private void checkForWin() {
+        if (secondaryOutputTxt.getText().toLowerCase().contains("win")) {
+            handleWin();
+        }
     }
 
     private void updateOutput() {
@@ -134,7 +171,7 @@ public class FxHandler {
     }
 
 
-//    private void updatePlayerCaptureCount() {
+    //    private void updatePlayerCaptureCount() {
 //        playerOneCaptureCount.setText(gameController.getEngine().getPlayerOneCaptureCount().toString());
 //        playerTwoCaptureCount.setText(gameController.getEngine().getPlayerTwoCaptureCount().toString());
 //    }
@@ -142,12 +179,15 @@ public class FxHandler {
         secondaryOutputTxt.setText(gameController.conditionStr);
     }
 
+    private void handleWin() {
+        gridGame.setDisable(true);
+    }
 
     private void updateBoard() {
         Piece[][] board = gameController.getEngine().getBoard();
         for (Object object : gridGame.getChildren().toArray()) {
             Button button = (Button) object;
-            String btnId = button.getId().toString();
+            String btnId = button.getId();
             //Separates string into [<grid>,<y>,<x>] and stores [<y>,<x>]
             String[] pos = btnId.split("grid")[1].split("_");
             int y = Integer.parseInt(pos[0]);
@@ -160,10 +200,6 @@ public class FxHandler {
         }
     }
 
-    public void GoToSettings(ActionEvent actionEvent) {
-        changeScene((Stage) SettingsBtn.getScene().getWindow(), "../resources/penteTemplateTest.fxml");
-    }
-
     public void onPvCClicked(ActionEvent actionEvent) {
         PlayerTwoName.setText("Computer");
         PlayerTwoName.setEditable(false);
@@ -174,7 +210,23 @@ public class FxHandler {
         PlayerTwoName.setEditable(true);
     }
 
+    public void GoToSettings(ActionEvent actionEvent) {
+//        changeScene((Stage) SettingsBtn.getScene().getWindow(), "../resources/settings.fxml");
+        changeScene((Stage) SettingsBtn.getScene().getWindow(), settingsScene);
+    }
+
     public void quitGame(ActionEvent actionEvent) {
-        changeScene((Stage) quitGameBtn.getScene().getWindow(), "../resources/penteTemplateTest.fxml");
+//        changeScene((Stage) quitGameBtn.getScene().getWindow(), "../resources/settings.fxml");
+        changeScene((Stage) quitGameBtn.getScene().getWindow(), settingsScene);
+//        handleExistingNames();
+    }
+
+    private void handleExistingNames() {
+//        if (gameController.getPlayerOneName() != null) {
+//            PlayerOneName.setText(gameController.getPlayerOneName());
+//        }
+//        if (gameController.getPlayerTwoName() != null) {
+//            PlayerTwoName.setText(gameController.getPlayerTwoName());
+//        }
     }
 }

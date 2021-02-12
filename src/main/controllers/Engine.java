@@ -14,7 +14,7 @@ public class Engine {
 
     private Piece[][] board;
     private Boolean isPlayerOneTurn;
-    private Boolean isP2Ai;
+    private final Boolean isP2Ai;
     private byte p1Caps = 0, p2Caps = 0;
 
     public Engine(Boolean secondPlayerIsAI) {
@@ -34,41 +34,48 @@ public class Engine {
 
     //aiTurn() (get move from AI class. Make move. PassTurn)
     public int[] aiTurn() {
-        return new int[] { new Random().nextInt(19), new Random().nextInt(19)};
+        return new int[]{new Random().nextInt(19), new Random().nextInt(19)};
     }
 
-    public boolean validateMove(int y, int x){
-        if(board[y][x] != Piece.EMPTY){
-            return false;
-        } else {
-            return true;
-        }
+    public boolean isValidMove(int y, int x) {
+//        if(board[y][x] != Piece.EMPTY){
+//            return false;
+//        } else {
+//            return true;
+//        }
+        return (y > -1 && y < 19 &&
+                x > -1 && x < 19 &&
+                board[y][x] == Piece.EMPTY);
     }
 
-    public boolean makeMove(int y, int x){
-        if(validateMove(y, x)){
+    public boolean makeMove(int y, int x) {
+        boolean isValidMove = isValidMove(y, x);
+        if (isValidMove) {
             if (isPlayerOneTurn) {
                 board[y][x] = Piece.WHITE;
             } else {
                 board[y][x] = Piece.BLACK;
             }
-            return true;
-        } else {
-            return false;
+//            return true;
+//        } else {
+//            return false;
+//        }
         }
+        return isValidMove;
     }
-    public void passTurn(){
-        if(isPlayerOneTurn){
-            isPlayerOneTurn = false;
-//            if(p2IsAI){
-//                return "It is now the AI's Turn";
-//            } else {
-//                return "It is now " + Controller.p2Name + "'s Turn";
-//            }
-        } else {
-            isPlayerOneTurn = true;
-//            return "It is now " + Controller.p1Name + "'s Turn";
-        }
+    public void passTurn() {
+        isPlayerOneTurn = !isPlayerOneTurn();
+//        if(isPlayerOneTurn){
+//            isPlayerOneTurn = false;
+////            if(p2IsAI){
+////                return "It is now the AI's Turn";
+////            } else {
+////                return "It is now " + Controller.p2Name + "'s Turn";
+////            }
+//        } else {
+//            isPlayerOneTurn = true;
+////            return "It is now " + Controller.p1Name + "'s Turn";
+//        }
     }
     public boolean checkForCapture(int y, int x) {
         Piece color = board[y][x];
@@ -217,10 +224,7 @@ public class Engine {
                 j++;
             }
         } catch (Exception e){}
-        if(pieces >= num){
-            return true;
-        }
-        return false;
+        return pieces >= num;
     }
 
     //If this class goes static, this method will be responsible for wiping everything
@@ -233,8 +237,12 @@ public class Engine {
 //    }
 
 
-    public Piece[][] getBoard(){
+    public Piece[][] getBoard() {
         return board;
+    }
+
+    public void setPlayerOneTurn(Boolean playerOneTurn) {
+        isPlayerOneTurn = playerOneTurn;
     }
 
     public Boolean isPlayerOneTurn() {
@@ -243,5 +251,20 @@ public class Engine {
 
     public Boolean isP2Ai() {
         return isP2Ai;
+    }
+
+    public boolean checkForWin(int y, int x) {
+        //TODO Implement this method
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public boolean checkForTria(int y, int x) {
+        //TODO Implement this method
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public boolean checkForTesera(int y, int x) {
+        //TODO Implement this method
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
