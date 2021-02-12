@@ -19,6 +19,7 @@ public class GameController {
 //    }
     private Engine engine;
     private String playerOneName;
+    private String playerTwoName;
 
     public String getPlayerOneName() {
         return playerOneName;
@@ -36,7 +37,6 @@ public class GameController {
         this.playerTwoName = playerTwoName;
     }
 
-    private String playerTwoName;
 
     public GameController() {}
 
@@ -60,6 +60,8 @@ public class GameController {
         engine.passTurn();
 
     }
+
+
 
     public Engine getEngine() {
         return engine;

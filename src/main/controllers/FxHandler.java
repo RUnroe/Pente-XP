@@ -35,6 +35,10 @@ public class FxHandler {
     public Label lblP1Name;
     public Label lblP2Name;
     public Text outputTxt;
+    public Text secondaryOutputTxt;
+    public Button quitGameBtn;
+    public Text playerOneCaptureCount;
+    public Text playerTwoCaptureCount;
 
     //Can't use this with JavaFX
 //    private FxHandler() {}
@@ -109,8 +113,11 @@ public class FxHandler {
     }
 
     private void updateOutput() {
-        lblP1Name.setText(gameController.getPlayerOneName());
-        lblP2Name.setText(gameController.getPlayerTwoName());
+        updatePlayerNames();
+
+        //updatePlayerCaptureCount();
+        //updateSecondaryOutputBox();
+
 
         String pOneName = gameController.getPlayerOneName();
         String pTwoName = gameController.getPlayerTwoName();
@@ -120,6 +127,22 @@ public class FxHandler {
             outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
         }
     }
+
+    private void updatePlayerNames() {
+        lblP1Name.setText(gameController.getPlayerOneName());
+        lblP2Name.setText(gameController.getPlayerTwoName());
+    }
+
+
+//    private void updatePlayerCaptureCount() {
+//        playerOneCaptureCount.setText(gameController.getEngine().getPlayerOneCaptureCount().toString());
+//        playerTwoCaptureCount.setText(gameController.getEngine().getPlayerTwoCaptureCount().toString());
+//    }
+//    private void updateSecondaryOutputBox() {
+//        secondaryOutputTxt.setText(gameController.conditionStr);
+//    }
+
+
     private void updateBoard() {
         Piece[][] board = gameController.getEngine().getBoard();
         for (Object object : gridGame.getChildren().toArray()) {
@@ -149,5 +172,9 @@ public class FxHandler {
     public void onPvPClicked(ActionEvent actionEvent) {
         PlayerTwoName.setText("Player 2");
         PlayerTwoName.setEditable(true);
+    }
+
+    public void quitGame(ActionEvent actionEvent) {
+        changeScene((Stage) quitGameBtn.getScene().getWindow(), "../resources/penteTemplateTest.fxml");
     }
 }
