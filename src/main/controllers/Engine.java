@@ -8,19 +8,19 @@ package main.controllers;
 
 import main.models.Piece;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Engine {
+public class Engine implements Serializable {
 
     private Piece[][] board;
-    private Boolean isPlayerOneTurn;
-    private final Boolean isP2Ai;
-    private byte p1Caps = 0, p2Caps = 0;
+    private int turn = 0, players;
+    private final boolean[] AIArray;
+    private byte[] captures = new byte[]{0,0,0,0};
 
-
-    public Engine(Boolean secondPlayerIsAI) {
-        isP2Ai = secondPlayerIsAI;
-        isPlayerOneTurn = true;
+    public Engine(int players, Boolean isP2Ai, Boolean isP3Ai, Boolean isP4Ai) {
+        this.players = players;
+        AIArray = new boolean[]{false, isP2Ai, isP3Ai, isP4Ai};
         createBoard();
     }
 
@@ -52,143 +52,100 @@ public class Engine {
     public boolean makeMove(int y, int x) {
         boolean isValidMove = isValidMove(y, x);
         if (isValidMove) {
-            if (isPlayerOneTurn) {
-                board[y][x] = Piece.WHITE;
-            } else {
-                board[y][x] = Piece.BLACK;
+            switch(turn % players){
+                case(0):
+                    board[y][x] = Piece.WHITE;
+                    break;
+                case(1):
+                    board[y][x] = Piece.BLACK;
+                    break;
+                case(2):
+                    board[y][x] = Piece.RED;
+                    break;
+                case(3):
+                    board[y][x] = Piece.BLUE;
+                    break;
+
             }
         }
             return isValidMove;
     }
 
-
     public void passTurn() {
-        isPlayerOneTurn = !isPlayerOneTurn();
+        turn++;
     }
 
     public boolean checkForCapture(int y, int x) {
         boolean isCapture = false;
         Piece color = board[y][x];
         boolean p1Turn;
-        Piece oppColor = null;
 
         p1Turn = (color == Piece.WHITE);
-        oppColor = (p1Turn ? Piece.BLACK : Piece.WHITE);
-
-        //Commented out because player 1 takes white piece.
-        //Ternary above solves issue
-//        if (color == Piece.BLACK) {
-//            oppColor = Piece.WHITE;
-//            p1Turn = true;
-//        } else {
-//            oppColor = Piece.BLACK;
-//            p1Turn = false;
-//        }
 
         //Checks horizontally
         if (x > 2) {
-            if (board[y][x - 1] == oppColor && board[y][x - 2] == oppColor && board[y][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
+                captures[turn % players]++;
                 board[y][x - 1] = Piece.EMPTY;
                 board[y][x - 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         if (x < 16) {
-            if (board[y][x + 1] == oppColor && board[y][x + 2] == oppColor && board[y][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
+                captures[turn % players]++;
                 board[y][x + 1] = Piece.EMPTY;
                 board[y][x + 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         //Checks Vertically
         if (y > 2) {
-            if (board[y - 1][x] == oppColor && board[y - 2][x] == oppColor && board[y - 3][x] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
+                captures[turn % players]++;
                 board[y - 1][x] = Piece.EMPTY;
                 board[y - 2][x] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         if (y < 16) {
-            if (board[y + 1][x] == oppColor && board[y + 2][x] == oppColor && board[y + 3][x] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
+                captures[turn % players]++;
                 board[y + 1][x] = Piece.EMPTY;
                 board[y + 2][x] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         //Checks Diagonally
         if (x > 2 && y > 2) {
-            if (board[y - 1][x - 1] == oppColor && board[y - 2][x - 2] == oppColor && board[y - 3][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
+                captures[turn % players]++;
                 board[y - 1][x - 1] = Piece.EMPTY;
                 board[y - 2][x - 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         if (x < 16 && y < 16) {
-            if (board[y + 1][x + 1] == oppColor && board[y + 2][x + 2] == oppColor && board[y + 3][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
+                captures[turn % players]++;
                 board[y + 1][x + 1] = Piece.EMPTY;
                 board[y + 2][x + 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         if (x > 2 && y < 16) {
-            if (board[y + 1][x - 1] == oppColor && board[y + 2][x - 2] == oppColor && board[y + 3][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
+                captures[turn % players]++;
                 board[y + 1][x - 1] = Piece.EMPTY;
                 board[y + 2][x - 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
         if (x < 16 && y > 2) {
-            if (board[y - 1][x + 1] == oppColor && board[y + -2][x + 2] == oppColor && board[y - 3][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
+            if (board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
+                captures[turn % players]++;
                 board[y - 1][x + 1] = Piece.EMPTY;
                 board[y - 2][x + 2] = Piece.EMPTY;
-//                return true;
                 isCapture = true;
             }
         }
@@ -274,11 +231,8 @@ public class Engine {
         return pieces >= num;
     }
 
-
     public boolean checkForWin(int y, int x) {
-        if (isPlayerOneTurn && p1Caps >= 5) {
-            return true;
-        } else if (!isPlayerOneTurn && p2Caps >= 5) {
+        if(captures[turn % players] >= 5){
             return true;
         } else {
             return checkFor(y, x, 5);
@@ -290,30 +244,19 @@ public class Engine {
     public boolean checkForTesera(int y, int x) {
         return checkFor(y, x, 4);
     }
-
-    public int getP1Captures() {
-        return p1Caps;
+    public int getCaptures(int player){
+        return captures[player];
     }
-    public int getP2Captures() {
-        return p2Caps;
+    public boolean isPlayerAi(int player){
+        return AIArray[player];
     }
-    public void setP1Captures(int p1Captures) {
-        this.p1Caps = (byte) p1Captures;
+    public int getPlayerTurn() {
+        return (turn % players);
     }
-    public void setP2Captures(int p2Captures) {
-        this.p2Caps = (byte) p2Captures;
-    }
-
-    public Boolean isP2Ai() {
-        return isP2Ai;
-    }
-    public Boolean isPlayerOneTurn() {
-        return isPlayerOneTurn;
+    public int getTurn(){
+        return turn;
     }
     public Piece[][] getBoard() {
         return board;
-    }
-    public void setPlayerOneTurn(Boolean playerOneTurn) {
-        isPlayerOneTurn = playerOneTurn;
     }
 }

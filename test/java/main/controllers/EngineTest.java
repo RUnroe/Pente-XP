@@ -10,7 +10,7 @@ class EngineTest {
 
     @Test
     void checkForWinHorizontalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -32,7 +32,7 @@ class EngineTest {
 
         //Bottom right corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 18; x >= 13; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
         }
@@ -49,7 +49,7 @@ class EngineTest {
 
         //Not a win
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -60,7 +60,7 @@ class EngineTest {
 
     @Test
     void checkForWinVerticalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -82,7 +82,7 @@ class EngineTest {
 
         //Bottom right corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 18; y >= 13; y--) {
             engine.getBoard()[y][18] = Piece.BLACK;
         }
@@ -99,7 +99,7 @@ class EngineTest {
 
         //Not a win
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
         }
@@ -111,13 +111,13 @@ class EngineTest {
     //Top left to bottom right diagonal check
     @Test
     void checkForWinDiagonalTLtoBRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
         //Top left corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 5; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
@@ -135,7 +135,7 @@ class EngineTest {
 
         //Not a win
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 2; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
@@ -148,7 +148,7 @@ class EngineTest {
     //Bottom left to top right diagonal check
     @Test
     void checkForWinDiagonalBLtoTRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -171,7 +171,7 @@ class EngineTest {
 
         //Not a win
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
@@ -184,7 +184,7 @@ class EngineTest {
 
     @Test
     void makeMoveIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
 
         //Validate moves
 //        engine.getBoard() = getInitBoard();
@@ -213,7 +213,7 @@ class EngineTest {
 
     @Test
     void passTurnIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         engine.setPlayerOneTurn(true);
         engine.passTurn();
         assertFalse(engine.isPlayerOneTurn());
@@ -226,7 +226,7 @@ class EngineTest {
 //
     @Test
     void checkForCaptureHorizontalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for capture in x,y
 
@@ -246,7 +246,7 @@ class EngineTest {
 
         //Missing enemy piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[0][1] = Piece.EMPTY;
         engine.getBoard()[0][2] = Piece.BLACK;
@@ -261,7 +261,7 @@ class EngineTest {
 
         //Missing other player_one piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[0][1] = Piece.BLACK;
         engine.getBoard()[0][2] = Piece.BLACK;
@@ -276,13 +276,13 @@ class EngineTest {
 
     @Test
     void checkForCaptureVerticalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for capture in x,y
 
         //Valid capture
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][0] = Piece.BLACK;
         engine.getBoard()[2][0] = Piece.BLACK;
@@ -297,7 +297,7 @@ class EngineTest {
 
         //Missing enemy piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][0] = Piece.EMPTY;
         engine.getBoard()[2][0] = Piece.BLACK;
@@ -312,7 +312,7 @@ class EngineTest {
 
         //Missing other player_one piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[1][0] = Piece.BLACK;
         engine.getBoard()[2][0] = Piece.BLACK;
@@ -328,13 +328,13 @@ class EngineTest {
     //Top left to bottom right diagonal check
     @Test
     void checkForCaptureDiagonalTLtoBRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for capture in x,y
 
         //Valid capture
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][1] = Piece.BLACK;
         engine.getBoard()[2][2] = Piece.BLACK;
@@ -349,7 +349,7 @@ class EngineTest {
 
         //Missing enemy piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][1] = Piece.EMPTY;
         engine.getBoard()[2][2] = Piece.BLACK;
@@ -364,7 +364,7 @@ class EngineTest {
 
         //Missing other player_one piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[1][1] = Piece.BLACK;
         engine.getBoard()[2][2] = Piece.BLACK;
@@ -380,13 +380,13 @@ class EngineTest {
     //Bottom left to top right diagonal check
     @Test
     void checkForCaptureDiagonalBLtoTRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for capture in x,y
 
         //Valid capture
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[18][0] = Piece.WHITE;
         engine.getBoard()[17][1] = Piece.BLACK;
         engine.getBoard()[16][2] = Piece.BLACK;
@@ -401,7 +401,7 @@ class EngineTest {
 
         //Missing enemy piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[18][0] = Piece.WHITE;
         engine.getBoard()[17][1] = Piece.EMPTY;
         engine.getBoard()[16][2] = Piece.BLACK;
@@ -416,7 +416,7 @@ class EngineTest {
 
         //Missing other player_one piece
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         engine.getBoard()[18][0] = Piece.EMPTY;
         engine.getBoard()[17][1] = Piece.BLACK;
         engine.getBoard()[16][2] = Piece.BLACK;
@@ -432,7 +432,7 @@ class EngineTest {
 
     @Test
     void checkForTriaHorizontalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for tria in x,y
 
@@ -452,7 +452,7 @@ class EngineTest {
 
         //Bottom right corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 18; x > 15; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
         }
@@ -467,7 +467,7 @@ class EngineTest {
 
         //Not a tria
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -478,13 +478,13 @@ class EngineTest {
 
     @Test
     void checkForTriaVerticalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for tria in x,y
 
         //Top left corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 0; y < 3; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
         }
@@ -513,7 +513,7 @@ class EngineTest {
 
         //Not a tria
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
         }
@@ -525,7 +525,7 @@ class EngineTest {
     //Top left to bottom right diagonal check
     @Test
     void checkForTriaDiagonalTLtoBRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -558,7 +558,7 @@ class EngineTest {
     //Bottom left to top right diagonal check
     @Test
     void checkForTriaDiagonalBLtoTRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -579,7 +579,7 @@ class EngineTest {
 
         //Not a tria
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
@@ -592,7 +592,7 @@ class EngineTest {
 
     @Test
     void checkForTeseraHorizontalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for tesera in x,y
 
@@ -613,7 +613,7 @@ class EngineTest {
 
         //Bottom right corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 18; x >= 14; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
         }
@@ -629,7 +629,7 @@ class EngineTest {
 
         //Not a win
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -640,7 +640,7 @@ class EngineTest {
 
     @Test
     void checkForTeseraVerticalIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for tesera in x,y
 
@@ -661,7 +661,7 @@ class EngineTest {
 
         //Bottom right corner
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 18; y >= 14; y--) {
             engine.getBoard()[y][18] = Piece.BLACK;
         }
@@ -677,7 +677,7 @@ class EngineTest {
 
         //Not a tesera
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
         }
@@ -689,7 +689,7 @@ class EngineTest {
     //Top left to bottom right diagonal check
     @Test
     void checkForTeseraDiagonalTLtoBRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for Tesera in x,y
 
@@ -711,7 +711,7 @@ class EngineTest {
 
         //Not a tesera
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 2; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
@@ -724,7 +724,7 @@ class EngineTest {
     //Bottom left to top right diagonal check
     @Test
     void checkForTeseraDiagonalBLtoTRIsCorrect() {
-        Engine engine = new Engine(false);
+        Engine engine = new Engine(false, isP3Ai, isP4Ai);
         //Set board state
         //check for win in x,y
 
@@ -746,7 +746,7 @@ class EngineTest {
 
         //Not a tesera
 //        engine.board = getInitBoard();
-        engine = new Engine(false);
+        engine = new Engine(false, isP3Ai, isP4Ai);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
