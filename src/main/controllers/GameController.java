@@ -12,15 +12,16 @@ public class GameController {
 //        //Initializing the view with a JavaFX stage
 //        penteView = new PenteView(primaryStage);
 //    }
-    private Engine engine;
+private Engine engine;
     private String playerOneName;
     private String playerTwoName;
 
-
-//    public boolean isWin;
+    //    public boolean isWin;
 //    public boolean isTesera;
 //    public boolean isTria;
-public String conditionStr = "";
+    public String conditionStr = "";
+    private boolean isWin;
+
 
     public String getPlayerOneName() {
         return playerOneName;
@@ -87,62 +88,43 @@ public String conditionStr = "";
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
-//            //Check for win
-//            if (engine.checkFor(y, x, 5)) {
-//
-//            } else {
-//                //Check for tesera
-//                if (engine.checkFor(y, x, 4)) {
-//
-//                }
-//                //If not tesera, check for tria
-//                else if (engine.checkFor(y, x, 3)) {
-//
-//                }
-//                else {
-//
-//                }
-//            }
             boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
-            if (isCaptureFound) {
-//                if (engine.isPlayerOneTurn()) {
-//                    engine.setP1Captures(getEngine().getP1Captures() + 1);
-//                } else {
-//                    engine.setP2Captures(getEngine().getP2Captures() + 1);
-//                }
+
+            String currentPlayerName = (engine.isPlayerOneTurn() ? playerOneName : playerTwoName);
+            setWin(engine.checkForWin(y, x));
+            if (isWin()) {
+                conditionStr = currentPlayerName + " wins!";
+            } else if (engine.checkForTesera(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tesera");
+            } else if (engine.checkForTria(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tria");
             }
 
-            /*
-            left, down, and the tl<->br diagonal return true for captures
-              \
-              -\
-              | \- -- -- --
-              |  \
-              |   \
-              |
-            */
+            engine.setTurnCounter(engine.getTurnCounter() + 1);
+            if (!isWin()) engine.passTurn();
+            System.out.println(isWin());
 
-            conditionStr = (engine.checkForWin(y, x) || //Checks for win by 5 consecutive stones
-                    ((engine.isPlayerOneTurn() ? engine.getP1Captures() : engine.getP2Captures()) >= 5)) ? //Checks for win by 5 captures
-                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
-                    (engine.checkForTesera(y, x)) ? //Checks for tesera
-                            ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
-                            (engine.checkForTria(y, x)) ? //Checks for tria
-                                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tria")) : "";
-            if (conditionStr.toLowerCase().contains("win")) engine.passTurn();
-            engine.passTurn();
         }
         return isTurnHandled;
     }
 
 
-
     public Engine getEngine() {
         return engine;
     }
+
     public void createGame(Boolean secondPlayerIsAI) {
         engine = new Engine(secondPlayerIsAI);
+        setWin(false);
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public void setWin(boolean win) {
+        isWin = win;
     }
 
 

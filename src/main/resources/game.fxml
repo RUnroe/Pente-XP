@@ -472,10 +472,11 @@
             <Font size="14.0"/>
           </font>
         </Label>
-        <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER"/>
-        <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Tria/Tesera/Win"/>
+        <Text fx:id="outputTxt" layoutX="152.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Start the game by clicking on the center-most intersection. It is now Player 1's (white) turn."
+              textAlignment="CENTER"/>
+        <Text fx:id="secondaryOutputTxt" layoutX="292.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Tria/Tesera/Win will be announced here."/>
         <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame"
                 text="Quit Game"/>
         <Text fx:id="playerOneCaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"

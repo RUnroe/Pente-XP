@@ -106,6 +106,7 @@ public class FxHandler {
 //            }
 //        });
         gameController.createGame(isSecondPlayerAi);
+        gameController.conditionStr = "Tria/Tesera/Win will be announced here.";
     }
 
     public void onBackClicked(ActionEvent actionEvent) {
@@ -151,7 +152,10 @@ public class FxHandler {
     }
 
     private void checkForWin() {
-        if (secondaryOutputTxt.getText().toLowerCase().contains("win")) {
+//        if (secondaryOutputTxt.getText().toLowerCase().contains("win")) {
+//            handleWin();
+//        }
+        if (gameController.isWin()) {
             handleWin();
         }
     }
@@ -166,10 +170,14 @@ public class FxHandler {
         String pOneName = gameController.getPlayerOneName();
         String pTwoName = gameController.getPlayerTwoName();
 
-        if (gameController.getEngine().isPlayerOneTurn()) {
-            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
+        if (gameController.getEngine().getTurnCounter() > 0) {
+            if (gameController.getEngine().isPlayerOneTurn()) {
+                outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
+            } else {
+                outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
+            }
         } else {
-            outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
+            outputTxt.setText(pOneName + " (white) must start the game by placing stone on center-most intersection!");
         }
     }
 

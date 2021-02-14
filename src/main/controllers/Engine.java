@@ -16,6 +16,7 @@ public class Engine {
     private Boolean isPlayerOneTurn;
     private final Boolean isP2Ai;
     private byte p1Caps = 0, p2Caps = 0;
+    private int turnCounter = 0;
 
 
     public Engine(Boolean secondPlayerIsAI) {
@@ -44,9 +45,15 @@ public class Engine {
     }
 
     public boolean isValidMove(int y, int x) {
-        return (y > -1 && y < 19 &&
-                x > -1 && x < 19 &&
-                board[y][x] == Piece.EMPTY);
+        boolean isValidMove;
+        if (getTurnCounter() == 0) {
+            isValidMove = (y == 9 && x == 9);
+        } else {
+            isValidMove = (y > -1 && y < 19 &&
+                    x > -1 && x < 19 &&
+                    board[y][x] == Piece.EMPTY);
+        }
+        return isValidMove;
     }
 
     public boolean makeMove(int y, int x) {
@@ -277,10 +284,13 @@ public class Engine {
 
     public boolean checkForWin(int y, int x) {
         if (isPlayerOneTurn && p1Caps >= 5) {
+            System.out.println("P1 capture win");
             return true;
         } else if (!isPlayerOneTurn && p2Caps >= 5) {
+            System.out.println("P2 capture win");
             return true;
         } else {
+            System.out.println("Consecutive win: " + checkFor(y, x, 5));
             return checkFor(y, x, 5);
         }
     }
@@ -307,13 +317,24 @@ public class Engine {
     public Boolean isP2Ai() {
         return isP2Ai;
     }
+
     public Boolean isPlayerOneTurn() {
         return isPlayerOneTurn;
     }
+
     public Piece[][] getBoard() {
         return board;
     }
+
     public void setPlayerOneTurn(Boolean playerOneTurn) {
         isPlayerOneTurn = playerOneTurn;
+    }
+
+    public int getTurnCounter() {
+        return turnCounter;
+    }
+
+    public void setTurnCounter(int turnCounter) {
+        this.turnCounter = turnCounter;
     }
 }
