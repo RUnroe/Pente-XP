@@ -1,9 +1,5 @@
 package main.controllers;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class GameController {
 
 
@@ -16,15 +12,16 @@ public class GameController {
 //        //Initializing the view with a JavaFX stage
 //        penteView = new PenteView(primaryStage);
 //    }
-    private Engine engine;
+private Engine engine;
     private String playerOneName;
     private String playerTwoName;
 
-
-//    public boolean isWin;
+    //    public boolean isWin;
 //    public boolean isTesera;
 //    public boolean isTria;
-public String conditionStr = "";
+    public String conditionStr = "";
+    private boolean isWin;
+
 
     public String getPlayerOneName() {
         return playerOneName;
@@ -42,11 +39,33 @@ public String conditionStr = "";
         this.playerTwoName = playerTwoName;
     }
 
+
+    public GameController() {}
+
+    //Test method as the core of this class
+    public void run () {
+
+        //Instantiating the current handler class connected to the fxml loader in the view
+        //Must retrieve from view instead of using constructor
+//        FxHandler fxHandler = penteView.getFxHandler();
+
+        //Test command to ensure fxml objects can be manipulated
+//        fxHandler.PlayGameBtn.setText("Don't press this button!");
+//        String playerOneName = fxHandler.pOneName;
+
+    }
+
+    //Test for clicking coords
     public void userClick(int y, int x) {
-        if (engine.isPlayerAi(engine.getPlayerTurn())) {
+        handleTurn(y, x);
+//        System.out.println("User clicked " + x + "," + y +"!");
+//        engine.makeMove(y, x);
+//        engine.passTurn();
+
+        //Checks if it is player 2's turn (not player one's turn) AND if player 2 is an AI
+
+        if (!engine.isPlayerOneTurn() && engine.isP2Ai()) {
             handleAiTurn();
-        } else {
-            handleTurn(y, x);
         }
     }
 
@@ -65,70 +84,47 @@ public String conditionStr = "";
 
     }
 
-
-    public boolean handleTurn(int y, int x) {
+    private boolean handleTurn(int y, int x) {
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
             boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
-            conditionStr = (engine.checkForWin(y, x) || //Checks for win by 5 consecutive stones
-                    ((engine.isPlayerOneTurn() ? engine.getP1Captures() : engine.getP2Captures()) >= 5)) ? //Checks for win by 5 captures
-                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
-                    (engine.checkForTesera(y, x)) ? //Checks for tesera
-                            ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
-                            (engine.checkForTria(y, x)) ? //Checks for tria
-                                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tria")) : "";
-            if (conditionStr.toLowerCase().contains("win")) engine.passTurn();
-            engine.passTurn();
+
+            String currentPlayerName = (engine.isPlayerOneTurn() ? playerOneName : playerTwoName);
+            setWin(engine.checkForWin(y, x));
+            if (isWin()) {
+                conditionStr = currentPlayerName + " wins!";
+            } else if (engine.checkForTesera(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tesera");
+            } else if (engine.checkForTria(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tria");
+            }
+
+            engine.setTurnCounter(engine.getTurnCounter() + 1);
+            if (!isWin()) engine.passTurn();
+            System.out.println(isWin());
+
         }
         return isTurnHandled;
     }
 
-//    public boolean saveBoard(String filename) {
-//        try {
-//            File file = new File("games/" + filename + ".txt");
-//            file.createNewFile();
-//            FileOutputStream f = new FileOutputStream(file, false);
-//            ObjectOutputStream o = new ObjectOutputStream(f);
-//            o.writeObject(engine);
-//            o.close();
-//            f.close();
-//            return true;
-//        } catch(Exception e){
-//            return false;
-//        }
-//    }
-//    public Engine loadBoard(String fileName){
-//        try {
-//            File file = new File("games/" + fileName + ".txt");
-//            FileInputStream f = new FileInputStream(file);
-//            ObjectInputStream o = new ObjectInputStream(f);
-//            Engine e = (Engine) o.readObject();
-//            f.close();
-//            o.close();
-//            return e;
-//        } catch (Exception e){
-//            return null;
-//        }
-//    }
-//    public String[] getFileNames(){
-//        try {
-//           String[] files = new File("games/").list();
-//           for(int i = 0; i < files.length; i++){
-//               files[i] = files[i].replace(".txt", "");
-//           }
-//           return files;
-//        } catch(Exception e) {
-//            return new String[]{};
-//        }
-//    }
 
     public Engine getEngine() {
         return engine;
     }
+
     public void createGame(Boolean secondPlayerIsAI) {
-        engine = new Engine(secondPlayerIsAI, isP3Ai, isP4Ai);
+        engine = new Engine(secondPlayerIsAI);
+        setWin(false);
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public void setWin(boolean win) {
+        isWin = win;
     }
 
 
