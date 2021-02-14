@@ -14,13 +14,15 @@ import java.util.Random;
 public class Engine implements Serializable {
 
     private Piece[][] board;
-    private int turn = 0, players;
-    private final boolean[] AIArray;
-    private byte[] captures = new byte[]{0,0,0,0};
+    private final int numOfPlayers;
+    private final byte[] captures = new byte[]{0, 0, 0, 0};
 
-    public Engine(int players, Boolean isP2Ai, Boolean isP3Ai, Boolean isP4Ai) {
-        this.players = players;
-        AIArray = new boolean[]{false, isP2Ai, isP3Ai, isP4Ai};
+    private final boolean[] AIArray;
+    private int turn = 0;
+
+    public Engine(int numOfPlayers, boolean isPlayerTwoAi, boolean isPlayerThreeAi, boolean isPlayerFourAi) {
+        this.numOfPlayers = numOfPlayers;
+        AIArray = new boolean[]{false, isPlayerTwoAi, isPlayerThreeAi, isPlayerFourAi};
         createBoard();
     }
 
@@ -52,17 +54,17 @@ public class Engine implements Serializable {
     public boolean makeMove(int y, int x) {
         boolean isValidMove = isValidMove(y, x);
         if (isValidMove) {
-            switch(turn % players){
-                case(0):
+            switch (turn % numOfPlayers) {
+                case (0):
                     board[y][x] = Piece.WHITE;
                     break;
-                case(1):
+                case (1):
                     board[y][x] = Piece.BLACK;
                     break;
-                case(2):
+                case (2):
                     board[y][x] = Piece.RED;
                     break;
-                case(3):
+                case (3):
                     board[y][x] = Piece.BLUE;
                     break;
 
@@ -85,7 +87,7 @@ public class Engine implements Serializable {
         //Checks horizontally
         if (x > 2) {
             if (board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y][x - 1] = Piece.EMPTY;
                 board[y][x - 2] = Piece.EMPTY;
                 isCapture = true;
@@ -93,7 +95,7 @@ public class Engine implements Serializable {
         }
         if (x < 16) {
             if (board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y][x + 1] = Piece.EMPTY;
                 board[y][x + 2] = Piece.EMPTY;
                 isCapture = true;
@@ -102,7 +104,7 @@ public class Engine implements Serializable {
         //Checks Vertically
         if (y > 2) {
             if (board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x] = Piece.EMPTY;
                 board[y - 2][x] = Piece.EMPTY;
                 isCapture = true;
@@ -110,7 +112,7 @@ public class Engine implements Serializable {
         }
         if (y < 16) {
             if (board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x] = Piece.EMPTY;
                 board[y + 2][x] = Piece.EMPTY;
                 isCapture = true;
@@ -119,7 +121,7 @@ public class Engine implements Serializable {
         //Checks Diagonally
         if (x > 2 && y > 2) {
             if (board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x - 1] = Piece.EMPTY;
                 board[y - 2][x - 2] = Piece.EMPTY;
                 isCapture = true;
@@ -127,7 +129,7 @@ public class Engine implements Serializable {
         }
         if (x < 16 && y < 16) {
             if (board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x + 1] = Piece.EMPTY;
                 board[y + 2][x + 2] = Piece.EMPTY;
                 isCapture = true;
@@ -135,7 +137,7 @@ public class Engine implements Serializable {
         }
         if (x > 2 && y < 16) {
             if (board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x - 1] = Piece.EMPTY;
                 board[y + 2][x - 2] = Piece.EMPTY;
                 isCapture = true;
@@ -143,7 +145,7 @@ public class Engine implements Serializable {
         }
         if (x < 16 && y > 2) {
             if (board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x + 1] = Piece.EMPTY;
                 board[y - 2][x + 2] = Piece.EMPTY;
                 isCapture = true;
@@ -151,6 +153,7 @@ public class Engine implements Serializable {
         }
         return isCapture;
     }
+
     private boolean checkFor(int y, int x, int num) {
         //check horizontal
         Piece color = board[y][x];
@@ -230,14 +233,14 @@ public class Engine implements Serializable {
         } catch (Exception e){}
         return pieces >= num;
     }
-
     public boolean checkForWin(int y, int x) {
-        if(captures[turn % players] >= 5){
+        if (captures[turn % numOfPlayers] >= 5) {
             return true;
         } else {
             return checkFor(y, x, 5);
         }
     }
+
     public boolean checkForTria(int y, int x) {
         return checkFor(y, x, 3);
     }
@@ -250,13 +253,20 @@ public class Engine implements Serializable {
     public boolean isPlayerAi(int player){
         return AIArray[player];
     }
+
     public int getPlayerTurn() {
-        return (turn % players);
+        return (turn % numOfPlayers);
     }
-    public int getTurn(){
+
+    public int getTurn() {
         return turn;
     }
+
     public Piece[][] getBoard() {
         return board;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
     }
 }

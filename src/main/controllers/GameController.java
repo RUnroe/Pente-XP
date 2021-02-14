@@ -1,9 +1,5 @@
 package main.controllers;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class GameController {
 
 
@@ -16,31 +12,32 @@ public class GameController {
 //        //Initializing the view with a JavaFX stage
 //        penteView = new PenteView(primaryStage);
 //    }
-    private Engine engine;
-    private String playerOneName;
-    private String playerTwoName;
+private Engine engine;
+    //    private String playerOneName;
+//    private String playerTwoName;
+    private String[] playerNames;
 
 
-//    public boolean isWin;
+    //    public boolean isWin;
 //    public boolean isTesera;
 //    public boolean isTria;
-public String conditionStr = "";
-
-    public String getPlayerOneName() {
-        return playerOneName;
-    }
-
-    public void setPlayerOneName(String playerOneName) {
-        this.playerOneName = playerOneName;
-    }
-
-    public String getPlayerTwoName() {
-        return playerTwoName;
-    }
-
-    public void setPlayerTwoName(String playerTwoName) {
-        this.playerTwoName = playerTwoName;
-    }
+    public String conditionStr = "";
+//
+//    public String getPlayerOneName() {
+//        return playerOneName;
+//    }
+//
+//    public void setPlayerOneName(String playerOneName) {
+//        this.playerOneName = playerOneName;
+//    }
+//
+//    public String getPlayerTwoName() {
+//        return playerTwoName;
+//    }
+//
+//    public void setPlayerTwoName(String playerTwoName) {
+//        this.playerTwoName = playerTwoName;
+//    }
 
     public void userClick(int y, int x) {
         if (engine.isPlayerAi(engine.getPlayerTurn())) {
@@ -127,8 +124,17 @@ public String conditionStr = "";
     public Engine getEngine() {
         return engine;
     }
-    public void createGame(Boolean secondPlayerIsAI) {
-        engine = new Engine(secondPlayerIsAI, isP3Ai, isP4Ai);
+
+    public void createGame(int numOfPlayers, boolean secondPlayerIsAI, boolean thirdPlayerIsAI, boolean fourthPlayerIsAI) {
+        engine = new Engine(numOfPlayers, secondPlayerIsAI, thirdPlayerIsAI, fourthPlayerIsAI);
+    }
+
+    public String[] getPlayerNames() {
+        return playerNames;
+    }
+
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
     }
 
 

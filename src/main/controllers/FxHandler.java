@@ -24,9 +24,10 @@ public class FxHandler {
     public Button SettingsBtn;
     public TextField PlayerOneName;
     public TextField PlayerTwoName;
-    public RadioButton gameTypePVP;
-    public ToggleGroup gameType;
-    public RadioButton gameTypePVC;
+    public ToggleGroup playerCount;
+    public RadioButton playerCount2;
+    public RadioButton playerCount3;
+    public RadioButton playerCount4;
     public Label lblP1Name;
     public Label lblP2Name;
     public Text outputTxt;
@@ -40,6 +41,9 @@ public class FxHandler {
     static Scene gameScene;
     public Button btnGameToHelp;
     public Button btnHelpToGame;
+    public CheckBox player2isAI;
+    public CheckBox player3isAI;
+    public CheckBox player4isAI;
 
     public static Scene getSettingsScene() {
         return settingsScene;
@@ -86,7 +90,7 @@ public class FxHandler {
 
         gameController.setPlayerOneName(PlayerOneName.getText());
         gameController.setPlayerTwoName(PlayerTwoName.getText());
-        boolean isSecondPlayerAi = gameType.selectedToggleProperty().get().equals(gameTypePVC);
+        boolean isSecondPlayerAi = playerCount.selectedToggleProperty().get().equals(playerCount3);
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
 //        changeScene(stage, "../resources/game.fxml");
@@ -105,7 +109,10 @@ public class FxHandler {
 //                updatePlayerNames();
 //            }
 //        });
-        gameController.createGame(isSecondPlayerAi);
+        int numOfPlayers = playerCount.selectedToggleProperty().get().equals(playerCount2) ? 2 :
+                playerCount.selectedToggleProperty().get().equals(playerCount3) ? 3 :
+                        playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
+        gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
     }
 
     public void onBackClicked(ActionEvent actionEvent) {
@@ -166,11 +173,18 @@ public class FxHandler {
         String pOneName = gameController.getPlayerOneName();
         String pTwoName = gameController.getPlayerTwoName();
 
-        if (gameController.getEngine().isPlayerOneTurn()) {
-            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
-        } else {
-            outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
+        int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
+        if (previousPlayerTurn < 0) {
+            previousPlayerTurn = gameController.getEngine().getNumOfPlayers();
         }
+        String previousPlayerName = gameController.getPlayerNames()[]
+        String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
+        outputTxt.setText(currentPlayerName + " made their move. It is now " + pOneName + "'s (white) turn!");
+//        if (gameController.getEngine().isPlayerOneTurn()) {
+//            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
+//        } else {
+//            outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
+//        }
     }
 
     private void updatePlayerCaptureCount() {
