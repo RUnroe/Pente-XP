@@ -252,4 +252,9 @@ public class FxHandler {
     public void onHelpToGameClick(ActionEvent actionEvent) {
         changeScene((Stage) btnHelpToGame.getScene().getWindow(), gameScene);
     }
+
+
+
+    public void saveGame(ActionEvent actionEvent) {
+    }
 }

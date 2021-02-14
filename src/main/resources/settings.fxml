@@ -34,8 +34,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.*?>
+
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.FxHandler">
   <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -49,24 +49,48 @@
       </AnchorPane>
       <AnchorPane prefHeight="676.0" prefWidth="750.0">
          <children>
-            <TextField fx:id="PlayerOneName" layoutX="150.0" layoutY="139.0" promptText="Enter name for first player" text="Player 1" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="139.0" />
-            <Label layoutX="150.0" layoutY="122.0" prefHeight="18.0" prefWidth="149.0" text="Player One Name:" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="122.0" />
-            <TextField fx:id="PlayerTwoName" layoutX="452.0" layoutY="139.0" promptText="Enter name for second player" text="Player 2" AnchorPane.rightAnchor="149.60000000000002" AnchorPane.topAnchor="139.0" />
-            <Label layoutX="451.0" layoutY="122.0" prefHeight="18.0" prefWidth="149.0" text="Player Two Name:" AnchorPane.rightAnchor="149.79999999999995" AnchorPane.topAnchor="122.0" />
-            <RadioButton fx:id="gameTypePVP" layoutX="173.0" layoutY="87.0" mnemonicParsing="false" onAction="#onPvPClicked" prefWidth="111.0" selected="true" text="Player vs Player">
+            <TextField fx:id="PlayerOneName" layoutX="150.0" layoutY="327.0" promptText="Enter name for first player" text="Player 1" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="327.0" />
+            <Label layoutX="150.0" layoutY="310.0" prefHeight="18.0" prefWidth="149.0" text="Player One Name:" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="310.0" />
+            <TextField fx:id="PlayerTwoName" layoutX="451.99999999999994" layoutY="327.0" promptText="Enter name for second player" text="Player 2" AnchorPane.rightAnchor="149.60000000000002" AnchorPane.topAnchor="327.0" />
+            <Label layoutX="451.0" layoutY="310.0" prefHeight="18.0" prefWidth="149.0" text="Player Two Name:" AnchorPane.rightAnchor="149.79999999999995" AnchorPane.topAnchor="310.0" />
+            <RadioButton fx:id="playerCount2" layoutX="190.0" layoutY="249.0" mnemonicParsing="false" onAction="#onPvPClicked" prefWidth="111.0" selected="true" text="2 Players">
                <toggleGroup>
-                  <ToggleGroup fx:id="gameType" />
+                  <ToggleGroup fx:id="playerCount" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="gameTypePVC" contentDisplay="RIGHT" layoutX="464.0" layoutY="87.0" mnemonicParsing="false" onAction="#onPvCClicked" text="Player vs Computer" toggleGroup="$gameType" />
+            <RadioButton fx:id="playerCount4" contentDisplay="RIGHT" layoutX="471.0" layoutY="249.0" mnemonicParsing="false" onAction="#onPvCClicked" text="4 Players" toggleGroup="$playerCount" />
             <Text layoutX="332.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Button fx:id="PlayGameBtn" layoutX="339.0" layoutY="441.0" mnemonicParsing="false" onAction="#GoToGame" text="Play Game" />
+            <Button fx:id="PlayGameBtn" layoutX="331.0" layoutY="487.0" mnemonicParsing="false" onAction="#GoToGame" text="Create Game" />
             <Button fx:id="InstructionBtn" layoutY="2.0" mnemonicParsing="false" onAction="#GoToInstruction" text="?" />
-            <Label alignment="CENTER" layoutX="300.0" layoutY="68.0" prefHeight="18.0" prefWidth="149.0" text="Game Mode:" />
+            <Label alignment="CENTER" layoutX="300.0" layoutY="228.0" prefHeight="18.0" prefWidth="149.0" text="Player Count:" />
+            <Separator layoutY="178.0" prefWidth="750.0" />
+            <Separator layoutX="-1.0" layoutY="44.0" prefWidth="750.0" />
+            <Text layoutX="306.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game From Save">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Button layoutX="237.0" layoutY="78.0" mnemonicParsing="false" text="Find Pente File" />
+            <Button layoutX="327.0" layoutY="120.0" mnemonicParsing="false" text="Resume Game" />
+            <Label layoutX="338.0" layoutY="82.0" text="No file chosen" />
+            <Text layoutX="325.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play New Game">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="PlayerThreeName" layoutX="150.0" layoutY="383.0" promptText="Enter name for first player" text="Player 3" />
+            <Label layoutX="150.0" layoutY="366.0" prefHeight="18.0" prefWidth="149.0" text="Player Three Name:" />
+            <TextField fx:id="PlayerFourName" layoutX="452.0" layoutY="383.0" promptText="Enter name for second player" text="Player 4" />
+            <Label layoutX="451.0" layoutY="366.0" prefHeight="18.0" prefWidth="149.0" text="Player Four Name:" />
+            <CheckBox fx:id="player3isAI" layoutX="302.0" layoutY="387.0" mnemonicParsing="false" text="AI" />
+            <CheckBox fx:id="player2isAI" layoutX="609.0" layoutY="331.0" mnemonicParsing="false" text="AI" />
+            <CheckBox fx:id="player4isAI" layoutX="610.0" layoutY="387.0" mnemonicParsing="false" text="AI" />
+            <Text layoutX="365.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <RadioButton fx:id="playerCount3" layoutX="339.0" layoutY="249.0" mnemonicParsing="false" text="3 Players" toggleGroup="$playerCount" />
          </children>
       </AnchorPane>
   </children>
