@@ -84,10 +84,10 @@ private Engine engine;
 
     }
 
-    private boolean handleTurn(int y, int x) {
+    public boolean handleTurn(int y, int x) {
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
-        if  (isTurnHandled) {
+        if (isTurnHandled) {
             boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
 
