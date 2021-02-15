@@ -87,7 +87,7 @@ public String conditionStr = "";
 
 //    public boolean saveBoard(String filename) {
 //        try {
-//            File file = new File("games/" + filename + ".txt");
+//            File file = new File("games/" + filename + ".pxp");
 //            file.createNewFile();
 //            FileOutputStream f = new FileOutputStream(file, false);
 //            ObjectOutputStream o = new ObjectOutputStream(f);
@@ -101,7 +101,7 @@ public String conditionStr = "";
 //    }
 //    public Engine loadBoard(String fileName){
 //        try {
-//            File file = new File("games/" + fileName + ".txt");
+//            File file = new File("games/" + fileName + ".pxp");
 //            FileInputStream f = new FileInputStream(file);
 //            ObjectInputStream o = new ObjectInputStream(f);
 //            Engine e = (Engine) o.readObject();
@@ -116,7 +116,7 @@ public String conditionStr = "";
 //        try {
 //           String[] files = new File("games/").list();
 //           for(int i = 0; i < files.length; i++){
-//               files[i] = files[i].replace(".txt", "");
+//               files[i] = files[i].replace(".pxp", "");
 //           }
 //           return files;
 //        } catch(Exception e) {

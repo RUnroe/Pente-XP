@@ -78,9 +78,6 @@ public class Engine implements Serializable {
     public boolean checkForCapture(int y, int x) {
         boolean isCapture = false;
         Piece color = board[y][x];
-        boolean p1Turn;
-
-        p1Turn = (color == Piece.WHITE);
 
         //Checks horizontally
         if (x > 2) {
