@@ -22,22 +22,19 @@ private Engine engine;
 //    public boolean isTesera;
 //    public boolean isTria;
     public String conditionStr = "";
-//
-//    public String getPlayerOneName() {
-//        return playerOneName;
-//    }
-//
-//    public void setPlayerOneName(String playerOneName) {
-//        this.playerOneName = playerOneName;
-//    }
-//
-//    public String getPlayerTwoName() {
-//        return playerTwoName;
-//    }
-//
-//    public void setPlayerTwoName(String playerTwoName) {
-//        this.playerTwoName = playerTwoName;
-//    }
+
+    private boolean isWin = false;
+
+
+
+    public void setWin(boolean win) {
+        isWin = win;
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
 
     public void userClick(int y, int x) {
         if (engine.isPlayerAi(engine.getPlayerTurn())) {
@@ -69,15 +66,20 @@ private Engine engine;
         if  (isTurnHandled) {
             boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
-            conditionStr = (engine.checkForWin(y, x) || //Checks for win by 5 consecutive stones
-                    ((engine.isPlayerOneTurn() ? engine.getP1Captures() : engine.getP2Captures()) >= 5)) ? //Checks for win by 5 captures
-                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + " wins!") :
-                    (engine.checkForTesera(y, x)) ? //Checks for tesera
-                            ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tesera")) :
-                            (engine.checkForTria(y, x)) ? //Checks for tria
-                                    ((engine.isPlayerOneTurn() ? playerOneName : playerTwoName) + (" has a tria")) : "";
-            if (conditionStr.toLowerCase().contains("win")) engine.passTurn();
-            engine.passTurn();
+
+            String currentPlayerName = playerNames[engine.getPlayerTurn()];
+            isWin = engine.checkForWin(y, x);
+            if (isWin()) {
+                conditionStr = currentPlayerName + " wins!";
+            } else if (engine.checkForTesera(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tesera");
+            } else if (engine.checkForTria(y, x)) {
+                conditionStr = currentPlayerName + (" has made a tria");
+            }
+
+            if (!isWin()) engine.passTurn();
+            System.out.println(isWin());
+
         }
         return isTurnHandled;
     }

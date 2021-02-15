@@ -122,6 +122,7 @@ public class FxHandler {
                 playerCount.selectedToggleProperty().get().equals(playerCount3) ? 3 :
                         playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
         gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
+        gameController.setWin(false);
     }
 
     public void onBackClicked(ActionEvent actionEvent) {
@@ -179,7 +180,7 @@ public class FxHandler {
 
         int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
         if (previousPlayerTurn < 0) {
-            previousPlayerTurn = gameController.getEngine().getNumOfPlayers();
+            previousPlayerTurn = gameController.getEngine().getNumOfPlayers() - 1;
         }
         String previousPlayerName = gameController.getPlayerNames()[previousPlayerTurn];
         String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
@@ -240,6 +241,8 @@ public class FxHandler {
                 case EMPTY -> button.setStyle("-fx-background-color: transparent; -fx-background-radius: 50%;");
                 case WHITE -> button.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 100%;");
                 case BLACK -> button.setStyle("-fx-background-color: #000000; -fx-background-radius: 50%;");
+                case RED -> button.setStyle("-fx-background-color: #ff0000; -fx-background-radius: 100%;");
+                case BLUE -> button.setStyle("-fx-background-color: #0000ff; -fx-background-radius: 50%;");
             }
         }
     }
