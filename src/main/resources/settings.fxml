@@ -53,12 +53,12 @@
             <Label layoutX="150.0" layoutY="310.0" prefHeight="18.0" prefWidth="149.0" text="Player One Name:" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="310.0" />
             <TextField fx:id="PlayerTwoName" layoutX="451.99999999999994" layoutY="327.0" promptText="Enter name for second player" text="Player 2" AnchorPane.rightAnchor="149.60000000000002" AnchorPane.topAnchor="327.0" />
             <Label layoutX="451.0" layoutY="310.0" prefHeight="18.0" prefWidth="149.0" text="Player Two Name:" AnchorPane.rightAnchor="149.79999999999995" AnchorPane.topAnchor="310.0" />
-            <RadioButton fx:id="playerCount2" layoutX="190.0" layoutY="249.0" mnemonicParsing="false" onAction="#onPvPClicked" prefWidth="111.0" selected="true" text="2 Players">
+            <RadioButton fx:id="playerCount2" layoutX="190.0" layoutY="249.0" mnemonicParsing="false" onAction="#changePlayerCount" prefWidth="111.0" selected="true" text="2 Players">
                <toggleGroup>
                   <ToggleGroup fx:id="playerCount" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="playerCount4" contentDisplay="RIGHT" layoutX="471.0" layoutY="249.0" mnemonicParsing="false" onAction="#onPvCClicked" text="4 Players" toggleGroup="$playerCount" />
+            <RadioButton fx:id="playerCount4" contentDisplay="RIGHT" layoutX="471.0" layoutY="249.0" mnemonicParsing="false" onAction="#changePlayerCount" text="4 Players" toggleGroup="$playerCount" />
             <Text layoutX="332.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
                <font>
                   <Font size="24.0" />
@@ -82,15 +82,15 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="PlayerThreeName" layoutX="150.0" layoutY="383.0" promptText="Enter name for first player" text="Player 3" />
+            <TextField fx:id="PlayerThreeName" disable="true" layoutX="150.0" layoutY="383.0" promptText="Enter name for first player" text="Player 3" />
             <Label layoutX="150.0" layoutY="366.0" prefHeight="18.0" prefWidth="149.0" text="Player Three Name:" />
-            <TextField fx:id="PlayerFourName" layoutX="452.0" layoutY="383.0" promptText="Enter name for second player" text="Player 4" />
+            <TextField fx:id="PlayerFourName" disable="true" layoutX="452.0" layoutY="383.0" promptText="Enter name for second player" text="Player 4" />
             <Label layoutX="451.0" layoutY="366.0" prefHeight="18.0" prefWidth="149.0" text="Player Four Name:" />
-            <CheckBox fx:id="player3isAI" layoutX="302.0" layoutY="387.0" mnemonicParsing="false" text="AI" />
-            <CheckBox fx:id="player2isAI" layoutX="609.0" layoutY="331.0" mnemonicParsing="false" text="AI" />
-            <CheckBox fx:id="player4isAI" layoutX="610.0" layoutY="387.0" mnemonicParsing="false" text="AI" />
+            <CheckBox fx:id="player3isAI" disable="true" layoutX="302.0" layoutY="387.0" mnemonicParsing="false" onAction="#playerIsAICheck" text="AI" />
+            <CheckBox fx:id="player2isAI" layoutX="609.0" layoutY="331.0" mnemonicParsing="false" onAction="#playerIsAICheck" text="AI" />
+            <CheckBox fx:id="player4isAI" disable="true" layoutX="610.0" layoutY="387.0" mnemonicParsing="false" onAction="#playerIsAICheck" text="AI" />
             <Text layoutX="365.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <RadioButton fx:id="playerCount3" layoutX="339.0" layoutY="249.0" mnemonicParsing="false" text="3 Players" toggleGroup="$playerCount" />
+            <RadioButton fx:id="playerCount3" layoutX="339.0" layoutY="249.0" mnemonicParsing="false" onAction="#changePlayerCount" text="3 Players" toggleGroup="$playerCount" />
          </children>
       </AnchorPane>
   </children>

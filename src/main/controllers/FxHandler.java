@@ -289,4 +289,44 @@ public class FxHandler {
 
     public void saveGame(ActionEvent actionEvent) {
     }
+
+    public void changePlayerCount(ActionEvent actionEvent) {
+        RadioButton radioBtn = (RadioButton) actionEvent.getSource();
+        int numOfPlayers = Integer.parseInt(radioBtn.getId().split("playerCount")[1]);
+
+        switch (numOfPlayers) {
+            case 2:
+                player3isAI.setDisable(true);
+                PlayerThreeName.setDisable(true);
+                player4isAI.setDisable(true);
+                PlayerFourName.setDisable(true);
+                break;
+            case 3:
+                player3isAI.setDisable(false);
+                PlayerThreeName.setDisable(false);
+                player4isAI.setDisable(true);
+                PlayerFourName.setDisable(true);
+                break;
+            case 4:
+                player3isAI.setDisable(false);
+                PlayerThreeName.setDisable(false);
+                player4isAI.setDisable(false);
+                PlayerFourName.setDisable(false);
+                break;
+        }
+    }
+
+    public void playerIsAICheck(ActionEvent actionEvent) {
+        CheckBox checkBox = (CheckBox) actionEvent.getSource();
+        int playerNumber = Integer.parseInt(checkBox.getId().split("player")[1].split("isAI")[0]);
+        TextField[] playerNames = new TextField[]{PlayerOneName, PlayerTwoName, PlayerThreeName, PlayerFourName};
+        if(checkBox.isSelected()) {
+            playerNames[playerNumber-1].setEditable(false);
+            playerNames[playerNumber-1].setText("Computer " + playerNumber);
+        }else {
+            playerNames[playerNumber-1].setEditable(true);
+            playerNames[playerNumber-1].setText("Player " + playerNumber);
+        }
+
+    }
 }
