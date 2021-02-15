@@ -74,9 +74,9 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <Button layoutX="237.0" layoutY="78.0" mnemonicParsing="false" text="Find Pente File" />
-            <Button layoutX="327.0" layoutY="120.0" mnemonicParsing="false" text="Resume Game" />
-            <Label layoutX="338.0" layoutY="82.0" text="No file chosen" />
+            <Button layoutX="237.0" layoutY="78.0" mnemonicParsing="false" onAction="#findGameFile" text="Find Pente File" />
+            <Button layoutX="327.0" layoutY="120.0" mnemonicParsing="false" onAction="#playLoadedGame" text="Resume Game" />
+            <Label fx:id="fileName" layoutX="338.0" layoutY="82.0" text="No file chosen" />
             <Text layoutX="325.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play New Game">
                <font>
                   <Font size="14.0" />

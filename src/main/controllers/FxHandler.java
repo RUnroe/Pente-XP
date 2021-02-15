@@ -5,11 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.models.Piece;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -52,6 +58,12 @@ public class FxHandler {
     public Text player2CaptureCount;
     public TextField PlayerThreeName;
     public TextField PlayerFourName;
+    public Label fileName;
+
+
+    FileChooser fileChooser = new FileChooser();
+    Desktop desktop = Desktop.getDesktop();
+    File loadedFile;
 
     public static Scene getSettingsScene() {
         return settingsScene;
@@ -124,6 +136,23 @@ public class FxHandler {
         gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
         gameController.setWin(false);
     }
+
+    public void playLoadedGame(ActionEvent actionEvent) {
+        gameController.loadBoard(loadedFile.getName());
+
+        Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
+        try {
+            gameScene = createScene("../resources/game.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        changeScene(stage, gameScene);
+
+    }
+
+
+
+
 
     public void onBackClicked(ActionEvent actionEvent) {
         Stage stage = (Stage) btnBack.getScene().getWindow();
@@ -288,7 +317,29 @@ public class FxHandler {
 
 
     public void saveGame(ActionEvent actionEvent) {
+        String fileName = "Pente" + System.currentTimeMillis();
+        gameController.saveBoard(fileName);
     }
+    public void findGameFile(ActionEvent actionEvent) {
+        loadedFile = fileChooser.showOpenDialog((Stage) PlayGameBtn.getScene().getWindow());
+        if (loadedFile != null) {
+            openFile(loadedFile);
+        }
+        try {
+            fileName.setText(loadedFile.getName());
+        }catch(Exception e) {
+            fileName.setText("No file chosen");
+        }
+    }
+
+
+    private void openFile(File file) {
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+        }
+    }
+
 
     public void changePlayerCount(ActionEvent actionEvent) {
         RadioButton radioBtn = (RadioButton) actionEvent.getSource();
@@ -329,4 +380,7 @@ public class FxHandler {
         }
 
     }
+
+
+
 }

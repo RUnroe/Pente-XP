@@ -1,5 +1,7 @@
 package main.controllers;
 
+import java.io.*;
+
 public class GameController {
 
 
@@ -84,44 +86,45 @@ private Engine engine;
         return isTurnHandled;
     }
 
-//    public boolean saveBoard(String filename) {
-//        try {
-//            File file = new File("games/" + filename + ".txt");
-//            file.createNewFile();
-//            FileOutputStream f = new FileOutputStream(file, false);
-//            ObjectOutputStream o = new ObjectOutputStream(f);
-//            o.writeObject(engine);
-//            o.close();
-//            f.close();
-//            return true;
-//        } catch(Exception e){
-//            return false;
-//        }
-//    }
-//    public Engine loadBoard(String fileName){
-//        try {
-//            File file = new File("games/" + fileName + ".txt");
-//            FileInputStream f = new FileInputStream(file);
-//            ObjectInputStream o = new ObjectInputStream(f);
-//            Engine e = (Engine) o.readObject();
-//            f.close();
-//            o.close();
-//            return e;
-//        } catch (Exception e){
-//            return null;
-//        }
-//    }
-//    public String[] getFileNames(){
-//        try {
-//           String[] files = new File("games/").list();
-//           for(int i = 0; i < files.length; i++){
-//               files[i] = files[i].replace(".txt", "");
-//           }
-//           return files;
-//        } catch(Exception e) {
-//            return new String[]{};
-//        }
-//    }
+    public boolean saveBoard(String filename) {
+        try {
+            File file = new File("games/" + filename + ".txt");
+            file.createNewFile();
+            FileOutputStream f = new FileOutputStream(file, false);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            o.writeObject(engine);
+            o.close();
+            f.close();
+            System.out.println(file);
+            return true;
+        } catch(Exception e){
+            return false;
+        }
+    }
+    public Engine loadBoard(String fileName){
+        try {
+            File file = new File("games/" + fileName + ".txt");
+            FileInputStream f = new FileInputStream(file);
+            ObjectInputStream o = new ObjectInputStream(f);
+            Engine e = (Engine) o.readObject();
+            f.close();
+            o.close();
+            return e;
+        } catch (Exception e){
+            return null;
+        }
+    }
+    public String[] getFileNames(){
+        try {
+           String[] files = new File("games/").list();
+           for(int i = 0; i < files.length; i++){
+               files[i] = files[i].replace(".txt", "");
+           }
+           return files;
+        } catch(Exception e) {
+            return new String[]{};
+        }
+    }
 
     public Engine getEngine() {
         return engine;
