@@ -475,14 +475,26 @@
         <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER" />
         <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tria/Tesera/Win" />
         <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame" text="Quit Game" />
-        <Text fx:id="playerOneCaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
-        <Text fx:id="playerTwoCaptureCount" layoutX="661.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+        <Text fx:id="player1CaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+        <Text fx:id="player2CaptureCount" layoutX="661.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
         <Button fx:id="btnGameToHelp" layoutX="709.0" layoutY="498.0" mnemonicParsing="false" onAction="#onGameToHelpClick" prefHeight="30.0" prefWidth="35.0" text="?">
           <font>
             <Font size="14.0" />
           </font>
         </Button>
             <Button fx:id="saveGameBtn" layoutX="343.0" layoutY="500.0" mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
+            <Label fx:id="lblP3Name" layoutX="34.0" layoutY="165.0" text="Player 3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblP4Name" layoutX="666.0" layoutY="165.0" text="Player 4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Text fx:id="player3CaptureCount" layoutX="29.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+            <Text fx:id="player4CaptureCount" layoutX="661.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
       </children>
     </AnchorPane>
   </children>

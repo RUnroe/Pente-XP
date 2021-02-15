@@ -44,6 +44,14 @@ public class FxHandler {
     public CheckBox player2isAI;
     public CheckBox player3isAI;
     public CheckBox player4isAI;
+    public Label lblP4Name;
+    public Label lblP3Name;
+    public Text player4CaptureCount;
+    public Text player3CaptureCount;
+    public Text player1CaptureCount;
+    public Text player2CaptureCount;
+    public TextField PlayerThreeName;
+    public TextField PlayerFourName;
 
     public static Scene getSettingsScene() {
         return settingsScene;
@@ -88,8 +96,9 @@ public class FxHandler {
 
 //        System.out.println(PlayerOneName.getText());
 
-        gameController.setPlayerOneName(PlayerOneName.getText());
-        gameController.setPlayerTwoName(PlayerTwoName.getText());
+        
+        gameController.setPlayerNames(new String[] {PlayerOneName.getText(), PlayerTwoName.getText(), PlayerThreeName.getText(), PlayerFourName.getText()});
+        
         boolean isSecondPlayerAi = playerCount.selectedToggleProperty().get().equals(playerCount3);
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
@@ -164,22 +173,18 @@ public class FxHandler {
     }
 
     private void updateOutput() {
-        updatePlayerNames();
-
-        updatePlayerCaptureCount();
+        updatePlayerDisplay();
         updateSecondaryOutputBox();
 
-
-        String pOneName = gameController.getPlayerOneName();
-        String pTwoName = gameController.getPlayerTwoName();
 
         int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
         if (previousPlayerTurn < 0) {
             previousPlayerTurn = gameController.getEngine().getNumOfPlayers();
         }
-        String previousPlayerName = gameController.getPlayerNames()[]
+        String previousPlayerName = gameController.getPlayerNames()[previousPlayerTurn];
         String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
-        outputTxt.setText(currentPlayerName + " made their move. It is now " + pOneName + "'s (white) turn!");
+        String currentPlayerColor = getPlayerPieceColor(gameController.getEngine().getPlayerTurn());
+        outputTxt.setText(previousPlayerName + " made their move. It is now " + currentPlayerName + "'s (" + currentPlayerColor + ") turn!");
 //        if (gameController.getEngine().isPlayerOneTurn()) {
 //            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
 //        } else {
@@ -187,16 +192,26 @@ public class FxHandler {
 //        }
     }
 
-    private void updatePlayerCaptureCount() {
-//        playerOneCaptureCount.setText(String.valueOf(gameController.getEngine().getP1Captures()));
-//        playerTwoCaptureCount.setText(String.valueOf(gameController.getEngine().getP2Captures()));
-        playerOneCaptureCount.setText("Captures: " + gameController.getEngine().getP1Captures());
-        playerTwoCaptureCount.setText("Captures: " + gameController.getEngine().getP2Captures());
+    private String getPlayerPieceColor (int playerIndex) {
+        switch(playerIndex) {
+            case 1: return "Black";
+            case 2: return "Red";
+            case 3: return "Blue";
+            default: return "White";
+        }
     }
 
-    private void updatePlayerNames() {
-        lblP1Name.setText(gameController.getPlayerOneName());
-        lblP2Name.setText(gameController.getPlayerTwoName());
+
+
+    private void updatePlayerDisplay() {
+        Text[] playerCaptureCountText = new Text[]{player1CaptureCount, player2CaptureCount, player3CaptureCount, player4CaptureCount};
+        Label[] playerNameLabels = new Label[]{lblP1Name, lblP2Name, lblP3Name, lblP4Name};
+        for(int indexOfPlayer = 0; indexOfPlayer < gameController.getEngine().getNumOfPlayers(); indexOfPlayer++) {
+            playerNameLabels[indexOfPlayer].setText(gameController.getPlayerNames()[indexOfPlayer]);
+
+            playerCaptureCountText[indexOfPlayer].setText("Captures: " + gameController.getEngine().getCaptures(indexOfPlayer));
+        }
+
     }
 
 
