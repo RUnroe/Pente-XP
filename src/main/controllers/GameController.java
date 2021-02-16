@@ -39,11 +39,13 @@ private Engine engine;
 
 
     public void userClick(int y, int x) {
-        if (engine.isPlayerAi(engine.getPlayerTurn())) {
-            handleAiTurn();
-        } else {
+        if (!engine.isPlayerAi(engine.getPlayerTurn())) {
             handleTurn(y, x);
+            while(engine.isPlayerAi(engine.getPlayerTurn())) {
+                handleAiTurn();
+            }
         }
+
     }
 
     private void handleAiTurn() {
