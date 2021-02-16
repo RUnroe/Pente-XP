@@ -109,6 +109,7 @@ private Engine engine;
             f.close();
             o.close();
             this.engine = e;
+            playerNames = engine.getPlayerNames();
         } catch (Exception e){
             System.out.println(e);
         }
@@ -131,6 +132,7 @@ private Engine engine;
 
     public void createGame(int numOfPlayers, boolean secondPlayerIsAI, boolean thirdPlayerIsAI, boolean fourthPlayerIsAI) {
         engine = new Engine(numOfPlayers, secondPlayerIsAI, thirdPlayerIsAI, fourthPlayerIsAI);
+        engine.setPlayerNames(playerNames);
     }
 
     public String[] getPlayerNames() {

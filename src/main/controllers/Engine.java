@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class Engine implements Serializable {
 
+    private String[] playerNames;
     private Piece[][] board;
     private final int numOfPlayers;
     private final byte[] captures = new byte[]{0, 0, 0, 0};
@@ -268,5 +269,13 @@ public class Engine implements Serializable {
 
     public int getNumOfPlayers() {
         return numOfPlayers;
+    }
+
+    public String[] getPlayerNames() {
+        return playerNames;
+    }
+
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
     }
 }
