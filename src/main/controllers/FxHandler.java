@@ -241,6 +241,12 @@ public class FxHandler {
 
             playerCaptureCountText[indexOfPlayer].setText("Captures: " + gameController.getEngine().getCaptures(indexOfPlayer));
         }
+        int maxNumOfPlayers = 4;
+        for(int indexOfPlayer = maxNumOfPlayers; indexOfPlayer > gameController.getEngine().getNumOfPlayers(); indexOfPlayer--) {
+            playerNameLabels[indexOfPlayer-1].setVisible(false);
+            playerCaptureCountText[indexOfPlayer-1].setVisible(false);
+
+        }
 
     }
 
