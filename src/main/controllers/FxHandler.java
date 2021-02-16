@@ -139,7 +139,6 @@ public class FxHandler {
         gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
         gameController.setWin(false);
 
-        setupGameBtn.setVisible(true);
     }
 
     public void playLoadedGame(ActionEvent actionEvent) {
@@ -152,7 +151,6 @@ public class FxHandler {
             e.printStackTrace();
         }
         changeScene(stage, gameScene);
-        setupGameBtn.setVisible(true);
 
     }
 
