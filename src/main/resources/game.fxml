@@ -35,6 +35,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.FxHandler">
@@ -495,6 +496,8 @@
             </Label>
             <Text fx:id="player3CaptureCount" layoutX="29.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
             <Text fx:id="player4CaptureCount" layoutX="661.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+            <Rectangle fx:id="clickCaptureScreen" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#242424" height="607.0" layoutY="-65.0" onMouseClicked="#setupGameView" opacity="0.54" stroke="BLACK" strokeType="INSIDE" width="750.0" />
+            <Button fx:id="setupGameBtn" layoutX="323.0" layoutY="255.0" mnemonicParsing="false" onAction="#setupGameView" prefHeight="48.0" prefWidth="113.0" text="Setup Game" />
       </children>
     </AnchorPane>
   </children>

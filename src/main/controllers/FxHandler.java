@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -59,6 +60,8 @@ public class FxHandler {
     public TextField PlayerThreeName;
     public TextField PlayerFourName;
     public Label fileName;
+    public Button setupGameBtn;
+    public Rectangle clickCaptureScreen;
 
 
     FileChooser fileChooser = new FileChooser();
@@ -135,6 +138,8 @@ public class FxHandler {
                         playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
         gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
         gameController.setWin(false);
+
+        setupGameBtn.setVisible(true);
     }
 
     public void playLoadedGame(ActionEvent actionEvent) {
@@ -147,6 +152,7 @@ public class FxHandler {
             e.printStackTrace();
         }
         changeScene(stage, gameScene);
+        setupGameBtn.setVisible(true);
 
     }
 
@@ -235,26 +241,13 @@ public class FxHandler {
 
     private void updatePlayerDisplay() {
         Text[] playerCaptureCountText = new Text[]{player1CaptureCount, player2CaptureCount, player3CaptureCount, player4CaptureCount};
-        Label[] playerNameLabels = new Label[]{lblP1Name, lblP2Name, lblP3Name, lblP4Name};
         for(int indexOfPlayer = 0; indexOfPlayer < gameController.getEngine().getNumOfPlayers(); indexOfPlayer++) {
-            playerNameLabels[indexOfPlayer].setText(gameController.getPlayerNames()[indexOfPlayer]);
-
             playerCaptureCountText[indexOfPlayer].setText("Captures: " + gameController.getEngine().getCaptures(indexOfPlayer));
         }
-        int maxNumOfPlayers = 4;
-        for(int indexOfPlayer = maxNumOfPlayers; indexOfPlayer > gameController.getEngine().getNumOfPlayers(); indexOfPlayer--) {
-            playerNameLabels[indexOfPlayer-1].setVisible(false);
-            playerCaptureCountText[indexOfPlayer-1].setVisible(false);
-
-        }
-
     }
 
 
-    //    private void updatePlayerCaptureCount() {
-//        playerOneCaptureCount.setText(gameController.getEngine().getPlayerOneCaptureCount().toString());
-//        playerTwoCaptureCount.setText(gameController.getEngine().getPlayerTwoCaptureCount().toString());
-//    }
+
     private void updateSecondaryOutputBox() {
         secondaryOutputTxt.setText(gameController.conditionStr);
     }
@@ -402,5 +395,24 @@ public class FxHandler {
     }
 
 
+    public void setupGameView(ActionEvent actionEvent) {
 
+        Text[] playerCaptureCountText = new Text[]{player1CaptureCount, player2CaptureCount, player3CaptureCount, player4CaptureCount};
+        Label[] playerNameLabels = new Label[]{lblP1Name, lblP2Name, lblP3Name, lblP4Name};
+        for(int indexOfPlayer = 0; indexOfPlayer < gameController.getEngine().getNumOfPlayers(); indexOfPlayer++) {
+            playerNameLabels[indexOfPlayer].setText(gameController.getPlayerNames()[indexOfPlayer]);
+
+            playerCaptureCountText[indexOfPlayer].setText("Captures: " + gameController.getEngine().getCaptures(indexOfPlayer));
+        }
+        int maxNumOfPlayers = 4;
+        for(int indexOfPlayer = maxNumOfPlayers; indexOfPlayer > gameController.getEngine().getNumOfPlayers(); indexOfPlayer--) {
+            playerNameLabels[indexOfPlayer - 1].setVisible(false);
+            playerCaptureCountText[indexOfPlayer - 1].setVisible(false);
+        }
+        updateBoard();
+        updateOutput();
+
+        setupGameBtn.setVisible(false);
+        clickCaptureScreen.setVisible(false);
+    }
 }

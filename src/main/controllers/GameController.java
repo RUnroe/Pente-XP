@@ -101,16 +101,16 @@ private Engine engine;
             return false;
         }
     }
-    public Engine loadBoard(File file){
+    public void loadBoard(File file){
         try {
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream o = new ObjectInputStream(f);
             Engine e = (Engine) o.readObject();
             f.close();
             o.close();
-            return e;
+            this.engine = e;
         } catch (Exception e){
-            return null;
+            System.out.println(e);
         }
     }
     public String[] getFileNames(){
