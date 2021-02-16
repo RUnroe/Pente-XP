@@ -138,7 +138,7 @@ public class FxHandler {
     }
 
     public void playLoadedGame(ActionEvent actionEvent) {
-        gameController.loadBoard(loadedFile.getName());
+        gameController.loadBoard(loadedFile);
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
         try {
@@ -324,9 +324,23 @@ public class FxHandler {
 
     public void saveGame(ActionEvent actionEvent) {
         String fileName = "Pente" + System.currentTimeMillis();
-        gameController.saveBoard(fileName);
+
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PXP files (*.pxp)", "*.pxp");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog((Stage) quitGameBtn.getScene().getWindow());
+
+        if (file != null) {
+            gameController.saveBoard(file);
+        }
     }
     public void findGameFile(ActionEvent actionEvent) {
+        //Set extension filter for text files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PXP files (*.pxp)", "*.pxp");
+        fileChooser.getExtensionFilters().add(extFilter);
+
         loadedFile = fileChooser.showOpenDialog((Stage) PlayGameBtn.getScene().getWindow());
         if (loadedFile != null) {
             openFile(loadedFile);

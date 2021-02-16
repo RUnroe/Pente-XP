@@ -86,9 +86,8 @@ private Engine engine;
         return isTurnHandled;
     }
 
-    public boolean saveBoard(String filename) {
+    public boolean saveBoard(File file) {
         try {
-            File file = new File("games/" + filename + ".txt");
             file.createNewFile();
             FileOutputStream f = new FileOutputStream(file, false);
             ObjectOutputStream o = new ObjectOutputStream(f);
@@ -98,12 +97,12 @@ private Engine engine;
             System.out.println(file);
             return true;
         } catch(Exception e){
+            System.out.println(e);
             return false;
         }
     }
-    public Engine loadBoard(String fileName){
+    public Engine loadBoard(File file){
         try {
-            File file = new File("games/" + fileName + ".txt");
             FileInputStream f = new FileInputStream(file);
             ObjectInputStream o = new ObjectInputStream(f);
             Engine e = (Engine) o.readObject();
