@@ -19,7 +19,7 @@ public class Engine implements Serializable {
     private String[] playerNames;
     private Piece[][] board;
     private final int numOfPlayers;
-    private final byte[] captures = new byte[]{0, 0, 0, 0};
+    private final int[] captures = new int[]{0, 0, 0, 0};
 
     private final boolean[] AIArray;
     private int turn = 0;
@@ -40,13 +40,6 @@ public class Engine implements Serializable {
     }
 
     public int[] aiTurn() {
-//        boolean isValid = false;
-//        int[] move;
-//        do {
-//            move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
-//            isValid = isValidMove(move[0], move[1]);
-//        } while (!isValid);
-//        return move;
         Piece color;
         switch (turn % numOfPlayers) {
             case 1:
@@ -224,21 +217,23 @@ public class Engine implements Serializable {
         int[] move = new int[]{0,0,0};
         for(int y = 0; y < 19; y++){
             for(int x = 0; x < 19; x++){
-                if(scores[y][x] > move[2]){
-                    move[0] = y;
-                    move[1] = x;
-                    move[2] = scores[y][x];
-                } else if(scores[y][x] == move[2]){
-                    Random r = new Random();
-                    if(r.nextBoolean()){
+                if(board[y][x] == Piece.EMPTY) {
+                    if (scores[y][x] > move[2]) {
                         move[0] = y;
                         move[1] = x;
                         move[2] = scores[y][x];
+                    } else if (scores[y][x] == move[2]) {
+                        Random r = new Random();
+                        if (r.nextInt(2) != 1) {
+                            move[0] = y;
+                            move[1] = x;
+                            move[2] = scores[y][x];
+                        }
                     }
                 }
             }
         }
-        makeMove(move[0], move[1]);
+//        makeMove(move[0], move[1]);
         return new int[]{move[0], move[1]};
     }
 

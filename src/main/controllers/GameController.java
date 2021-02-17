@@ -54,13 +54,15 @@ private Engine engine;
         //Gets an array of [<y>, <x>] coordinates using the AI algorithms
         int[] yx;
 
-        boolean isTurnHandled;
+        boolean isTurnHandled = false;
 
         //Attempts to handle turn until handle turn returns true
         //Uses same turn handling method as player with AI determined [<y>, <x>] values
         do {
             yx = engine.aiTurn();
-            isTurnHandled = handleTurn(yx[0], yx[1]);
+            if(engine.isValidMove(yx[0], yx[1])) {
+                isTurnHandled = handleTurn(yx[0], yx[1]);
+            }
         } while (!isTurnHandled);
 
     }
