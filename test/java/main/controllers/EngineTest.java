@@ -513,6 +513,8 @@ class EngineTest {
 
         //Not a tria
 //        engine.board = getInitBoard();
+        engine = new Engine(4, false, false, false);
+
         for (int xy = 0; xy < 2; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
