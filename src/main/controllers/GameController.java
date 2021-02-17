@@ -7,29 +7,11 @@ import java.util.Arrays;
 public class GameController {
 
 
-//    //Main view integrating with JavaFX
-//    PenteView penteView;
-//
-//    //Constructor taking a stage to utilize JavaFX
-//    public GameController(Stage primaryStage) throws IOException {
-//
-//        //Initializing the view with a JavaFX stage
-//        penteView = new PenteView(primaryStage);
-//    }
 private Engine engine;
-    //    private String playerOneName;
-//    private String playerTwoName;
     private String[] playerNames;
-
-
-    //    public boolean isWin;
-//    public boolean isTesera;
-//    public boolean isTria;
     public String conditionStr = "";
 
     private boolean isWin = false;
-
-
 
     public void setWin(boolean win) {
         isWin = win;

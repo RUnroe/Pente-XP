@@ -40,8 +40,6 @@ public class FxHandler {
     public Text outputTxt;
     public Text secondaryOutputTxt;
     public Button quitGameBtn;
-    public Text playerOneCaptureCount;
-    public Text playerTwoCaptureCount;
 
     static Scene settingsScene;
     static Scene instructionsScene;
@@ -72,8 +70,7 @@ public class FxHandler {
         return settingsScene;
     }
 
-    //Can't use this with JavaFX
-//    private FxHandler() {}
+
 
     void changeScene(Stage stage, String fxmlPath) {
         try {
@@ -108,31 +105,17 @@ public class FxHandler {
     }
 
     public void GoToGame(ActionEvent actionEvent) {
-
-//        System.out.println(PlayerOneName.getText());
-
-        
         gameController.setPlayerNames(new String[] {PlayerOneName.getText(), PlayerTwoName.getText(), PlayerThreeName.getText(), PlayerFourName.getText()});
-        
-        boolean isSecondPlayerAi = playerCount.selectedToggleProperty().get().equals(playerCount3);
 
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
-//        changeScene(stage, "../resources/game.fxml");
-//        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
-//        pauseTransition.setOnFinished(evt -> updatePlayerNames());
+
         try {
             gameScene = createScene("../resources/game.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
         changeScene(stage, gameScene);
-//        Worker worker = g
-//        stage.getScene().rootProperty().addListener(new ChangeListener<>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Parent> observableValue, Parent parent, Parent t1) {
-//                updatePlayerNames();
-//            }
-//        });
+
         int numOfPlayers = playerCount.selectedToggleProperty().get().equals(playerCount2) ? 2 :
                 playerCount.selectedToggleProperty().get().equals(playerCount3) ? 3 :
                         playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
@@ -183,13 +166,6 @@ public class FxHandler {
         int y = Integer.parseInt(pos[0]);
         int x = Integer.parseInt(pos[1]);
 
-        //set color based on which player's turn it is
-//        if (gameController.getEngine().isPlayerOneTurn()) {
-//            button.setStyle("-fx-background-color: #ffffff; ");
-//        } else {
-//            button.setStyle("-fx-background-color: #000000; ");
-//        }
-        //button.setDisable(true);
 
         button.setStyle("-fx-background-color: black;");
         System.out.println("Coords: " + x + "x, " + y + "y");
@@ -219,11 +195,7 @@ public class FxHandler {
         String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
         String currentPlayerColor = getPlayerPieceColor(gameController.getEngine().getPlayerTurn());
         outputTxt.setText(previousPlayerName + " made their move. It is now " + currentPlayerName + "'s (" + currentPlayerColor + ") turn!");
-//        if (gameController.getEngine().isPlayerOneTurn()) {
-//            outputTxt.setText(pTwoName + " made their move. It is now " + pOneName + "'s (white) turn!");
-//        } else {
-//            outputTxt.setText(pOneName + " made their move. It is now " + pTwoName + "'s (black) turn!");
-//        }
+
     }
 
     private String getPlayerPieceColor (int playerIndex) {
@@ -273,35 +245,15 @@ public class FxHandler {
         }
     }
 
-    public void onPvCClicked(ActionEvent actionEvent) {
-        PlayerTwoName.setText("Computer");
-        PlayerTwoName.setEditable(false);
-    }
-
-    public void onPvPClicked(ActionEvent actionEvent) {
-        PlayerTwoName.setText("Player 2");
-        PlayerTwoName.setEditable(true);
-    }
 
     public void GoToSettings(ActionEvent actionEvent) {
-//        changeScene((Stage) SettingsBtn.getScene().getWindow(), "../resources/settings.fxml");
         changeScene((Stage) SettingsBtn.getScene().getWindow(), settingsScene);
     }
 
     public void quitGame(ActionEvent actionEvent) {
-//        changeScene((Stage) quitGameBtn.getScene().getWindow(), "../resources/settings.fxml");
         changeScene((Stage) quitGameBtn.getScene().getWindow(), settingsScene);
-//        handleExistingNames();
     }
 
-    private void handleExistingNames() {
-//        if (gameController.getPlayerOneName() != null) {
-//            PlayerOneName.setText(gameController.getPlayerOneName());
-//        }
-//        if (gameController.getPlayerTwoName() != null) {
-//            PlayerTwoName.setText(gameController.getPlayerTwoName());
-//        }
-    }
 
     public void onGameToHelpClick(ActionEvent actionEvent) {
         changeScene((Stage) btnGameToHelp.getScene().getWindow(), instructionsScene);

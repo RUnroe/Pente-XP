@@ -48,176 +48,6 @@ public class Engine implements Serializable {
         };
         int[][] scores = new int[19][19];
 
-
-//        for (int y = 0; y < board.length; y++) {
-//            for (int x = 0; x < 19; x++) {
-//                if (board[y][x] != color && board[y][x] != Piece.EMPTY) {
-//
-//                    int[] tria = checkForTria(y, x);
-//                    if (tria[0] != 0) {
-//
-//                        int[] tesera = checkForTesera(y, x);
-//                        if (tesera[0] != 0) {
-//                            for (int i = 0; i < tesera.length; i++) {
-//                                switch (tesera[i]) {
-//
-//                                    case (1):
-//                                        try {
-//                                            if (board[y][x - 1] == board[y][x]) {
-//                                                if (board[y][x - 2] == board[y][x]) {
-//                                                    if (board[y][x - 3] == board[y][x]) {
-//                                                        if (board[y][x - 4] != Piece.EMPTY) {
-//                                                            scores[y][x - 4] += 4;
-//                                                        }
-//                                                    } else {
-//                                                        scores[y][x + 2] += 4;
-//                                                    }
-//                                                } else {
-//                                                    scores[y][x + 3] += 4;
-//                                                }
-//                                            }
-//                                        } catch (IndexOutOfBoundsException e){}
-//                                            break;
-//
-//                                        case (2):
-//                                            try {
-//                                                if (board[y - 1][x] == board[y][x]) {
-//                                                    if (board[y - 2][x] == board[y][x]) {
-//                                                        if (board[y - 3][x] == board[y][x]) {
-//                                                            if (board[y - 4][x] != Piece.EMPTY) {
-//                                                                scores[y - 4][x] += 4;
-//                                                            }
-//                                                        } else {
-//                                                            scores[y + 2][x] += 4;
-//                                                        }
-//                                                    } else {
-//                                                        scores[y + 3][x] += 4;
-//                                                    }
-//                                                }
-//                                            } catch (IndexOutOfBoundsException e){}
-//                                            break;
-//
-//                                            case (3):
-//                                                try {
-//                                                    if (board[y - 1][x - 1] == board[y][x]) {
-//                                                        if (board[y - 2][x - 2] == board[y][x]) {
-//                                                            if (board[y - 3][x - 3] == board[y][x]) {
-//                                                                if (board[y - 4][x - 4] != Piece.EMPTY) {
-//                                                                    scores[y - 4][x - 4] += 4;
-//                                                                }
-//                                                            } else {
-//                                                                scores[y + 2][x + 2] += 4;
-//                                                            }
-//                                                        } else {
-//                                                            scores[y + 3][x + 3] += 4;
-//                                                        }
-//                                                    }
-//                                                } catch (IndexOutOfBoundsException e){}
-//                                                break;
-//
-//                                            case (4):
-//                                                try {
-//                                                    if (board[y + 1][x - 1] == board[y][x]) {
-//                                                        if (board[y + 2][x - 2] == board[y][x]) {
-//                                                            if (board[y + 3][x - 3] == board[y][x]) {
-//                                                                if (board[y + 4][x - 4] != Piece.EMPTY) {
-//                                                                    scores[y + 4][x - 4] += 4;
-//                                                                }
-//                                                            } else {
-//                                                                scores[y - 2][x + 2] += 4;
-//                                                            }
-//                                                        } else {
-//                                                            scores[y - 3][x + 3] += 4;
-//                                                        }
-//                                                    }
-//                                                } catch (IndexOutOfBoundsException e){}
-//                                                break;
-//                                        }
-//                                }
-//                            } else{
-//                            for (int i = 0; i < tria.length; i++) {
-//                                switch (tria[i]) {
-//
-//                                    case (1):
-//                                        try {
-//                                            if (board[y][x - 1] == board[y][x]) {
-//                                                if (board[y][x - 2] == board[y][x]) {
-//                                                    if (board[y][x - 3] != Piece.EMPTY) {
-//                                                        scores[y][x - 3] += 3;
-//                                                    }
-//                                                } else {
-//                                                    scores[y][x + 1] += 3;
-//                                                }
-//                                            }
-//                                        } catch (IndexOutOfBoundsException e){}
-//                                        break;
-//
-//                                    case (2):
-//                                        try {
-//                                            if (board[y - 1][x] == board[y][x]) {
-//                                                if (board[y - 2][x] == board[y][x]) {
-//                                                    if (board[y - 3][x] != Piece.EMPTY) {
-//                                                        scores[y - 3][x] += 3;
-//                                                    }
-//                                                } else {
-//                                                    scores[y + 1][x] += 3;
-//                                                }
-//                                            }
-//                                        } catch (IndexOutOfBoundsException e){}
-//                                        break;
-//
-//                                    case (3):
-//                                        try {
-//                                            if (board[y - 1][x - 1] == board[y][x]) {
-//                                                if (board[y - 2][x - 2] == board[y][x]) {
-//                                                    if (board[y - 3][x - 3] != Piece.EMPTY) {
-//                                                        scores[y - 3][x - 3] += 3;
-//                                                    }
-//                                                } else {
-//                                                    scores[y + 1][x + 1] += 3;
-//                                                }
-//                                            }
-//                                        } catch (IndexOutOfBoundsException e){}
-//                                        break;
-//
-//                                    case (4):
-//                                        try {
-//                                            if (board[y + 1][x - 1] == board[y][x]) {
-//                                                if (board[y + 2][x - 2] == board[y][x]) {
-//                                                    if (board[y + 3][x - 3] != Piece.EMPTY) {
-//                                                        scores[y + 3][x - 3] += 3;
-//                                                    }
-//                                                } else {
-//                                                    scores[y - 1][x + 1] += 3;
-//                                                }
-//                                            }
-//                                        } catch (IndexOutOfBoundsException e){}
-//                                        break;
-//                                }
-//                            }
-//                            }
-//                        }
-//                    } else if(board[y][x] == color){
-//                        int[] capture = checkSpaceForAi(y, x, 3);
-//                        if(capture[0] != 0){
-//                            scores[y][x] += 2 * captures.length;
-//                        }
-//                    if(checkSpaceForAi(y,x,3)[0] != 0){
-//                        scores[y][x] = 8675309;
-//                    } else {
-//                        int[] tesera = checkSpaceForAi(y,x,1);
-//                        if(tesera[0] != 0){
-//                            scores[y][x] += tesera.length * 4;
-//                        } else {
-//                            int[] tria = checkSpaceForAi(x,y,0);
-//                            if(tria[0] != 0){
-//                                scores[y][x] += 3 * tesera.length;
-//                            }
-//                        }
-//                    }
-//                    }
-//                }
-//            }
         boolean isValid = false;
         int[] move = new int[0];
         for(int y = 0; y < board.length; y++){
@@ -235,33 +65,7 @@ public class Engine implements Serializable {
 
         }
         return move;
-//        for(int y = 0; y < scores.length; y++){
-//            for(int x = 0; x < scores[0].length; x++){
-//                if(board[y][x] != Piece.EMPTY){
-//                    scores[y][x] = -100;
-//                }
-//            }
-//        }
-//        int[] move = new int[]{0,0,0};
-//        for(int y = 0; y < 19; y++){
-//            for(int x = 0; x < 19; x++){
-//                if(isValidMove(y,x)){
-//                if(scores[y][x] > move[2]){
-//                    move[0] = y;
-//                    move[1] = x;
-//                    move[2] = scores[y][x];
-//                } else if(scores[y][x] == move[2]) {
-//                    Random r = new Random();
-//                    if (r.nextBoolean()) {
-//                        move[0] = y;
-//                        move[1] = x;
-//                        move[2] = scores[y][x];
-//                    }
-//                }
-//                }
-//            }
-//        }
-//        return new int[]{move[0], move[1]};
+
     }
 
     public int[] checkSpaceForAi(int y, int x, int type){
@@ -386,18 +190,20 @@ public class Engine implements Serializable {
             if (board[y][x + 1] != Piece.EMPTY && board[y][x + 2] != Piece.EMPTY && board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
                 captures[turn % numOfPlayers]++;
                 captureList.add(2);
-                if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
-                    captures[turn % numOfPlayers]++;
-                    captureList.add(3);
-                }
             }
         }
-            if (y < 16) {
-                if (board[y + 1][x] != Piece.EMPTY && board[y + 2][x] != Piece.EMPTY && board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
-                    captures[turn % numOfPlayers]++;
-                    captureList.add(4);
-                }
+        if(y > 2) {
+            if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
+                captures[turn % numOfPlayers]++;
+                captureList.add(3);
             }
+        }
+        if (y < 16) {
+            if (board[y + 1][x] != Piece.EMPTY && board[y + 2][x] != Piece.EMPTY && board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
+                captures[turn % numOfPlayers]++;
+                captureList.add(4);
+            }
+        }
             //Checks Diagonally
             if (x > 2 && y > 2) {
                 if (board[y - 1][x - 1] != Piece.EMPTY && board[y - 2][x - 2] != Piece.EMPTY && board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
