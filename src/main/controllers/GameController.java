@@ -74,7 +74,6 @@ private Engine engine;
         if  (isTurnHandled) {
             int[] captures = engine.checkForCapture(y, x);
             boolean isCaptureFound = !(captures.length == 1 && captures[0] == 0); //Should return coords of captured pieces?
-            System.out.println("Capture: " + isCaptureFound);
             if(isCaptureFound) {
                 for(int i = 0; i < captures.length; i++) {
                     engine.removePieces(y, x, captures[i]);
@@ -133,6 +132,8 @@ private Engine engine;
     public void createGame(int numOfPlayers, boolean secondPlayerIsAI, boolean thirdPlayerIsAI, boolean fourthPlayerIsAI) {
         engine = new Engine(numOfPlayers, secondPlayerIsAI, thirdPlayerIsAI, fourthPlayerIsAI);
         engine.setPlayerNames(playerNames);
+        isWin = false;
+        conditionStr = "";
     }
 
     public String[] getPlayerNames() {

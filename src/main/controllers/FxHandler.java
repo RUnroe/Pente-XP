@@ -136,14 +136,14 @@ public class FxHandler {
         int numOfPlayers = playerCount.selectedToggleProperty().get().equals(playerCount2) ? 2 :
                 playerCount.selectedToggleProperty().get().equals(playerCount3) ? 3 :
                         playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
-        gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
         gameController.setWin(false);
+        gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
 
     }
 
     public void playLoadedGame(ActionEvent actionEvent) {
+        gameController.setWin(false);
         gameController.loadBoard(loadedFile);
-
         Stage stage = (Stage) PlayGameBtn.getScene().getWindow();
         try {
             gameScene = createScene("../resources/game.fxml");
