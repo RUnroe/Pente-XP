@@ -186,16 +186,18 @@ public class FxHandler {
         updatePlayerDisplay();
         updateSecondaryOutputBox();
 
-
-        int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
-        if (previousPlayerTurn < 0) {
-            previousPlayerTurn = gameController.getEngine().getNumOfPlayers() - 1;
+        if (gameController.getEngine().getTurn() > 0) {
+            int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
+            if (previousPlayerTurn < 0) {
+                previousPlayerTurn = gameController.getEngine().getNumOfPlayers() - 1;
+            }
+            String previousPlayerName = gameController.getPlayerNames()[previousPlayerTurn];
+            String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
+            String currentPlayerColor = getPlayerPieceColor(gameController.getEngine().getPlayerTurn());
+            outputTxt.setText(previousPlayerName + " made their move. It is now " + currentPlayerName + "'s (" + currentPlayerColor + ") turn!");
+        } else {
+            outputTxt.setText(gameController.getPlayerNames()[0] + " (white) must start the game by placing stone on center-most intersection!");
         }
-        String previousPlayerName = gameController.getPlayerNames()[previousPlayerTurn];
-        String currentPlayerName = gameController.getPlayerNames()[gameController.getEngine().getPlayerTurn()];
-        String currentPlayerColor = getPlayerPieceColor(gameController.getEngine().getPlayerTurn());
-        outputTxt.setText(previousPlayerName + " made their move. It is now " + currentPlayerName + "'s (" + currentPlayerColor + ") turn!");
-
     }
 
     private String getPlayerPieceColor (int playerIndex) {

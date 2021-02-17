@@ -110,9 +110,15 @@ public class Engine implements Serializable {
         return result;
     }
     public boolean isValidMove(int y, int x) {
-        return (y > -1 && y < 19 &&
-                x > -1 && x < 19 &&
-                board[y][x] == Piece.EMPTY);
+        boolean isValidMove;
+        if (turn == 0) {
+            isValidMove = (y == 9 && x == 9);
+        } else {
+            isValidMove = (y > -1 && y < 19 &&
+                    x > -1 && x < 19 &&
+                    board[y][x] == Piece.EMPTY);
+        }
+        return isValidMove;
     }
 
     public boolean makeMove(int y, int x) {
