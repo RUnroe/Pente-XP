@@ -10,8 +10,6 @@ import main.models.Piece;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Engine implements Serializable {
@@ -306,6 +304,7 @@ public class Engine implements Serializable {
             return isValidMove;
     }
 
+
     public void passTurn() {
         turn++;
     }
@@ -353,51 +352,51 @@ public class Engine implements Serializable {
 
         //Checks horizontally
         if (x > 2) {
-            if (board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
+            if (board[y][x - 1] != Piece.EMPTY && board[y][x - 2] != Piece.EMPTY && board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
                 captures[turn % players]++;
                 captureList.add(1);
             }
         }
         if (x < 16) {
-            if (board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
+            if (board[y][x + 1] != Piece.EMPTY && board[y][x + 2] != Piece.EMPTY && board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
                 captures[turn % players]++;
                 captureList.add(2);
             }
         }
         //Checks Vertically
         if (y > 2) {
-            if (board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
+            if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
                 captures[turn % players]++;
                 captureList.add(3);
             }
         }
         if (y < 16) {
-            if (board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
+            if (board[y + 1][x] != Piece.EMPTY && board[y + 2][x] != Piece.EMPTY && board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
                 captures[turn % players]++;
                 captureList.add(4);
             }
         }
         //Checks Diagonally
         if (x > 2 && y > 2) {
-            if (board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
+            if (board[y - 1][x - 1] != Piece.EMPTY && board[y - 2][x - 2] != Piece.EMPTY && board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
                 captures[turn % players]++;
                 captureList.add(5);
             }
         }
         if (x < 16 && y < 16) {
-            if (board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
+            if (board[y + 1 ][x + 1] != Piece.EMPTY && board[y + 2][x + 2] != Piece.EMPTY && board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
                 captures[turn % players]++;
                 captureList.add(6);
             }
         }
         if (x > 2 && y < 16) {
-            if (board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
+            if (board[y + 1][x - 1] != Piece.EMPTY && board[y + 2][x - 2] != Piece.EMPTY && board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
                 captures[turn % players]++;
                 captureList.add(7);
             }
         }
         if (x < 16 && y > 2) {
-            if (board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
+            if (board[y - 1][x + 1] != Piece.EMPTY && board[y - 2][x + 2] != Piece.EMPTY &&board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
                 captures[turn % players]++;
                 captureList.add(8);
             }
