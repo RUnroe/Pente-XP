@@ -15,7 +15,6 @@ class EngineTest {
         //check for win in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
         for (int x = 0; x < 5; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -28,7 +27,6 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int x = 18; x >= 13; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
@@ -42,7 +40,6 @@ class EngineTest {
 
 
         //Not a win
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
@@ -58,7 +55,6 @@ class EngineTest {
         //check for win in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
         for (int y = 0; y < 5; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
         }
@@ -71,7 +67,6 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int y = 18; y >= 13; y--) {
             engine.getBoard()[y][18] = Piece.BLACK;
@@ -85,7 +80,6 @@ class EngineTest {
 
 
         //Not a win
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
@@ -102,7 +96,6 @@ class EngineTest {
         //check for win in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 5; xy++) {
             //xy: x and y values. Same value for diagonal
@@ -118,7 +111,6 @@ class EngineTest {
 
 
         //Not a win
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 2; xy++) {
             //xy: x and y values. Same value for diagonal
@@ -136,7 +128,6 @@ class EngineTest {
         //check for win in x,y
 
         //Bottom left corner
-//        engine.board = getInitBoard();
         for (int xy = 0; xy < 5; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
@@ -151,7 +142,6 @@ class EngineTest {
 
 
         //Not a win
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
@@ -167,17 +157,16 @@ class EngineTest {
         Engine engine = new Engine(4, false, false, false);
 
         //Validate moves
-//        engine.getBoard() = getInitBoard();
-//        engine.setPlayerOneTurn(true);
-        assertTrue(engine.makeMove(0, 0));
+        assertTrue(engine.makeMove(9, 9));
+        engine.passTurn();
         assertTrue(engine.makeMove(0, 1));
         assertTrue(engine.makeMove(2, 2));
 
         //Check that player cannot place piece on another piece
-        assertFalse(engine.makeMove(0, 0));
+        assertFalse(engine.makeMove(9, 9));
 
         //Verify the board was updated
-        assertEquals(Piece.WHITE, engine.getBoard()[0][1]);
+        assertEquals(Piece.BLACK, engine.getBoard()[0][1]);
 
         //Verify other board positions are unchanged
         assertEquals(Piece.EMPTY, engine.getBoard()[1][0]);
@@ -210,7 +199,6 @@ class EngineTest {
         //check for capture in x,y
 
         //Valid capture
-//        engine.board = getInitBoard();
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[0][1] = Piece.BLACK;
         engine.getBoard()[0][2] = Piece.BLACK;
@@ -224,7 +212,6 @@ class EngineTest {
 
 
         //Missing enemy piece
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[0][1] = Piece.EMPTY;
@@ -239,7 +226,6 @@ class EngineTest {
 
 
         //Missing other player_one piece
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[0][1] = Piece.BLACK;
@@ -260,7 +246,6 @@ class EngineTest {
         //check for capture in x,y
 
         //Valid capture
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][0] = Piece.BLACK;
@@ -275,7 +260,6 @@ class EngineTest {
 
 
         //Missing enemy piece
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][0] = Piece.EMPTY;
@@ -290,7 +274,6 @@ class EngineTest {
 
 
         //Missing other player_one piece
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[1][0] = Piece.BLACK;
@@ -312,7 +295,6 @@ class EngineTest {
         //check for capture in x,y
 
         //Valid capture
-//        engine.board = getInitBoard();
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][1] = Piece.BLACK;
@@ -327,7 +309,7 @@ class EngineTest {
 
 
         //Missing enemy piece
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.WHITE;
         engine.getBoard()[1][1] = Piece.EMPTY;
@@ -342,7 +324,7 @@ class EngineTest {
 
 
         //Missing other player_one piece
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         engine.getBoard()[0][0] = Piece.EMPTY;
         engine.getBoard()[1][1] = Piece.BLACK;
@@ -364,7 +346,7 @@ class EngineTest {
         //check for capture in x,y
 
         //Valid capture
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         engine.getBoard()[18][0] = Piece.WHITE;
         engine.getBoard()[17][1] = Piece.BLACK;
@@ -379,7 +361,7 @@ class EngineTest {
 
 
         //Missing enemy piece
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         engine.getBoard()[18][0] = Piece.WHITE;
         engine.getBoard()[17][1] = Piece.EMPTY;
@@ -394,7 +376,7 @@ class EngineTest {
 
 
         //Missing other player_one piece
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         engine.getBoard()[18][0] = Piece.EMPTY;
         engine.getBoard()[17][1] = Piece.BLACK;
@@ -416,7 +398,7 @@ class EngineTest {
         //check for tria in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
+
         for (int x = 0; x < 3; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -428,7 +410,7 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int x = 18; x > 15; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
@@ -441,7 +423,7 @@ class EngineTest {
 
 
         //Not a tria
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
@@ -457,7 +439,7 @@ class EngineTest {
         //check for tria in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int y = 0; y < 3; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
@@ -470,7 +452,7 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
+
         for (int y = 18; y > 15; y--) {
             engine.getBoard()[y][18] = Piece.BLACK;
         }
@@ -482,7 +464,7 @@ class EngineTest {
 
 
         //Not a tria
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
@@ -499,7 +481,7 @@ class EngineTest {
         //check for win in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
+
         for (int xy = 0; xy < 3; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
@@ -512,7 +494,7 @@ class EngineTest {
 
 
         //Not a tria
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
 
         for (int xy = 0; xy < 2; xy++) {
@@ -531,7 +513,7 @@ class EngineTest {
         //check for win in x,y
 
         //Bottom left corner
-//        engine.board = getInitBoard();
+
         for (int xy = 0; xy < 3; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
@@ -544,7 +526,7 @@ class EngineTest {
 
 
         //Not a tria
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
@@ -562,7 +544,7 @@ class EngineTest {
         //check for tesera in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
+
         for (int x = 0; x < 4; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
         }
@@ -575,7 +557,7 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int x = 18; x >= 14; x--) {
             engine.getBoard()[18][x] = Piece.BLACK;
@@ -589,7 +571,7 @@ class EngineTest {
 
 
         //Not a win
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int x = 0; x < 2; x++) {
             engine.getBoard()[0][x] = Piece.WHITE;
@@ -618,7 +600,7 @@ class EngineTest {
 
 
         //Bottom right corner
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int y = 18; y >= 14; y--) {
             engine.getBoard()[y][18] = Piece.BLACK;
@@ -632,7 +614,7 @@ class EngineTest {
 
 
         //Not a tesera
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int y = 0; y < 2; y++) {
             engine.getBoard()[y][0] = Piece.WHITE;
@@ -649,7 +631,7 @@ class EngineTest {
         //check for Tesera in x,y
 
         //Top left corner
-//        engine.board = getInitBoard();
+
         for (int xy = 0; xy < 4; xy++) {
             //xy: x and y values. Same value for diagonal
             engine.getBoard()[xy][xy] = Piece.WHITE;
@@ -663,7 +645,7 @@ class EngineTest {
 
 
         //Not a tesera
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 2; xy++) {
             //xy: x and y values. Same value for diagonal
@@ -681,7 +663,7 @@ class EngineTest {
         //check for win in x,y
 
         //Bottom left corner
-//        engine.board = getInitBoard();
+
         for (int xy = 0; xy < 4; xy++) {
             //y and x values are inversely related
             engine.getBoard()[18 - xy][xy] = Piece.BLACK;
@@ -695,7 +677,7 @@ class EngineTest {
 
 
         //Not a tesera
-//        engine.board = getInitBoard();
+
         engine = new Engine(4, false, false, false);
         for (int xy = 0; xy < 2; xy++) {
             //y and x values are inversely related
