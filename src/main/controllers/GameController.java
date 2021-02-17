@@ -84,9 +84,9 @@ private Engine engine;
             isWin = engine.checkForWin(y, x);
             if (isWin()) {
                 conditionStr = currentPlayerName + " wins!";
-            } else if (!(engine.checkForTesera(y, x).length == 1 && engine.checkForTesera(y, x)[0] == 0)) {
+            } else if (!(engine.checkForTesera(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tesera");
-            } else if (!(engine.checkForTria(y, x).length == 1 && engine.checkForTria(y, x)[0] == 0)) {
+            } else if (!(engine.checkForTria(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tria");
             }
 
@@ -125,17 +125,6 @@ private Engine engine;
             System.out.println(e);
         }
     }
-    public String[] getFileNames(){
-        try {
-           String[] files = new File("games/").list();
-           for(int i = 0; i < files.length; i++){
-               files[i] = files[i].replace(".txt", "");
-           }
-           return files;
-        } catch(Exception e) {
-            return new String[]{};
-        }
-    }
 
     public Engine getEngine() {
         return engine;
@@ -154,12 +143,4 @@ private Engine engine;
         this.playerNames = playerNames;
     }
 
-
-    //PenteView view
-
-    //userClick(x, y) (call all engine methods) (what happened in turn. Display on gui)
-    //                  (check for tria and tesera. Display in separate part of GUI)
-
-
-    //setup()
 }
