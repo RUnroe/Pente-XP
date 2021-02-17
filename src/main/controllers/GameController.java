@@ -25,7 +25,7 @@ private Engine engine;
     public void userClick(int y, int x) {
         if (!engine.isPlayerAi(engine.getPlayerTurn())) {
             handleTurn(y, x);
-            while(engine.isPlayerAi(engine.getPlayerTurn())) {
+            while(engine.isPlayerAi(engine.getPlayerTurn()) && !isWin()) {
                 handleAiTurn();
             }
         }
