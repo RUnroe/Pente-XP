@@ -14,14 +14,17 @@ import java.util.Random;
 
 public class Engine implements Serializable {
 
+    private String[] playerNames;
     private Piece[][] board;
-    private int turn = 0, players;
-    private final boolean[] AIArray;
-    private byte[] captures = new byte[]{0,0,0,0};
+    private final int numOfPlayers;
+    private final byte[] captures = new byte[]{0, 0, 0, 0};
 
-    public Engine(int players, Boolean isP2Ai, Boolean isP3Ai, Boolean isP4Ai) {
-        this.players = players;
-        AIArray = new boolean[]{false, isP2Ai, isP3Ai, isP4Ai};
+    private final boolean[] AIArray;
+    private int turn = 0;
+
+    public Engine(int numOfPlayers, boolean isPlayerTwoAi, boolean isPlayerThreeAi, boolean isPlayerFourAi) {
+        this.numOfPlayers = numOfPlayers;
+        AIArray = new boolean[]{false, isPlayerTwoAi, isPlayerThreeAi, isPlayerFourAi};
         createBoard();
     }
 
@@ -285,17 +288,17 @@ public class Engine implements Serializable {
     public boolean makeMove(int y, int x) {
         boolean isValidMove = isValidMove(y, x);
         if (isValidMove) {
-            switch(turn % players){
-                case(0):
+            switch (turn % numOfPlayers) {
+                case (0):
                     board[y][x] = Piece.WHITE;
                     break;
-                case(1):
+                case (1):
                     board[y][x] = Piece.BLACK;
                     break;
-                case(2):
+                case (2):
                     board[y][x] = Piece.RED;
                     break;
-                case(3):
+                case (3):
                     board[y][x] = Piece.BLUE;
                     break;
 
@@ -361,10 +364,6 @@ public class Engine implements Serializable {
             if (board[y][x + 1] != Piece.EMPTY && board[y][x + 2] != Piece.EMPTY && board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
                 captures[turn % players]++;
                 captureList.add(2);
-            }
-        }
-        //Checks Vertically
-        if (y > 2) {
             if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
                 captures[turn % players]++;
                 captureList.add(3);
@@ -530,7 +529,7 @@ public class Engine implements Serializable {
     }
 
     public boolean checkForWin(int y, int x) {
-        if(captures[turn % players] >= 5){
+        if(captures[turn % numOfPlayers] >= 5){
             return true;
         } else {
             return checkFor(y, x, 5)[0] != 0;
@@ -548,13 +547,28 @@ public class Engine implements Serializable {
     public boolean isPlayerAi(int player){
         return AIArray[player];
     }
+
     public int getPlayerTurn() {
-        return (turn % players);
+        return (turn % numOfPlayers);
     }
-    public int getTurn(){
+
+    public int getTurn() {
         return turn;
     }
+
     public Piece[][] getBoard() {
         return board;
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    public String[] getPlayerNames() {
+        return playerNames;
+    }
+
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
     }
 }
