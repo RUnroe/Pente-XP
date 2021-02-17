@@ -54,13 +54,15 @@ private Engine engine;
         //Gets an array of [<y>, <x>] coordinates using the AI algorithms
         int[] yx;
 
-        boolean isTurnHandled;
+        boolean isTurnHandled = false;
 
         //Attempts to handle turn until handle turn returns true
         //Uses same turn handling method as player with AI determined [<y>, <x>] values
         do {
             yx = engine.aiTurn();
-            isTurnHandled = handleTurn(yx[0], yx[1]);
+            if(engine.isValidMove(yx[0], yx[1])) {
+                isTurnHandled = handleTurn(yx[0], yx[1]);
+            }
         } while (!isTurnHandled);
 
     }
@@ -69,21 +71,25 @@ private Engine engine;
     public boolean handleTurn(int y, int x) {
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
-        if  (isTurnHandled) {
-            boolean isCaptureFound = !(engine.checkForCapture(y, x).length == 1 && engine.checkForCapture(y, x)[0] == 0); //Should return coords of captured pieces?
-            System.out.println("Capture: " + isCaptureFound);
-
+        if (isTurnHandled) {
+            int[] capturesFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
+            if(capturesFound[0] != 0){
+                for(int i = 0; i < capturesFound.length; i++){
+                    engine.removePieces(y,x,capturesFound[i]);
+                }
+            }
+            System.out.println("Capture: " + capturesFound);
             String currentPlayerName = playerNames[engine.getPlayerTurn()];
             isWin = engine.checkForWin(y, x);
             if (isWin()) {
                 conditionStr = currentPlayerName + " wins!";
-            } else if (!(engine.checkForTesera(y, x).length == 1 && engine.checkForTesera(y, x)[0] == 0)) {
+            } else if (!(engine.checkForTesera(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tesera");
-            } else if (!(engine.checkForTria(y, x).length == 1 && engine.checkForTria(y, x)[0] == 0)) {
+            } else if (!(engine.checkForTria(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tria");
             }
 
-            if (!isWin()) engine.passTurn();
+            engine.passTurn();
             System.out.println(isWin());
 
         }
@@ -118,17 +124,6 @@ private Engine engine;
             System.out.println(e);
         }
     }
-    public String[] getFileNames(){
-        try {
-           String[] files = new File("games/").list();
-           for(int i = 0; i < files.length; i++){
-               files[i] = files[i].replace(".txt", "");
-           }
-           return files;
-        } catch(Exception e) {
-            return new String[]{};
-        }
-    }
 
     public Engine getEngine() {
         return engine;
@@ -147,12 +142,4 @@ private Engine engine;
         this.playerNames = playerNames;
     }
 
-
-    //PenteView view
-
-    //userClick(x, y) (call all engine methods) (what happened in turn. Display on gui)
-    //                  (check for tria and tesera. Display in separate part of GUI)
-
-
-    //setup()
 }
