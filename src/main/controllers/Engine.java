@@ -48,14 +48,14 @@ public class Engine implements Serializable {
 //        } while (!isValid);
 //        return move;
         Piece color;
-        switch (turn % players) {
-            case 2:
+        switch (turn % numOfPlayers) {
+            case 1:
                 color = Piece.BLACK;
                 break;
-            case 3:
+            case 2:
                 color = Piece.RED;
                 break;
-            case 4:
+            case 3:
                 color = Piece.BLUE;
                 break;
             default:
@@ -245,14 +245,14 @@ public class Engine implements Serializable {
     public int[] checkSpaceForAi(int y, int x, int type){
         Piece original = board[y][x];
         Piece color;
-        switch (turn % players) {
-            case 2:
+        switch (turn % numOfPlayers) {
+            case 1:
                 color = Piece.BLACK;
                 break;
-            case 3:
+            case 2:
                 color = Piece.RED;
                 break;
-            case 4:
+            case 3:
                 color = Piece.BLUE;
                 break;
             default:
