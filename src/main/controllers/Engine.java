@@ -52,9 +52,11 @@ public class Engine implements Serializable {
         int[] move = new int[0];
         for(int y = 0; y < board.length; y++){
             for(int x = 0; x < board[0].length; x++){
-                for(int i = 0; i < 4; i++){
-                    if(checkSpaceForAi(y,x,i)[0] != 0){
-                        return new int[]{y,x};
+                if(board[y][x] == Piece.EMPTY) {
+                    for (int i = 0; i < 4; i++) {
+                        if (checkSpaceForAi(y, x, i)[0] != 0) {
+                            return new int[]{y, x};
+                        }
                     }
                 }
             }
@@ -141,34 +143,42 @@ public class Engine implements Serializable {
     public void removePieces(int y, int x, int direction){
         switch(direction){
             case 1:
+                captures[turn % numOfPlayers]++;
                 board[y][x - 1] = Piece.EMPTY;
                 board[y][x - 2] = Piece.EMPTY;
                 break;
             case 2:
+                captures[turn % numOfPlayers]++;
                 board[y][x + 1] = Piece.EMPTY;
                 board[y][x + 2] = Piece.EMPTY;
                 break;
             case 3:
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x] = Piece.EMPTY;
                 board[y - 2][x] = Piece.EMPTY;
                 break;
             case 4:
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x] = Piece.EMPTY;
                 board[y + 2][x] = Piece.EMPTY;
                 break;
             case 5:
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x - 1] = Piece.EMPTY;
                 board[y - 2][x - 2] = Piece.EMPTY;
                 break;
             case 6:
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x + 1] = Piece.EMPTY;
                 board[y + 2][x + 2] = Piece.EMPTY;
                 break;
             case 7:
+                captures[turn % numOfPlayers]++;
                 board[y + 1][x - 1] = Piece.EMPTY;
                 board[y + 2][x - 2] = Piece.EMPTY;
                 break;
             case 8:
+                captures[turn % numOfPlayers]++;
                 board[y - 1][x + 1] = Piece.EMPTY;
                 board[y - 2][x + 2] = Piece.EMPTY;
                 break;
@@ -182,50 +192,42 @@ public class Engine implements Serializable {
         //Checks horizontally
         if (x > 2) {
             if (board[y][x - 1] != Piece.EMPTY && board[y][x - 2] != Piece.EMPTY && board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
-                captures[turn % numOfPlayers]++;
                 captureList.add(1);
             }
         }
         if (x < 16) {
             if (board[y][x + 1] != Piece.EMPTY && board[y][x + 2] != Piece.EMPTY && board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
-                captures[turn % numOfPlayers]++;
                 captureList.add(2);
             }
         }
         if(y > 2) {
             if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
-                captures[turn % numOfPlayers]++;
                 captureList.add(3);
             }
         }
         if (y < 16) {
             if (board[y + 1][x] != Piece.EMPTY && board[y + 2][x] != Piece.EMPTY && board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
-                captures[turn % numOfPlayers]++;
                 captureList.add(4);
             }
         }
             //Checks Diagonally
             if (x > 2 && y > 2) {
                 if (board[y - 1][x - 1] != Piece.EMPTY && board[y - 2][x - 2] != Piece.EMPTY && board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
-                    captures[turn % numOfPlayers]++;
                     captureList.add(5);
                 }
             }
             if (x < 16 && y < 16) {
                 if (board[y + 1][x + 1] != Piece.EMPTY && board[y + 2][x + 2] != Piece.EMPTY && board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
-                    captures[turn % numOfPlayers]++;
                     captureList.add(6);
                 }
             }
             if (x > 2 && y < 16) {
                 if (board[y + 1][x - 1] != Piece.EMPTY && board[y + 2][x - 2] != Piece.EMPTY && board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
-                    captures[turn % numOfPlayers]++;
                     captureList.add(7);
                 }
             }
             if (x < 16 && y > 2) {
                 if (board[y - 1][x + 1] != Piece.EMPTY && board[y - 2][x + 2] != Piece.EMPTY && board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
-                    captures[turn % numOfPlayers]++;
                     captureList.add(8);
                 }
             }
