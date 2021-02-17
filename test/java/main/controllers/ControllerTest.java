@@ -15,6 +15,9 @@ class ControllerTest {
 
         assertTrue(controller.handleTurn(0,1));
         assertFalse(controller.handleTurn(9,9));
+        assertFalse(controller.handleTurn(0,1));
+        assertTrue(controller.handleTurn(5,1));
+
 
     }
 
