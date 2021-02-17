@@ -70,9 +70,14 @@ private Engine engine;
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
-            boolean isCaptureFound = !(engine.checkForCapture(y, x).length == 1 && engine.checkForCapture(y, x)[0] == 0); //Should return coords of captured pieces?
+            int[] captures = engine.checkForCapture(y, x);
+            boolean isCaptureFound = !(captures.length == 1 && captures[0] == 0); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
-
+            if(isCaptureFound) {
+                for(int i = 0; i < captures.length; i++) {
+                    engine.removePieces(y, x, captures[i]);
+                }
+            }
             String currentPlayerName = playerNames[engine.getPlayerTurn()];
             isWin = engine.checkForWin(y, x);
             if (isWin()) {
