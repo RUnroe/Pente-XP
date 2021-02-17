@@ -70,16 +70,16 @@ private Engine engine;
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
-            boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
+            boolean isCaptureFound = !(engine.checkForCapture(y, x).length == 1 && engine.checkForCapture(y, x)[0] == 0); //Should return coords of captured pieces?
             System.out.println("Capture: " + isCaptureFound);
 
             String currentPlayerName = playerNames[engine.getPlayerTurn()];
             isWin = engine.checkForWin(y, x);
             if (isWin()) {
                 conditionStr = currentPlayerName + " wins!";
-            } else if (engine.checkForTesera(y, x)) {
+            } else if (!(engine.checkForTesera(y, x).length == 1 && engine.checkForTesera(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tesera");
-            } else if (engine.checkForTria(y, x)) {
+            } else if (!(engine.checkForTria(y, x).length == 1 && engine.checkForTria(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tria");
             }
 

@@ -38,34 +38,35 @@ public class Engine implements Serializable {
     }
 
     public int[] aiTurn() {
-//        boolean isValid = false;
-//        int[] move;
-//        do {
-//            move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
-//            isValid = isValidMove(move[0], move[1]);
-//        } while (!isValid);
-//        return move;
-        Piece color;
-        switch(turn % players){
-            case 2:
-                color = Piece.BLACK;
-                break;
-            case 3:
-                color = Piece.RED;
-                break;
-            case 4:
-                color = Piece.BLUE;
-                break;
-            default:
-                throw new RuntimeException();
-        }
-        for(int y = 0; y < board.length; y++){
-            for(int x = 0; x < 19){
-                if(board[y][x] != color && board[y][x] != Piece.EMPTY){
-                    checkFor(checkForTria())
-                }
-            }
-        }
+        boolean isValid = false;
+        int[] move;
+        do {
+            move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
+            isValid = isValidMove(move[0], move[1]);
+        } while (!isValid);
+        return move;
+//        Piece color;
+//        switch(turn % numOfPlayers){
+//            case 2:
+//                color = Piece.BLACK;
+//                break;
+//            case 3:
+//                color = Piece.RED;
+//                break;
+//            case 4:
+//                color = Piece.BLUE;
+//                break;
+//            default:
+//                throw new RuntimeException();
+//        }
+//        for(int y = 0; y < board.length; y++){
+//            for(int x = 0; x < 19; x++){
+//                if(board[y][x] != color && board[y][x] != Piece.EMPTY){
+//                    checkForTria(y, x);
+//                }
+//            }
+//        }
+
     }
 
     public boolean isValidMove(int y, int x) {
@@ -144,51 +145,51 @@ public class Engine implements Serializable {
         //Checks horizontally
         if (x > 2) {
             if (board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(1);
             }
         }
         if (x < 16) {
             if (board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(2);
             }
         }
         //Checks Vertically
         if (y > 2) {
             if (board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(3);
             }
         }
         if (y < 16) {
             if (board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(4);
             }
         }
         //Checks Diagonally
         if (x > 2 && y > 2) {
             if (board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(5);
             }
         }
         if (x < 16 && y < 16) {
             if (board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(6);
             }
         }
         if (x > 2 && y < 16) {
             if (board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(7);
             }
         }
         if (x < 16 && y > 2) {
             if (board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
-                captures[turn % players]++;
+                captures[turn % numOfPlayers]++;
                 captureList.add(8);
             }
         }
@@ -321,7 +322,7 @@ public class Engine implements Serializable {
     }
 
     public boolean checkForWin(int y, int x) {
-        if(captures[turn % players] >= 5){
+        if(captures[turn % numOfPlayers] >= 5){
             return true;
         } else {
             return checkFor(y, x, 5)[0] != 0;
