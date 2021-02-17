@@ -1,107 +1,76 @@
 package main.controllers;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GameController {
 
 
-//    //Main view integrating with JavaFX
-//    PenteView penteView;
-//
-//    //Constructor taking a stage to utilize JavaFX
-//    public GameController(Stage primaryStage) throws IOException {
-//
-//        //Initializing the view with a JavaFX stage
-//        penteView = new PenteView(primaryStage);
-//    }
 private Engine engine;
-    private String playerOneName;
-    private String playerTwoName;
-
-    //    public boolean isWin;
-//    public boolean isTesera;
-//    public boolean isTria;
+    private String[] playerNames;
     public String conditionStr = "";
-    private boolean isWin;
 
+    private boolean isWin = false;
 
-    public String getPlayerOneName() {
-        return playerOneName;
+    public void setWin(boolean win) {
+        isWin = win;
     }
 
-    public void setPlayerOneName(String playerOneName) {
-        this.playerOneName = playerOneName;
-    }
-
-    public String getPlayerTwoName() {
-        return playerTwoName;
-    }
-
-    public void setPlayerTwoName(String playerTwoName) {
-        this.playerTwoName = playerTwoName;
+    public boolean isWin() {
+        return isWin;
     }
 
 
-    public GameController() {}
-
-    //Test method as the core of this class
-    public void run () {
-
-        //Instantiating the current handler class connected to the fxml loader in the view
-        //Must retrieve from view instead of using constructor
-//        FxHandler fxHandler = penteView.getFxHandler();
-
-        //Test command to ensure fxml objects can be manipulated
-//        fxHandler.PlayGameBtn.setText("Don't press this button!");
-//        String playerOneName = fxHandler.pOneName;
-
-    }
-
-    //Test for clicking coords
     public void userClick(int y, int x) {
-        handleTurn(y, x);
-//        System.out.println("User clicked " + x + "," + y +"!");
-//        engine.makeMove(y, x);
-//        engine.passTurn();
-
-        //Checks if it is player 2's turn (not player one's turn) AND if player 2 is an AI
-
-        if (!engine.isPlayerOneTurn() && engine.isP2Ai()) {
-            handleAiTurn();
+        if (!engine.isPlayerAi(engine.getPlayerTurn())) {
+            handleTurn(y, x);
+            while(engine.isPlayerAi(engine.getPlayerTurn()) && !isWin()) {
+                handleAiTurn();
+            }
         }
+
     }
 
     private void handleAiTurn() {
         //Gets an array of [<y>, <x>] coordinates using the AI algorithms
         int[] yx;
 
-        boolean isTurnHandled;
+        boolean isTurnHandled = false;
 
         //Attempts to handle turn until handle turn returns true
         //Uses same turn handling method as player with AI determined [<y>, <x>] values
         do {
             yx = engine.aiTurn();
-            isTurnHandled = handleTurn(yx[0], yx[1]);
+            if(engine.isValidMove(yx[0], yx[1])) {
+                isTurnHandled = handleTurn(yx[0], yx[1]);
+            }
         } while (!isTurnHandled);
 
     }
 
-    private boolean handleTurn(int y, int x) {
+
+    public boolean handleTurn(int y, int x) {
         boolean isTurnHandled = engine.makeMove(y, x);
         System.out.println("isTurnHandled: " + isTurnHandled);
         if  (isTurnHandled) {
-            boolean isCaptureFound = engine.checkForCapture(y, x); //Should return coords of captured pieces?
-            System.out.println("Capture: " + isCaptureFound);
-
-            String currentPlayerName = (engine.isPlayerOneTurn() ? playerOneName : playerTwoName);
-            setWin(engine.checkForWin(y, x));
+            int[] captures = engine.checkForCapture(y, x);
+            boolean isCaptureFound = !(captures.length == 1 && captures[0] == 0); //Should return coords of captured pieces?
+            if(isCaptureFound) {
+                for(int i = 0; i < captures.length; i++) {
+                    engine.removePieces(y, x, captures[i]);
+                }
+            }
+            String currentPlayerName = playerNames[engine.getPlayerTurn()];
+            isWin = engine.checkForWin(y, x);
             if (isWin()) {
                 conditionStr = currentPlayerName + " wins!";
-            } else if (engine.checkForTesera(y, x)) {
+            } else if (!(engine.checkForTesera(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tesera");
-            } else if (engine.checkForTria(y, x)) {
+            } else if (!(engine.checkForTria(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tria");
             }
 
-            engine.setTurnCounter(engine.getTurnCounter() + 1);
             if (!isWin()) engine.passTurn();
             System.out.println(isWin());
 
@@ -109,30 +78,52 @@ private Engine engine;
         return isTurnHandled;
     }
 
+    public boolean saveBoard(File file) {
+        try {
+            file.createNewFile();
+            FileOutputStream f = new FileOutputStream(file, false);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+            o.writeObject(engine);
+            o.close();
+            f.close();
+            System.out.println(file);
+            return true;
+        } catch(Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+    public void loadBoard(File file){
+        try {
+            FileInputStream f = new FileInputStream(file);
+            ObjectInputStream o = new ObjectInputStream(f);
+            Engine e = (Engine) o.readObject();
+            f.close();
+            o.close();
+            this.engine = e;
+            playerNames = engine.getPlayerNames();
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     public Engine getEngine() {
         return engine;
     }
 
-    public void createGame(Boolean secondPlayerIsAI) {
-        engine = new Engine(secondPlayerIsAI);
-        setWin(false);
+    public void createGame(int numOfPlayers, boolean secondPlayerIsAI, boolean thirdPlayerIsAI, boolean fourthPlayerIsAI) {
+        engine = new Engine(numOfPlayers, secondPlayerIsAI, thirdPlayerIsAI, fourthPlayerIsAI);
+        engine.setPlayerNames(playerNames);
+        isWin = false;
+        conditionStr = "";
     }
 
-    public boolean isWin() {
-        return isWin;
+    public String[] getPlayerNames() {
+        return playerNames;
     }
 
-    public void setWin(boolean win) {
-        isWin = win;
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
     }
 
-
-    //PenteView view
-
-    //userClick(x, y) (call all engine methods) (what happened in turn. Display on gui)
-    //                  (check for tria and tesera. Display in separate part of GUI)
-
-
-    //setup()
 }

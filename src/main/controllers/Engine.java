@@ -8,20 +8,23 @@ package main.controllers;
 
 import main.models.Piece;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Engine {
+public class Engine implements Serializable {
 
+    private String[] playerNames;
     private Piece[][] board;
-    private Boolean isPlayerOneTurn;
-    private final Boolean isP2Ai;
-    private byte p1Caps = 0, p2Caps = 0;
-    private int turnCounter = 0;
+    private final int numOfPlayers;
+    private final int[] captures = new int[]{0, 0, 0, 0};
 
+    private final boolean[] AIArray;
+    private int turn = 0;
 
-    public Engine(Boolean secondPlayerIsAI) {
-        isP2Ai = secondPlayerIsAI;
-        isPlayerOneTurn = true;
+    public Engine(int numOfPlayers, boolean isPlayerTwoAi, boolean isPlayerThreeAi, boolean isPlayerFourAi) {
+        this.numOfPlayers = numOfPlayers;
+        AIArray = new boolean[]{false, isPlayerTwoAi, isPlayerThreeAi, isPlayerFourAi};
         createBoard();
     }
 
@@ -35,18 +38,80 @@ public class Engine {
     }
 
     public int[] aiTurn() {
+
+        Piece color = switch (turn % numOfPlayers) {
+            case 0 -> Piece.WHITE;
+            case 1 -> Piece.BLACK;
+            case 2 -> Piece.RED;
+            case 3 -> Piece.BLUE;
+            default -> throw new IllegalStateException("Unexpected value: " + turn % numOfPlayers);
+        };
+        int[][] scores = new int[19][19];
+
         boolean isValid = false;
-        int[] move;
-        do {
-            move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
-            isValid = isValidMove(move[0], move[1]);
-        } while (!isValid);
+        int[] move = new int[0];
+        for(int y = 0; y < board.length; y++){
+            for(int x = 0; x < board[0].length; x++){
+                if(board[y][x] == Piece.EMPTY) {
+                    for (int i = 0; i < 4; i++) {
+                        if (checkSpaceForAi(y, x, i)[0] != 0) {
+                            return new int[]{y, x};
+                        }
+                    }
+                }
+            }
+            do {
+                move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
+                isValid = isValidMove(move[0], move[1]);
+            } while (!isValid);
+
+        }
         return move;
+
     }
 
+    public int[] checkSpaceForAi(int y, int x, int type){
+        Piece original = board[y][x];
+        Piece color;
+        switch (turn % numOfPlayers) {
+            case 1:
+                color = Piece.BLACK;
+                break;
+            case 2:
+                color = Piece.RED;
+                break;
+            case 3:
+                color = Piece.BLUE;
+                break;
+            default:
+                throw new RuntimeException();
+        }
+        board[y][x] = color;
+        int[] result = new int[]{0};
+        switch(type){
+            case(0):
+                result = checkForTria(y, x);
+                break;
+            case(1):
+                result = checkForTesera(y, x);
+                break;
+            case(2):
+                if(checkForWin(y, x)){
+                    result = new int[]{1};
+                }
+                break;
+            case(3):
+                result = checkForCapture(y, x);
+                break;
+            default:
+                throw new RuntimeException();
+        }
+        board[y][x] = original;
+        return result;
+    }
     public boolean isValidMove(int y, int x) {
         boolean isValidMove;
-        if (getTurnCounter() == 0) {
+        if (turn == 0) {
             isValidMove = (y == 9 && x == 9);
         } else {
             isValidMove = (y > -1 && y < 19 &&
@@ -59,151 +124,132 @@ public class Engine {
     public boolean makeMove(int y, int x) {
         boolean isValidMove = isValidMove(y, x);
         if (isValidMove) {
-            if (isPlayerOneTurn) {
-                board[y][x] = Piece.WHITE;
-            } else {
-                board[y][x] = Piece.BLACK;
+            switch (turn % numOfPlayers) {
+                case (0):
+                    board[y][x] = Piece.WHITE;
+                    break;
+                case (1):
+                    board[y][x] = Piece.BLACK;
+                    break;
+                case (2):
+                    board[y][x] = Piece.RED;
+                    break;
+                case (3):
+                    board[y][x] = Piece.BLUE;
+                    break;
+
             }
         }
             return isValidMove;
     }
-
-
     public void passTurn() {
-        isPlayerOneTurn = !isPlayerOneTurn();
+        turn++;
     }
 
-    public boolean checkForCapture(int y, int x) {
-        boolean isCapture = false;
+    public void removePieces(int y, int x, int direction){
+        switch(direction){
+            case 1:
+                captures[turn % numOfPlayers]++;
+                board[y][x - 1] = Piece.EMPTY;
+                board[y][x - 2] = Piece.EMPTY;
+                break;
+            case 2:
+                captures[turn % numOfPlayers]++;
+                board[y][x + 1] = Piece.EMPTY;
+                board[y][x + 2] = Piece.EMPTY;
+                break;
+            case 3:
+                captures[turn % numOfPlayers]++;
+                board[y - 1][x] = Piece.EMPTY;
+                board[y - 2][x] = Piece.EMPTY;
+                break;
+            case 4:
+                captures[turn % numOfPlayers]++;
+                board[y + 1][x] = Piece.EMPTY;
+                board[y + 2][x] = Piece.EMPTY;
+                break;
+            case 5:
+                captures[turn % numOfPlayers]++;
+                board[y - 1][x - 1] = Piece.EMPTY;
+                board[y - 2][x - 2] = Piece.EMPTY;
+                break;
+            case 6:
+                captures[turn % numOfPlayers]++;
+                board[y + 1][x + 1] = Piece.EMPTY;
+                board[y + 2][x + 2] = Piece.EMPTY;
+                break;
+            case 7:
+                captures[turn % numOfPlayers]++;
+                board[y + 1][x - 1] = Piece.EMPTY;
+                board[y + 2][x - 2] = Piece.EMPTY;
+                break;
+            case 8:
+                captures[turn % numOfPlayers]++;
+                board[y - 1][x + 1] = Piece.EMPTY;
+                board[y - 2][x + 2] = Piece.EMPTY;
+                break;
+        }
+    }
+
+    public int[] checkForCapture(int y, int x) {
         Piece color = board[y][x];
-        boolean p1Turn;
-        Piece oppColor = null;
-
-        p1Turn = (color == Piece.WHITE);
-        oppColor = (p1Turn ? Piece.BLACK : Piece.WHITE);
-
-        //Commented out because player 1 takes white piece.
-        //Ternary above solves issue
-//        if (color == Piece.BLACK) {
-//            oppColor = Piece.WHITE;
-//            p1Turn = true;
-//        } else {
-//            oppColor = Piece.BLACK;
-//            p1Turn = false;
-//        }
+        ArrayList<Integer> captureList = new ArrayList<>();
 
         //Checks horizontally
         if (x > 2) {
-            if (board[y][x - 1] == oppColor && board[y][x - 2] == oppColor && board[y][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
-                board[y][x - 1] = Piece.EMPTY;
-                board[y][x - 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
+            if (board[y][x - 1] != Piece.EMPTY && board[y][x - 2] != Piece.EMPTY && board[y][x - 1] != color && board[y][x - 2] != color && board[y][x - 3] == color) {
+                captureList.add(1);
             }
         }
         if (x < 16) {
-            if (board[y][x + 1] == oppColor && board[y][x + 2] == oppColor && board[y][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
-                board[y][x + 1] = Piece.EMPTY;
-                board[y][x + 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
+            if (board[y][x + 1] != Piece.EMPTY && board[y][x + 2] != Piece.EMPTY && board[y][x + 1] != color && board[y][x + 2] != color && board[y][x + 3] == color) {
+                captureList.add(2);
             }
         }
-        //Checks Vertically
-        if (y > 2) {
-            if (board[y - 1][x] == oppColor && board[y - 2][x] == oppColor && board[y - 3][x] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
-                board[y - 1][x] = Piece.EMPTY;
-                board[y - 2][x] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
+        if(y > 2) {
+            if (board[y - 1][x] != Piece.EMPTY && board[y - 2][x] != Piece.EMPTY && board[y - 1][x] != color && board[y - 2][x] != color && board[y - 3][x] == color) {
+                captureList.add(3);
             }
         }
         if (y < 16) {
-            if (board[y + 1][x] == oppColor && board[y + 2][x] == oppColor && board[y + 3][x] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
-                }
-                board[y + 1][x] = Piece.EMPTY;
-                board[y + 2][x] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
+            if (board[y + 1][x] != Piece.EMPTY && board[y + 2][x] != Piece.EMPTY && board[y + 1][x] != color && board[y + 2][x] != color && board[y + 3][x] == color) {
+                captureList.add(4);
             }
         }
-        //Checks Diagonally
-        if (x > 2 && y > 2) {
-            if (board[y - 1][x - 1] == oppColor && board[y - 2][x - 2] == oppColor && board[y - 3][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
+            //Checks Diagonally
+            if (x > 2 && y > 2) {
+                if (board[y - 1][x - 1] != Piece.EMPTY && board[y - 2][x - 2] != Piece.EMPTY && board[y - 1][x - 1] != color && board[y - 2][x - 2] != color && board[y - 3][x - 3] == color) {
+                    captureList.add(5);
                 }
-                board[y - 1][x - 1] = Piece.EMPTY;
-                board[y - 2][x - 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
             }
-        }
-        if (x < 16 && y < 16) {
-            if (board[y + 1][x + 1] == oppColor && board[y + 2][x + 2] == oppColor && board[y + 3][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
+            if (x < 16 && y < 16) {
+                if (board[y + 1][x + 1] != Piece.EMPTY && board[y + 2][x + 2] != Piece.EMPTY && board[y + 1][x + 1] != color && board[y + 2][x + 2] != color && board[y + 3][x + 3] == color) {
+                    captureList.add(6);
                 }
-                board[y + 1][x + 1] = Piece.EMPTY;
-                board[y + 2][x + 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
             }
-        }
-        if (x > 2 && y < 16) {
-            if (board[y + 1][x - 1] == oppColor && board[y + 2][x - 2] == oppColor && board[y + 3][x - 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
+            if (x > 2 && y < 16) {
+                if (board[y + 1][x - 1] != Piece.EMPTY && board[y + 2][x - 2] != Piece.EMPTY && board[y + 1][x - 1] != color && board[y + 2][x - 2] != color && board[y + 3][x - 3] == color) {
+                    captureList.add(7);
                 }
-                board[y + 1][x - 1] = Piece.EMPTY;
-                board[y + 2][x - 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
             }
-        }
-        if (x < 16 && y > 2) {
-            if (board[y - 1][x + 1] == oppColor && board[y + -2][x + 2] == oppColor && board[y - 3][x + 3] == color) {
-                if (p1Turn) {
-                    p1Caps++;
-                } else {
-                    p2Caps++;
+            if (x < 16 && y > 2) {
+                if (board[y - 1][x + 1] != Piece.EMPTY && board[y - 2][x + 2] != Piece.EMPTY && board[y - 1][x + 1] != color && board[y + -2][x + 2] != color && board[y - 3][x + 3] == color) {
+                    captureList.add(8);
                 }
-                board[y - 1][x + 1] = Piece.EMPTY;
-                board[y - 2][x + 2] = Piece.EMPTY;
-//                return true;
-                isCapture = true;
             }
-        }
-        return isCapture;
+            if (captureList.size() == 0) {
+                captureList.add(0);
+            }
+            int[] capturesArray = new int[captureList.size()];
+            for (int i = 0; i < captureList.size(); i++) {
+                capturesArray[i] = captureList.get(i);
+            }
+        return capturesArray;
     }
-    private boolean checkFor(int y, int x, int num) {
+    private int[] checkFor(int y, int x, int num) {
         //check horizontal
         Piece color = board[y][x];
+        ArrayList<Integer> checked = new ArrayList<>();
 
         int pieces = 1;
         try {
@@ -227,7 +273,7 @@ public class Engine {
         } catch (Exception e) {
         }
         if (pieces >= num) {
-            return true;
+            checked.add(1);
         }
         pieces = 1;
         try {
@@ -251,7 +297,7 @@ public class Engine {
         } catch (Exception e) {
         }
         if (pieces >= num) {
-            return true;
+            checked.add(2);
         }
         pieces = 1;
         try {
@@ -278,63 +324,88 @@ public class Engine {
                 j++;
             }
         } catch (Exception e){}
-        return pieces >= num;
-    }
+        if(pieces >= num){
+            checked.add(3);
+        }
+        pieces = 1;
+        try {
+            int j = y + 1;
+            for (int i = x - 1; pieces < num; i--) {
+                if (board[j][i] == color) {
+                    pieces++;
+                } else {
+                    throw new Exception();
+                }
+                j++;
 
+            }
+        } catch (Exception e) {
+        }
+        try {
+            int j = y - 1;
+            for (int i = x + 1; pieces < num; i++) {
+                if (board[j][i] == color) {
+                    pieces++;
+                } else {
+                    throw new Exception();
+                }
+                j--;
+            }
+        } catch (Exception e){}
+        if(pieces >= num){
+            checked.add(4);
+        }
+        if(checked.size() == 0){
+            checked.add(0);
+        }
+        int[] checkedArray = new int[checked.size()];
+        for(int i = 0; i < checked.size(); i++){
+            checkedArray[i] = checked.get(i);
+        }
+        return checkedArray;
+    }
 
     public boolean checkForWin(int y, int x) {
-        if (isPlayerOneTurn && p1Caps >= 5) {
-            System.out.println("P1 capture win");
-            return true;
-        } else if (!isPlayerOneTurn && p2Caps >= 5) {
-            System.out.println("P2 capture win");
+        if(captures[turn % numOfPlayers] >= 5){
             return true;
         } else {
-            System.out.println("Consecutive win: " + checkFor(y, x, 5));
-            return checkFor(y, x, 5);
+            return checkFor(y, x, 5)[0] != 0;
         }
     }
-    public boolean checkForTria(int y, int x) {
+    public int[] checkForTria(int y, int x) {
         return checkFor(y, x, 3);
     }
-    public boolean checkForTesera(int y, int x) {
+    public int[] checkForTesera(int y, int x) {
         return checkFor(y, x, 4);
     }
-
-    public int getP1Captures() {
-        return p1Caps;
+    public int getCaptures(int player){
+        return captures[player];
     }
-    public int getP2Captures() {
-        return p2Caps;
-    }
-    public void setP1Captures(int p1Captures) {
-        this.p1Caps = (byte) p1Captures;
-    }
-    public void setP2Captures(int p2Captures) {
-        this.p2Caps = (byte) p2Captures;
+    public boolean isPlayerAi(int player){
+        return AIArray[player];
     }
 
-    public Boolean isP2Ai() {
-        return isP2Ai;
+    public int getPlayerTurn() {
+        return (turn % numOfPlayers);
     }
 
-    public Boolean isPlayerOneTurn() {
-        return isPlayerOneTurn;
+    public int getTurn() {
+        return turn;
     }
 
     public Piece[][] getBoard() {
         return board;
     }
 
-    public void setPlayerOneTurn(Boolean playerOneTurn) {
-        isPlayerOneTurn = playerOneTurn;
+    public int getNumOfPlayers() {
+        return numOfPlayers;
     }
 
-    public int getTurnCounter() {
-        return turnCounter;
+    public String[] getPlayerNames() {
+        return playerNames;
     }
 
-    public void setTurnCounter(int turnCounter) {
-        this.turnCounter = turnCounter;
+    public void setPlayerNames(String[] playerNames) {
+        this.playerNames = playerNames;
     }
 }

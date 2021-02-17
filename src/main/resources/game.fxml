@@ -33,10 +33,11 @@
 -->
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.FxHandler">
   <children>
     <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -464,31 +465,39 @@
         </GridPane>
         <Label fx:id="lblP1Name" layoutX="35.0" layoutY="15.0" text="Player 1">
           <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
           </font>
         </Label>
         <Label fx:id="lblP2Name" layoutX="667.0" layoutY="15.0" text="Player 2">
           <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
           </font>
         </Label>
-        <Text fx:id="outputTxt" layoutX="152.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Start the game by clicking on the center-most intersection. It is now Player 1's (white) turn."
-              textAlignment="CENTER"/>
-        <Text fx:id="secondaryOutputTxt" layoutX="292.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Tria/Tesera/Win will be announced here."/>
-        <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame"
-                text="Quit Game"/>
-        <Text fx:id="playerOneCaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Captures: 0"/>
-        <Text fx:id="playerTwoCaptureCount" layoutX="661.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Captures: 0"/>
-        <Button fx:id="btnGameToHelp" layoutX="709.0" layoutY="498.0" mnemonicParsing="false"
-                onAction="#onGameToHelpClick" prefHeight="30.0" prefWidth="35.0" text="?">
+        <Text fx:id="outputTxt" layoutX="197.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game by clicking on an intersection. It is now WHITE's turn" textAlignment="CENTER" />
+        <Text fx:id="secondaryOutputTxt" layoutX="339.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tria/Tesera/Win" />
+        <Button fx:id="quitGameBtn" layoutX="12.0" layoutY="498.0" mnemonicParsing="false" onAction="#quitGame" text="Quit Game" />
+        <Text fx:id="player1CaptureCount" layoutX="29.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+        <Text fx:id="player2CaptureCount" layoutX="661.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+        <Button fx:id="btnGameToHelp" layoutX="709.0" layoutY="498.0" mnemonicParsing="false" onAction="#onGameToHelpClick" prefHeight="30.0" prefWidth="35.0" text="?">
           <font>
-            <Font size="14.0"/>
+            <Font size="14.0" />
           </font>
         </Button>
+            <Button fx:id="saveGameBtn" layoutX="343.0" layoutY="500.0" mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
+            <Label fx:id="lblP3Name" layoutX="34.0" layoutY="165.0" text="Player 3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblP4Name" layoutX="666.0" layoutY="165.0" text="Player 4">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Text fx:id="player3CaptureCount" layoutX="29.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+            <Text fx:id="player4CaptureCount" layoutX="661.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Captures: 0" />
+            <Rectangle fx:id="clickCaptureScreen" arcHeight="5.0" arcWidth="5.0" disable="true" fill="#242424" height="607.0" layoutY="-65.0" onMouseClicked="#setupGameView" opacity="0.54" stroke="BLACK" strokeType="INSIDE" width="750.0" />
+            <Button fx:id="setupGameBtn" layoutX="323.0" layoutY="255.0" mnemonicParsing="false" onAction="#setupGameView" prefHeight="48.0" prefWidth="113.0" text="Setup Game" />
       </children>
     </AnchorPane>
   </children>
