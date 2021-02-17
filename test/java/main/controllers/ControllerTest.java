@@ -10,10 +10,11 @@ class ControllerTest {
     void testHandleTurn() {
         GameController controller = new GameController();
         controller.createGame(2, false, false, false);
-        controller.getEngine().makeMove(0,0);
+        controller.setPlayerNames(new String[] {"Player 1", "Player 2", "Player 3", "Player 4"});
+        controller.handleTurn(9,9);
 
         assertTrue(controller.handleTurn(0,1));
-        assertFalse(controller.handleTurn(0,0));
+        assertFalse(controller.handleTurn(9,9));
 
     }
 
