@@ -268,8 +268,6 @@ public class FxHandler {
 
 
     public void saveGame(ActionEvent actionEvent) {
-        String fileName = "Pente" + System.currentTimeMillis();
-
         //Set extension filter for text files
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PXP files (*.pxp)", "*.pxp");
         fileChooser.getExtensionFilters().add(extFilter);
