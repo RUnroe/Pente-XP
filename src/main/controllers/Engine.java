@@ -48,44 +48,77 @@ public class Engine implements Serializable {
         };
         int[][] scores = new int[19][19];
 
-        boolean isValid = false;
-        int[] move = new int[0];
-        for(int y = 0; y < board.length; y++){
-            for(int x = 0; x < board[0].length; x++){
-                if(board[y][x] == Piece.EMPTY) {
+
+        for(int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[0].length; x++) {
+                if (board[y][x] == Piece.EMPTY) {
                     for (int i = 0; i < 4; i++) {
-                        if (checkSpaceForAi(y, x, i)[0] != 0) {
-                            return new int[]{y, x};
+                        if (checkSpaceForAi(y, x, i, color)[0] != 0) {
+                            if (i == 3) {
+                                scores[y][x] = 10000;
+                            } else {
+                                scores[y][x] += i;
+                            }
+                        }
+                        for (int c = 0; c < 4; c++) {
+                            Piece oppColor = null;
+                            switch (c) {
+                                case (0):
+                                    if (!(turn % numOfPlayers == c)) {
+                                        oppColor = Piece.WHITE;
+                                    }
+                                    break;
+                                case (1):
+                                    if (!(turn % numOfPlayers == c)) {
+                                        oppColor = Piece.BLACK;
+                                    }
+                                    break;
+                                case (2):
+                                    if (!(turn % numOfPlayers == c)) {
+                                        oppColor = Piece.RED;
+                                    }
+                                    break;
+                                case (3):
+                                    if (!(turn % numOfPlayers == c)) {
+                                        oppColor = Piece.BLUE;
+                                    }
+                                    break;
+                            }
+                            if (oppColor != null) {
+                                if (checkSpaceForAi(y, x, i, oppColor)[0] != 0) {
+                                    scores[y][x] += 2 * i;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    scores[y][x] = -10000;
+                }
+            }
+        }
+        int[] total;
+        boolean isValid;
+        do {
+            total = new int[]{-1, -1, 0};
+            for (int y = 0; y < 19; y++) {
+                for (int x = 0; x < 19; x++) {
+                    if (scores[y][x] > total[2]) {
+                        total = new int[]{y, x, scores[y][x]};
+                    } else if (scores[y][x] == total[2]) {
+                        if (new Random().nextInt(10000) % 2 == 0) {
+                            total = new int[]{y, x, scores[y][x]};
                         }
                     }
                 }
             }
-            do {
-                move = new int[]{new Random().nextInt(19), new Random().nextInt(19)};
-                isValid = isValidMove(move[0], move[1]);
-            } while (!isValid);
-
-        }
-        return move;
+            isValid = isValidMove(total[0], total[1]);
+        } while(!isValid);
+        return new int[]{total[0], total[1]};
 
     }
 
-    public int[] checkSpaceForAi(int y, int x, int type){
+    public int[] checkSpaceForAi(int y, int x, int type, Piece color){
         Piece original = board[y][x];
-        Piece color;
-        switch (turn % numOfPlayers) {
-            case 1:
-                color = Piece.BLACK;
-                break;
-            case 2:
-                color = Piece.RED;
-                break;
-            case 3:
-                color = Piece.BLUE;
-                break;
-            default:
-                throw new RuntimeException();
-        }
         board[y][x] = color;
         int[] result = new int[]{0};
         switch(type){
@@ -96,12 +129,12 @@ public class Engine implements Serializable {
                 result = checkForTesera(y, x);
                 break;
             case(2):
+                result = checkForCapture(y, x);
+                break;
+            case(3):
                 if(checkForWin(y, x)){
                     result = new int[]{1};
                 }
-                break;
-            case(3):
-                result = checkForCapture(y, x);
                 break;
             default:
                 throw new RuntimeException();
