@@ -1,5 +1,6 @@
 package main.views;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -15,6 +16,10 @@ public class PenteView {
 
     public PenteView(Stage primaryStage) {
         setupGui(primaryStage);
+        primaryStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     public void setupGui(Stage primaryStage) {

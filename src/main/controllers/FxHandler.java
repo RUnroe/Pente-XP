@@ -4,10 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -19,6 +19,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //Class linked to fxml objects and methods
 public class FxHandler {
@@ -60,6 +62,32 @@ public class FxHandler {
     public Label fileName;
     public Button setupGameBtn;
     public Rectangle clickCaptureScreen;
+    private final Timer timer = new Timer();
+    public Text timerDisplayTxt;
+    private final TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            if (gameController.getEngine().getTurn() > 0) {
+                gameController.setCurrentTimeCounter(gameController.getCurrentTimeCounter() - 1);
+                if (gameController.getCurrentTimeCounter() < 1) {
+//
+                    gameController.getEngine().passTurn();
+                    while (gameController.getEngine().isPlayerAi(gameController.getEngine().getPlayerTurn()) && !gameController.isWin()) {
+                        gameController.handleAiTurn();
+                    }
+                    updateBoard();
+                    updateOutput();
+                    checkForWin();
+
+                    System.out.println("Turn: " + gameController.getEngine().getTurn());
+                    gameController.setCurrentTimeCounter(GameController.MAX_TIMER_COUNTER);
+                } else {
+                    updateTimerDisplay();
+                }
+                System.out.println("Timer: " + gameController.getCurrentTimeCounter());
+            }
+        }
+    };
 
 
     FileChooser fileChooser = new FileChooser();
@@ -121,6 +149,7 @@ public class FxHandler {
                         playerCount.selectedToggleProperty().get().equals(playerCount4) ? 4 : 2;
         gameController.setWin(false);
         gameController.createGame(numOfPlayers, player2isAI.isSelected(), player3isAI.isSelected(), player4isAI.isSelected());
+        gameController.setCurrentTimeCounter(GameController.MAX_TIMER_COUNTER);
 
     }
 
@@ -177,7 +206,7 @@ public class FxHandler {
     }
 
     private void checkForWin() {
-        if (secondaryOutputTxt.getText().toLowerCase().contains("win")) {
+        if (gameController.isWin()) {
             handleWin();
         }
     }
@@ -185,6 +214,7 @@ public class FxHandler {
     private void updateOutput() {
         updatePlayerDisplay();
         updateSecondaryOutputBox();
+        updateTimerDisplay();
 
         if (gameController.getEngine().getTurn() > 0) {
             int previousPlayerTurn = gameController.getEngine().getPlayerTurn() - 1;
@@ -226,6 +256,7 @@ public class FxHandler {
 
     private void handleWin() {
         gridGame.setDisable(true);
+        timer.cancel();
     }
 
     private void updateBoard() {
@@ -254,6 +285,7 @@ public class FxHandler {
 
     public void quitGame(ActionEvent actionEvent) {
         changeScene((Stage) quitGameBtn.getScene().getWindow(), settingsScene);
+        timer.cancel();
     }
 
 
@@ -273,7 +305,7 @@ public class FxHandler {
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Show save file dialog
-        File file = fileChooser.showSaveDialog((Stage) quitGameBtn.getScene().getWindow());
+        File file = fileChooser.showSaveDialog(quitGameBtn.getScene().getWindow());
 
         if (file != null) {
             gameController.saveBoard(file);
@@ -284,7 +316,7 @@ public class FxHandler {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PXP files (*.pxp)", "*.pxp");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        loadedFile = fileChooser.showOpenDialog((Stage) PlayGameBtn.getScene().getWindow());
+        loadedFile = fileChooser.showOpenDialog(PlayGameBtn.getScene().getWindow());
         if (loadedFile != null) {
             openFile(loadedFile);
         }
@@ -355,7 +387,7 @@ public class FxHandler {
             playerCaptureCountText[indexOfPlayer].setText("Captures: " + gameController.getEngine().getCaptures(indexOfPlayer));
         }
         int maxNumOfPlayers = 4;
-        for(int indexOfPlayer = maxNumOfPlayers; indexOfPlayer > gameController.getEngine().getNumOfPlayers(); indexOfPlayer--) {
+        for (int indexOfPlayer = maxNumOfPlayers; indexOfPlayer > gameController.getEngine().getNumOfPlayers(); indexOfPlayer--) {
             playerNameLabels[indexOfPlayer - 1].setVisible(false);
             playerCaptureCountText[indexOfPlayer - 1].setVisible(false);
         }
@@ -364,5 +396,12 @@ public class FxHandler {
 
         setupGameBtn.setVisible(false);
         clickCaptureScreen.setVisible(false);
+
+//        timer.schedule(timerTask, 1000);
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
+    }
+
+    public void updateTimerDisplay() {
+        timerDisplayTxt.setText("Time Left: " + gameController.getCurrentTimeCounter() + "s");
     }
 }

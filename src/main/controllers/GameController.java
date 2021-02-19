@@ -1,17 +1,27 @@
 package main.controllers;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameController {
 
 
-private Engine engine;
+    private Engine engine;
     private String[] playerNames;
     public String conditionStr = "";
 
     private boolean isWin = false;
+
+    public static final int MAX_TIMER_COUNTER = 30;
+    boolean isTimerRunning;
+    int currentTimeCounter = MAX_TIMER_COUNTER;
+
+    public int getCurrentTimeCounter() {
+        return currentTimeCounter;
+    }
+
+    public void setCurrentTimeCounter(int currentTimeCounter) {
+        this.currentTimeCounter = currentTimeCounter;
+    }
 
     public void setWin(boolean win) {
         isWin = win;
@@ -32,7 +42,7 @@ private Engine engine;
 
     }
 
-    private void handleAiTurn() {
+    public void handleAiTurn() {
         //Gets an array of [<y>, <x>] coordinates using the AI algorithms
         int[] yx;
 
@@ -42,7 +52,7 @@ private Engine engine;
         //Uses same turn handling method as player with AI determined [<y>, <x>] values
         do {
             yx = engine.aiTurn();
-            if(engine.isValidMove(yx[0], yx[1])) {
+            if (engine.isValidMove(yx[0], yx[1])) {
                 isTurnHandled = handleTurn(yx[0], yx[1]);
             }
         } while (!isTurnHandled);
@@ -70,10 +80,14 @@ private Engine engine;
             } else if (!(engine.checkForTria(y, x)[0] == 0)) {
                 conditionStr = currentPlayerName + (" has made a tria");
             }
-
-            if (!isWin()) engine.passTurn();
+            if (!isTimerRunning) {
+                isTimerRunning = true;
+            }
+            if (!isWin()) {
+                engine.passTurn();
+                setCurrentTimeCounter(MAX_TIMER_COUNTER);
+            }
             System.out.println(isWin());
-
         }
         return isTurnHandled;
     }
